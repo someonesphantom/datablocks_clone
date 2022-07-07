@@ -39,7 +39,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import TextField from '@mui/material/TextField';
 import DoneIcon from '@mui/icons-material/Done';
 
-import DialogButton from './dialog';
+import DialogButton from './dialog/dialog';
 
 const sourceNode = ({ data }) => {
   console.log(data)
