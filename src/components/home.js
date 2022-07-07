@@ -146,7 +146,7 @@ export default function Home() {
                   name="password"
                   label=""
                   type="password"
-                  id="password"
+                  id="oldpassword"
                   autoComplete="current-password"
                   size='small'
                   InputLabelProps={{ style: { color: '#4A5568' } }}
@@ -161,7 +161,7 @@ export default function Home() {
                   name="password"
                   label=""
                   type="password"
-                  id="password"
+                  id="newpassword"
                   autoComplete="current-password"
                   size='small'
                   InputLabelProps={{ style: { color: '#4A5568' } }}
