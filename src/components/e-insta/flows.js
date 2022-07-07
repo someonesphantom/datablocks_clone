@@ -61,7 +61,7 @@ const Flows = (props) => {
                         }
                         setFlows(currflow => [...currflow, newflow]);
                         setflowcontext();
-                    }} y
+                    }}
                     sx={{
                         mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
                             bgcolor: '#4c497e',
