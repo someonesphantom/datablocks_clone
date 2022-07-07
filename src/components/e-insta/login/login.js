@@ -20,7 +20,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import logo from './resources/logo.png'
+import logo from '../../resources/logo.png'
 
 const theme = createTheme();
 

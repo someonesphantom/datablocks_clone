@@ -45,18 +45,21 @@ const DialogButton= React.memo(props => {
             open={open}
             onClose={handleClose}
             scroll={scroll}
-
+            fullWidth
+            maxWidth="md"
           >
-            <DialogTitle id="scroll-dialog-title" sx={{ backgroundColor: "#222138", color: "white" }}>Block Library</DialogTitle>
 
             <DialogContent dividers={scroll === 'paper'} sx={{ backgroundColor: "#222138" }}>
               <Grid container spacing={2}>
                 <Grid item xs={2}>
+                <Typography variant="h5" color="white" sx={{ mb: 1.5, fontSize: "20px", fontFamily:"sans-serif" }}>
+                Block Library
+                  </Typography>
                   <Button 
                   onClick={() => scrollTo('#input')}
                     startIcon={<InputIcon style={{ color: "white", width:"10px",height:"10px",marginBottom:"11px" }}/>}
                   >
-                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" }}>
+                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" , fontFamily:"sans-serif"}}>
                     INPUT
                   </Typography>
                   </Button>
@@ -64,7 +67,7 @@ const DialogButton= React.memo(props => {
                   onClick={() => scrollTo('#transform')}
                     startIcon={<ConstructionOutlinedIcon style={{ color: "white", width:"10px",height:"10px",marginBottom:"11px" }}/>}
                   >
-                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" }}>
+                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily:"sans-serif" }}>
                     TRANSFORM
                   </Typography>
                   </Button>
@@ -72,7 +75,7 @@ const DialogButton= React.memo(props => {
                   onClick={() => scrollTo('#geodata')}
                     startIcon={<LocationOnOutlinedIcon style={{ color: "white", width:"10px",height:"10px",marginBottom:"11px" }}/>}
                   >
-                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" }}>
+                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" , fontFamily:"sans-serif"}}>
                     GEO DATA
                   </Typography>
                   </Button>
@@ -80,7 +83,7 @@ const DialogButton= React.memo(props => {
                   onClick={() => scrollTo('#vis')}
                     startIcon={<InsertChartOutlinedIcon style={{ color: "white", width:"10px",height:"10px",marginBottom:"11px" }}/>}
                   >
-                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px" }}>
+                  <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily:"sans-serif" }}>
                     VISUALIZATION
                   </Typography>
                   </Button>
@@ -94,7 +97,7 @@ const DialogButton= React.memo(props => {
                   </Button>
                 </Grid>
                 <Grid item xs={10}>
-                  <div id="input">
+                  <div id="input" style={{ fontFamily:"sans-serif"}}>
                   <Typography variant="h7" color="white" >
                     INPUT
                   </Typography>
@@ -195,14 +198,14 @@ const DialogButton= React.memo(props => {
                   </Button>
                   </div>
                   <br></br>
-                  <div id="transform">
+                  <div id="transform" style={{ fontFamily:"sans-serif"}}>
                   <Typography variant="h7" color="white" >
                   TRANSFORM
                   </Typography>
                   </div>
                   
                   <br></br>
-                  <div id="geodata">
+                  <div id="geodata" style={{ fontFamily:"sans-serif"}}>
                   <Typography variant="h7" color="white" >
                   GEO DATA
                   </Typography>
@@ -210,7 +213,7 @@ const DialogButton= React.memo(props => {
                   
                   <br></br>
 
-                  <div id="vis">
+                  <div id="vis" style={{ fontFamily:"sans-serif"}}>
                   <Typography variant="h7" color="white" >
                   VISUALIZATION
                   </Typography>
@@ -218,7 +221,7 @@ const DialogButton= React.memo(props => {
 
                   <br></br>
 
-                  <div id="misc">
+                  <div id="misc" style={{ fontFamily:"sans-serif"}}>
                   <Typography variant="h7" color="white" >
                   MISC
                   </Typography>
