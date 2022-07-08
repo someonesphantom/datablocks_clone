@@ -5,7 +5,6 @@ import Login from './components/e-insta/login/login'
 import Home from './components/e-insta/home'
 import Reactflow from './components/e-insta/reactflow';
 import Flows from './components/e-insta/flows';
-
 const routing = (data,setData) => (
   <Router>
     <Routes>
@@ -13,7 +12,6 @@ const routing = (data,setData) => (
       <Route exact path="/home" element={<Home data={data} setData={setData}/>} />  
       <Route exact path="/reactapp" element={<Reactflow data={data} setData={setData}/>} />
       <Route exact path="/flowlist" element={<Flows data={data} setData={setData}/>} />
-      
     </Routes>  
   </Router>  
 )

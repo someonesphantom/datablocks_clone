@@ -1,0 +1,6 @@
+{
+    "userData": {
+        "postsignup": "http://localhost:8080/signup",
+        "postlogin": "http://localhost:8080/login"
+    }
+}
