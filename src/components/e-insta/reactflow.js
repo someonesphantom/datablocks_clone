@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   removeElements,
@@ -38,29 +38,72 @@ import Divider from '@mui/material/Divider';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import TextField from '@mui/material/TextField';
 import DoneIcon from '@mui/icons-material/Done';
-
+import useResponse from '../response/response';
 import DialogButton from './dialog/dialog';
-
-const sourceNode = ({ data }) => {
+import DisplayResponse from '../response/displayResponse';
+import FlowContext from './flowcontext';
+const SourceNode = ({ data }) => {
   console.log(data)
   if (data.color === "") {
     data.color = "333154"
   }
+  const [value, displayresponse, parsedData, tableRows, values] = useResponse(null)
+  // //State to store table Column name
+  // const [tablerows, setTableRows] = useState([]);
 
+  // //State to store the values
+  // const [Values, setValues] = useState([]);
+  // const flowdata = { tableRows: tablerows, setTableRows, values: Values, setValues }
+
+  // const handlechange = () => {
+  //   displayresponse()
+  //   // setTableRows(tableRows)
+  //   // setValues(values)
+
+  // }
   return (
     <>
-
+      {/* <FlowContext.Provider value={flowdata} > */}
       <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
-        <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 500, minHeight: 300, minWidth: 260 }}>
+        <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
           <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
           <React.Fragment>
             <CardContent>
               <Typography variant="h5" component="div" color="white">
                 {data.label}
               </Typography>
+              <input
+                type="file"
+                name="file"
+                onChange={displayresponse}
+                accept=".csv"
+                style={{ display: "block", margin: "10px auto" }}
+              />
               <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
                 {data.value}
               </Typography>
+              <div style={{}}>
+                <table>
+                  <thead>
+                    <tr>
+                      {tableRows.map((rows, index) => {
+                        return <th key={index}>{rows}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {values.map((value, index) => {
+                      return (
+                        <tr key={index}>
+                          {value.map((val, i) => {
+                            return <td key={i}>{val}</td>;
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
               <Typography variant="body2" color="text.secondary">
 
               </Typography>
@@ -77,11 +120,12 @@ const sourceNode = ({ data }) => {
         style={{ backgroundColor: 'warning.main' }}
         isConnectable={true}
       />
+      {/* </FlowContext.Provider> */}
     </>
   )
 }
 
-const nodeTypes = { source: sourceNode };
+const nodeTypes = { source: SourceNode };
 const edgeTypes = {
   // custom: CustomEdge,
 };
@@ -107,7 +151,24 @@ export default function Flow() {
   const [pos, setPos] = useState({});
   const [edit, setEdit] = React.useState(false);
   const [name, setName] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [scroll, setScroll] = React.useState('paper');
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open1 = Boolean(anchorEl);
+  const [response] = useResponse(null)
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClickOpen = (scrollType) => () => {
+    setOpen(true);
+    setScroll(scrollType);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setAnchorEl(null);
+  };
   const onDoubleClickOfNode = (node) => {
     { console.log("node", node) }
     setObjectEdit(node)
@@ -131,7 +192,6 @@ export default function Flow() {
   const addINode = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;
-    const tid = `${++tableId}`;
     const id = `${++nodeId}`;
     const position = {
       x: 250,
@@ -147,7 +207,7 @@ export default function Flow() {
         {
           id,
           type: "source",
-          data: { id: `${id}`, label: "Table " + `${tid}`, value: "", color: "" },
+          data: { id: `${id}`, label: "Table ", value: "", color: "" },
           position,
         }
       ];
@@ -155,22 +215,7 @@ export default function Flow() {
     handleClose()
   }, [nodes]);
 
-  const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState('paper');
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open1 = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-    setAnchorEl(null);
-  };
 
 
 
@@ -183,30 +228,30 @@ export default function Flow() {
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Button color="inherit"
-              aria-controls={open1 ? 'demo-positioned-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open1 ? 'true' : undefined}
-              onClick={handleClick}      
+                aria-controls={open1 ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open1 ? 'true' : undefined}
+                onClick={handleClick}
               >FILE</Button>
               <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open1}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open1}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
               <Button color="inherit"
               >VIEW</Button>
               <Button color="inherit"
@@ -285,12 +330,12 @@ export default function Flow() {
 
       <Grid container spacing={0} >
         <Grid item xs={12}>
-          <DialogButton addINode = {addINode} />
-          
+          <DialogButton addINode={addINode} />
+
         </Grid>
         <Grid item xs={12}>
           <ReactFlowProvider>
-            <div className="reactflow-wrapper" style={{ width: "100%", height: "70vh",backgroundColor: "#222138" }} ref={reactFlowWrapper}>
+            <div className="reactflow-wrapper" style={{ width: "100%", height: "70vh", backgroundColor: "#222138" }} ref={reactFlowWrapper}>
               <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -306,26 +351,30 @@ export default function Flow() {
                 edgeTypes={edgeTypes}
                 fitView
               >
-                <Controls style={{backgroundColor: "#222138"}}/>
-                <Background style={{backgroundColor: "#222138"}}/>
-                <MiniMap nodeColor="#333154" maskColor="#1A192B" style={{backgroundColor: "#222138"}}/>
+                <Controls style={{ backgroundColor: "#222138" }} />
+                <Background style={{ backgroundColor: "#222138" }} />
+                <MiniMap nodeColor="#333154" maskColor="#1A192B" style={{ backgroundColor: "#222138" }} />
               </ReactFlow>
             </div>
 
           </ReactFlowProvider>
         </Grid>
-        <Grid item xs={8} sx={{ backgroundColor: "#1A192B", height: "20vh",border:0.5 ,borderColor:"#4C497E"}}>
-          <div style={{ margin:"5px",marginTop:"5px", color: 'white',fontSize:"12px"}}>OUTPUT</div>
-          <hr style={{borderColor:"#4C497E"}}></hr>
+        <Grid item xs={8} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
+          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>OUTPUT</div>
+          <hr style={{ borderColor: "#4C497E" }}></hr>
+          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>
+            {/* <DisplayResponse /> */}
+          </div>
+
         </Grid>
 
-        <Grid item xs={4} sx={{ backgroundColor: "#1A192B" , height: "20vh",border:0.5 ,borderColor:"#4C497E"}}>
-          <div style={{ margin:"5px",marginTop:"5px", color: 'white',fontSize:"12px" }}>LOGS</div>
-          <hr style={{borderColor:"#4C497E"}}></hr>
-          <div style={{ margin:"2px", color: 'white',fontSize:"10px" }}>
-          Successfully loaded flow "{name}". Last update: { }
+        <Grid item xs={4} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
+          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>LOGS</div>
+          <hr style={{ borderColor: "#4C497E" }}></hr>
+          <div style={{ margin: "2px", color: 'white', fontSize: "10px" }}>
+            Successfully loaded flow "{name}". Last update: { }
           </div>
-          <hr style={{borderColor:"#4C497E"}}></hr>
+          <hr style={{ borderColor: "#4C497E" }}></hr>
         </Grid>
       </Grid>
     </div>
