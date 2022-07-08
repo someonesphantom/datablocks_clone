@@ -1,10 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import FlowContext from '../e-insta/flowcontext';
+import { UserContext } from '../e-insta/usercontext';
 const DisplayResponse =()=>{
-    // //State to store table Column name
-    // const flowcontext = useContext(FlowContext);
-    // //State to store the values
-    // console.log("tables ",flowcontext)
+    //State to store table Column name
+    const flowcontext = useContext(UserContext);
+    //State to store the values
+    useEffect(()=>{
+        console.log("flowcontext",flowcontext)
+    },[flowcontext])
+    console.log("flowcontext ",flowcontext)
     // const setflowcontext = () => {
     //     flowcontext.setTableRows([1,2,3,4]);
     //     console.log("called it")
@@ -12,40 +16,40 @@ const DisplayResponse =()=>{
     return(
        <>
             {
-            //     <div>
+                <div>
                     
                     
-            //     { flowcontext!==undefined && (
-            //         <>
-            //             { console.log("hi")}
-            //        { setflowcontext()}
-            //             <table style={{maxHeight: "30rem",maxWidth:"10%"}}>
-            //         <thead>
-            //           <tr>
-            //             {flowcontext.tablerows.map((rows, index) => {
+                { flowcontext.tableRows!==null && (
+                    <>
+                        { console.log("hi")}
+                   {/* { setflowcontext()} */}
+                        <table style={{maxHeight: "30rem",maxWidth:"10%"}}>
+                    <thead>
+                      <tr>
+                        {flowcontext.tablerows.map((rows, index) => {
                             
-            //               return <th key={index}>{rows}</th>;
-            //             })}
+                          return <th key={index}>{rows}</th>;
+                        })}
                     
-            //           </tr>
-            //         </thead>
-            //         <tbody>
-            //           {flowcontext.values.map((value, index) => {
-            //             return (
-            //               <tr key={index}>
-            //                 {value.map((val, i) => {
-            //                   return <td key={i}>{val}</td>;
-            //                 })}
-            //               </tr>
-            //             );
-            //           })}
-            //         </tbody>
-            //       </table>
-            //       </>
-            //         )
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {flowcontext.values.map((value, index) => {
+                        return (
+                          <tr key={index}>
+                            {value.map((val, i) => {
+                              return <td key={i}>{val}</td>;
+                            })}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  </>
+                    )
     
-            //     }
-            // </div>
+                }
+            </div>
                 // (value)=>{
                     
                 //     {console.log("table ",value)}

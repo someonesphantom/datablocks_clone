@@ -42,28 +42,44 @@ import useResponse from '../response/response';
 import DialogButton from './dialog/dialog';
 import DisplayResponse from '../response/displayResponse';
 import FlowContext from './flowcontext';
+import { UserContext } from './usercontext';
 const SourceNode = ({ data }) => {
-  console.log(data)
+  // console.log(data)
   if (data.color === "") {
     data.color = "333154"
   }
   const [value, displayresponse, parsedData, tableRows, values] = useResponse(null)
-  // //State to store table Column name
-  // const [tablerows, setTableRows] = useState([]);
+  //State to store table Column name
+  const [tablerows, setTableRows] = useState([]);
 
-  // //State to store the values
-  // const [Values, setValues] = useState([]);
-  // const flowdata = { tableRows: tablerows, setTableRows, values: Values, setValues }
+  //State to store the values
+  const [Values, setValues] = useState([]);
 
+  const [e,setE] = useState();
+  // const flowdata = { 
+  //   data:{
+  //     x:e
+  //   } }
+  const {x,setX} = useContext(UserContext)
+  
   // const handlechange = () => {
   //   displayresponse()
   //   // setTableRows(tableRows)
   //   // setValues(values)
 
   // }
+  useEffect(
+    ()=>{
+      
+      console.log("event12,",e)
+      setX(e)
+      console.log("x",x)
+    },[e,x]
+  )
   return (
     <>
-      {/* <FlowContext.Provider value={flowdata} > */}
+      {/* <UserContext.Provider value={e} > */}
+        
       <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
         <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
           <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
@@ -75,7 +91,13 @@ const SourceNode = ({ data }) => {
               <input
                 type="file"
                 name="file"
-                onChange={displayresponse}
+                onChange={(event) => {
+                  displayresponse(event);
+                  // setTableRows(tableRows)
+                  // setValues(values)
+                  setE(event)
+                  
+                  }}
                 accept=".csv"
                 style={{ display: "block", margin: "10px auto" }}
               />
@@ -86,6 +108,9 @@ const SourceNode = ({ data }) => {
                 <table>
                   <thead>
                     <tr>
+                      {/* {console.log("event",e)} */}
+                      {/* {console.log("tableRows",tablerows)}{
+                      console.log("tableRows12121",tableRows)} */}
                       {tableRows.map((rows, index) => {
                         return <th key={index}>{rows}</th>;
                       })}
@@ -120,7 +145,7 @@ const SourceNode = ({ data }) => {
         style={{ backgroundColor: 'warning.main' }}
         isConnectable={true}
       />
-      {/* </FlowContext.Provider> */}
+      {/* </UserContext.Provider> */}
     </>
   )
 }
@@ -363,7 +388,7 @@ export default function Flow() {
           <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>OUTPUT</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
           <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>
-            {/* <DisplayResponse /> */}
+            <DisplayResponse />
           </div>
 
         </Grid>
