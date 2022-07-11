@@ -1,15 +1,32 @@
 import React, { useState, useContext, useEffect, memo } from 'react';
 import { UserContext } from '../e-insta/context/usercontext';
 import { DataGrid } from '@mui/x-data-grid';
+import { v4 as uuidv4 } from 'uuid';
+
+
+
+
+
 
 const DisplayResponse = () => {
   //State to store table Column name
-  const { tableRows, values } = useContext(UserContext);
-  //State to store the values
+  const { tableRows, values,setValues } = useContext(UserContext);
+  const [rows,setRows] = useState([])
   useEffect(() => {
     console.log("table Rows in display ", tableRows)
-  }, [tableRows])
+    setRows(values)
+    console.log("rows id", rows)
+  }, [tableRows,values])
 
+  const geRowsWithId = (rows) => {
+
+   
+      console.log("rows id", rows)
+    setRows([...rows, {id: uuidv4().toString(), ...rows}]);
+    
+    return rows;
+    
+    }
   return (
     <>
       {
@@ -20,9 +37,10 @@ const DisplayResponse = () => {
           {tableRows.length !== 0 && (
             <>
               {/* <DataGrid
-                          
+                         
         columns={tableRows}
-        rows={values}
+        rows={rows}
+        getRowId={(row)=>row.Month} 
       /> */}
               <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
                 <thead>

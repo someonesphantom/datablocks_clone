@@ -42,7 +42,7 @@ import useResponse from '../../response/response';
 import DialogButton from '../dialog/dialog';
 import DisplayResponse from '../../response/displayResponse';
 import { UserContext, UserContextProvider } from '../context/usercontext';
-const SourceNode = ({ data }) => {
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';const SourceNode = ({ data }) => {
   if (data.color === "") {
     data.color = "333154"
   }
@@ -68,9 +68,13 @@ useEffect(()=>{
           <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
           <React.Fragment>
             <CardContent>
-              <Typography variant="h5" component="div" color="white">
-                {data.label}
-              </Typography>
+            <left>
+          <DragIndicatorIcon sx={{ fontSize:"30px", position: "absolute", left: "5px", top: "5px", color: "white" }} />
+          <Typography fontSize="15px" position="absolute" left="30px" top="8px" color="white">
+            File
+          </Typography>
+
+        </left>
               <input
                 type="file"
                 name="file"
@@ -119,12 +123,18 @@ useEffect(()=>{
         </Card>
       </Box>
       <Handle
-        type="source"
-        position="right"
-        id="a"
-        style={{ backgroundColor: 'warning.main' }}
-        isConnectable={true}
-      />
+          type="source"
+          position="right"
+          id="a"
+          style={{
+            backgroundColor: 'rgb(64, 63, 105)', border: "1px solid #fff",
+            borderRadius: "0px 10px 10px 0px",
+            height: "100%",
+            position: "absolute",
+            width: "19px", right: '-20px'
+          }}
+          isConnectable={true}
+        />
       </UserContextProvider>
     </>
   )
@@ -212,17 +222,13 @@ export default function Flow() {
         {
           id,
           type: "source",
-          data: { id: `${id}`, label: "Table ", value: "", color: "" },
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
           position,
         }
       ];
     });
     handleClose()
   }, [nodes]);
-
-
-
-
 
   return (
     <div style={{ backgroundColor: "#222138", height: '100vh' }}>
