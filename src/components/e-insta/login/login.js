@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,12 +20,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../../resources/logo.png'
+import logo from '../../resources/logo.png';
+import apiMapping from '../../resources/apiMapping.json';
+import axios from 'axios';
+
 
 const theme = createTheme();
 
 export default function Login() {
 
+  const [email, setemail] = useState('');
+  const [pass, setpass] = useState('');
+  const [errorflag, seterrorflag] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,6 +40,37 @@ export default function Login() {
       password: data.get('password'),
     });
   };
+
+  const errorbox = () => {
+    if (errorflag) {
+      return (
+        <Box noValidate bgcolor="#ff0072" fontFamily='sans-serif' fontSize='12px' sx={{ mt: 1, marginLeft: '0.1%', fontWeight: 700, height: "40px" }} color='#f8f8f2'>
+          <div style={{ marginLeft: "14px", marginTop: "10px", position: "absolute" }}>
+            Error: Incorrect "Email" or "Password"
+          </div>
+        </Box>
+      )
+    }
+  }
+
+  const signin = () => {
+    let payload =
+    {
+      "email": email,
+      "password": pass
+    }
+    axios.post(apiMapping.userData.postlogin, payload).then(response => {
+      seterrorflag(false);
+      window.location.href = '/home';
+      // console.log("userdata: ", response.data)
+    })
+      .catch((error) => {
+        if (error.code == "ERR_BAD_RESPONSE") {
+          seterrorflag(true);
+        }
+        // console.log("the error: ", error)
+      })
+  }
 
   return (
     <div style={{ background: '#1A202C', height: '100vh' }}>
@@ -87,6 +124,7 @@ export default function Login() {
               Login to datablocks
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, marginLeft: '0.4%' }} color='#f8f8f2'>
+              {errorbox()}
               <TextField
                 margin="normal"
                 fullWidth
@@ -101,6 +139,7 @@ export default function Login() {
                 }}
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
+                onChange={(e) => { setemail(e.target.value) }}
               />
               <TextField
                 margin="normal"
@@ -116,7 +155,11 @@ export default function Login() {
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 autoComplete="current-password"
+                onChange={(e) => { setpass(e.target.value) }}
               />
+
+              <Typography component="h1" variant="h5" fontFamily='monospace' color='#f8f8f2' sx={{ fontWeight: 550, marginLeft: "-60%" }}>
+              </Typography>
 
               <Button
                 type="submit"
@@ -132,7 +175,7 @@ export default function Login() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = '/home';
+                  signin();
                 }}
               >
                 Login
@@ -151,7 +194,6 @@ export default function Login() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = '/home';
                 }}
               >
                 <span>Login with Github</span>

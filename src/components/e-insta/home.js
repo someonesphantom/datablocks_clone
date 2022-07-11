@@ -23,6 +23,9 @@ import Checkbox from '@mui/material/Checkbox';
 import logo from '../resources/logo.png'
 import { useNavigate } from "react-router-dom";
 import FlowContext from './flowcontext';
+import avatar from '../resources/esblogo.jpg';
+import apiMapping from '../resources/apiMapping.json';
+
 
 
 function TabPanel(props) {
@@ -71,6 +74,10 @@ export default function Home() {
     setflowsvalue
   };
 
+  const username = () => {
+    return "Pradyumn Garg";
+  }
+
   return (
     <FlowContext.Provider value={flowdata}>
       <Box style={{ backgroundColor: "#1A202C", height: '100%', minHeight: "100vh" }}>
@@ -100,7 +107,10 @@ export default function Home() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 
               </Typography>
-
+              <Avatar src={avatar} alt="eaiesb" sx={{ marginTop: "-17px", height: 28, width: 28, marginRight:"10px" }} />
+              <div color="inherit" style={{fontSize: "11px",fontFamily: 'Arial',fontWeight: 500,marginTop:"-17.1px",marginRight:"10px"}}>
+                {username()}
+              </div>
               <Button
                 color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }}
                 onClick={(e) => {
