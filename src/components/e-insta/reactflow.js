@@ -41,45 +41,28 @@ import DoneIcon from '@mui/icons-material/Done';
 import useResponse from '../response/response';
 import DialogButton from './dialog/dialog';
 import DisplayResponse from '../response/displayResponse';
-import FlowContext from './flowcontext';
-import { UserContext } from './usercontext';
+import { UserContext, UserContextProvider } from './usercontext';
 const SourceNode = ({ data }) => {
-  // console.log(data)
   if (data.color === "") {
     data.color = "333154"
   }
-  const [value, displayresponse, parsedData, tableRows, values] = useResponse(null)
-  //State to store table Column name
-  const [tablerows, setTableRows] = useState([]);
+  const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
-  //State to store the values
-  const [Values, setValues] = useState([]);
 
-  const [e,setE] = useState();
-  // const flowdata = { 
-  //   data:{
-  //     x:e
-  //   } }
-  const {x,setX} = useContext(UserContext)
-  
-  // const handlechange = () => {
-  //   displayresponse()
-  //   // setTableRows(tableRows)
-  //   // setValues(values)
 
-  // }
-  useEffect(
-    ()=>{
-      
-      console.log("event12,",e)
-      setX(e)
-      console.log("x",x)
-    },[e,x]
-  )
+  const {tableRows, setTableRows,values, setValues} = useContext(UserContext)
+  useEffect(()=>{
+    console.log("Table Rows ",tablerows)
+    setTableRows(tablerows)
+},[tablerows])
+useEffect(()=>{
+  console.log("values  ",Values)
+  setValues(Values)
+},[Values])
+
   return (
     <>
-      {/* <UserContext.Provider value={e} > */}
-        
+        <UserContextProvider >
       <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
         <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
           <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
@@ -93,9 +76,8 @@ const SourceNode = ({ data }) => {
                 name="file"
                 onChange={(event) => {
                   displayresponse(event);
-                  // setTableRows(tableRows)
-                  // setValues(values)
-                  setE(event)
+                  
+                  
                   
                   }}
                 accept=".csv"
@@ -108,16 +90,14 @@ const SourceNode = ({ data }) => {
                 <table>
                   <thead>
                     <tr>
-                      {/* {console.log("event",e)} */}
-                      {/* {console.log("tableRows",tablerows)}{
-                      console.log("tableRows12121",tableRows)} */}
-                      {tableRows.map((rows, index) => {
+                      
+                      {tablerows.map((rows, index) => {
                         return <th key={index}>{rows}</th>;
                       })}
                     </tr>
                   </thead>
                   <tbody>
-                    {values.map((value, index) => {
+                    {Values.map((value, index) => {
                       return (
                         <tr key={index}>
                           {value.map((val, i) => {
@@ -145,7 +125,7 @@ const SourceNode = ({ data }) => {
         style={{ backgroundColor: 'warning.main' }}
         isConnectable={true}
       />
-      {/* </UserContext.Provider> */}
+      </UserContextProvider>
     </>
   )
 }

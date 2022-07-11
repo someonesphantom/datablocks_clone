@@ -1,32 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react';
-import FlowContext from '../e-insta/flowcontext';
+import React, { useState, useContext, useEffect,memo } from 'react';
 import { UserContext } from '../e-insta/usercontext';
 const DisplayResponse =()=>{
     //State to store table Column name
-    const flowcontext = useContext(UserContext);
+    const {tableRows,values} = useContext(UserContext);
     //State to store the values
     useEffect(()=>{
-        console.log("flowcontext",flowcontext)
-    },[flowcontext])
-    console.log("flowcontext ",flowcontext)
-    // const setflowcontext = () => {
-    //     flowcontext.setTableRows([1,2,3,4]);
-    //     console.log("called it")
-    // }
+        console.log("table Rows in display ",tableRows)
+    },[tableRows])
+    
     return(
        <>
             {
                 <div>
                     
                     
-                { flowcontext.tableRows!==null && (
+                { tableRows.length !== 0 && (
                     <>
-                        { console.log("hi")}
-                   {/* { setflowcontext()} */}
+
                         <table style={{maxHeight: "30rem",maxWidth:"10%"}}>
                     <thead>
                       <tr>
-                        {flowcontext.tablerows.map((rows, index) => {
+                        {tableRows.map((rows, index) => {
                             
                           return <th key={index}>{rows}</th>;
                         })}
@@ -34,7 +28,7 @@ const DisplayResponse =()=>{
                       </tr>
                     </thead>
                     <tbody>
-                      {flowcontext.values.map((value, index) => {
+                      {values.map((value, index) => {
                         return (
                           <tr key={index}>
                             {value.map((val, i) => {
@@ -50,16 +44,10 @@ const DisplayResponse =()=>{
     
                 }
             </div>
-                // (value)=>{
-                    
-                //     {console.log("table ",value)}
-                //     return(
-                        
-                //     )
-                // }
+
             }
         </>
     )
 }
 
-export default DisplayResponse
+export default memo(DisplayResponse)
