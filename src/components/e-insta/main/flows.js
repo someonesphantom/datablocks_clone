@@ -8,7 +8,9 @@ import TextField from '@mui/material/TextField';
 import DoneIcon from '@mui/icons-material/Done';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-import FlowContext from '../context/flowcontext';
+import { FlowContext } from '../context/flowcontext';
+import { Link } from "react-router-dom";
+
 
 
 
@@ -26,19 +28,21 @@ function getCurrentDate(separator = '/') {
 const Flows = (props) => {
     const [edit, setEdit] = React.useState(false);
     const [editid, setEditId] = useState('');
-    const flowcontext = useContext(FlowContext);
-    const [flows, setFlows] = useState(flowcontext.flowname);
+    const { flowsvalue, setflowsvalue } = useContext(FlowContext);
+
+    // const flowcontext = useContext(FlowContext);
+    // const [flows, setFlows] = useState(flowsvalue);
     // console.log("in flows.js:", flowcontext);
 
-    const setflowcontext = () => {
-        flowcontext.setflowsvalue(flows);
-        console.log("called it")
-    }
+    // const setflowcontext = () => {
+    //     setflowsvalue(flowsvalue);
+    //     console.log("called it")
+    // }
     const editname = (value, i) => {
-        let newArr = [...flows];
+        let newArr = [...flowsvalue];
         newArr[i].flowname = value;
-        setFlows(newArr)
-        setflowcontext();
+        setflowsvalue(newArr)
+        // setflowcontext();
     }
 
     // console.log('the structured data in flows is:', array)
@@ -59,8 +63,8 @@ const Flows = (props) => {
                             nodes: [],
                             edges: []
                         }
-                        setFlows(currflow => [...currflow, newflow]);
-                        setflowcontext();
+                        setflowsvalue(currflow => [...currflow, newflow]);
+                        // setflowcontext();
                     }}
                     sx={{
                         mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
@@ -74,7 +78,7 @@ const Flows = (props) => {
                 </Button>
                 <div style={{ marginTop: "-2%" }}>
                     {
-                        flows.map((currflow, i) => (
+                        flowsvalue.map((currflow, i) => (
                             <>
                                 <Button
                                     disableRipple
@@ -129,10 +133,10 @@ const Flows = (props) => {
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             e.preventDefault();
-                                                            let newArr = [...flows];
+                                                            let newArr = [...flowsvalue];
                                                             newArr[i].updationinfo = getCurrentDate();
-                                                            setFlows(newArr);
-                                                            setflowcontext();
+                                                            setflowsvalue(newArr);
+                                                            // setflowcontext();
                                                             setEdit(false);
                                                         }}
                                                         startIcon={<DoneIcon style={{ color: "white", marginRight: "-13px" }} />}
@@ -169,10 +173,10 @@ const Flows = (props) => {
                                                 setEditId(i)
                                                 e.stopPropagation();
                                                 e.preventDefault();
-                                                let newArr = [...flows];
+                                                let newArr = [...flowsvalue];
                                                 newArr[i].updationinfo = getCurrentDate();
-                                                setFlows(newArr);
-                                                setflowcontext();
+                                                setflowsvalue(newArr);
+                                                // setflowcontext();
                                             }}
                                             startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />
@@ -191,11 +195,11 @@ const Flows = (props) => {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 e.preventDefault();
-                                                setFlows([
-                                                    ...flows.slice(0, i),
-                                                    ...flows.slice(i + 1, flows.length)
+                                                setflowsvalue([
+                                                    ...flowsvalue.slice(0, i),
+                                                    ...flowsvalue.slice(i + 1, flowsvalue.length)
                                                 ]);
-                                                setflowcontext();
+                                                // setflowcontext();
                                             }}
                                             startIcon={<DeleteOutlineOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />

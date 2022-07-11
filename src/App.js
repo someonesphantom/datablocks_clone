@@ -1,22 +1,37 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import './index.css';
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'  
+import { render } from "react-dom";
+import { BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import Login from './components/e-insta/login/login'
+import Signup from './components/e-insta/login/signup'
 import Home from './components/e-insta/main/home'
+import Switch from "react-switch";
 import Reactflow from './components/e-insta/main/reactflow';
 import Flows from './components/e-insta/main/flows';
-const routing = (data,setData) => (
-  <Router>
-    <Routes>
-      <Route exact path="/" element={<Login data={data} setData={setData}/>} />  
-      <Route exact path="/home" element={<Home data={data} setData={setData}/>} />  
-      <Route exact path="/reactapp" element={<Reactflow data={data} setData={setData}/>} />
-      <Route exact path="/flowlist" element={<Flows data={data} setData={setData}/>} />
-    </Routes>  
-  </Router>  
-)
+import { FlowProvider } from './components/e-insta/context/flowcontext';
 
-export default function App() {
-  const [data, setData] = useState([]);
-  return (routing(data,setData));
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Login />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
+      <Route path="/home" element={<Home />}></Route>
+      <Route path="/reactapp" element={<Reactflow />}></Route>
+      <Route path="/flowlist" element={<Flows />} ></Route>
+    </Routes>
+  );
 }
+
+export default App;
+
+// export default function App() {
+//   return (
+//           <Routes>
+//             <Route path="/" element={<Login />} />
+//             <Route path="/home" element={<Home />} />
+//             <Route path="/reactapp" element={<Reactflow />} />
+//             <Route path="/flowlist" element={<Flows />} />
+//           </Routes>
+//   );
+// }

@@ -13,16 +13,19 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "browser-router": "^0.2.0",
     "dependencies": "^0.0.1",
     "file-saver": "^2.0.5",
     "gatsby-plugin-smoothscroll": "^1.2.0",
     "jszip": "^3.10.0",
+    "layouts": "^3.0.2",
     "papaparse": "^5.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-flow-renderer": "^10.3.8",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-switch": "^7.0.0",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
@@ -49,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
   }
 }

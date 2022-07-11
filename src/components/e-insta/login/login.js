@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import Link2 from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -23,6 +23,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../../resources/logo.png';
 import apiMapping from '../../resources/apiMapping.json';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import { render } from '@testing-library/react';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const theme = createTheme();
@@ -32,14 +36,8 @@ export default function Login() {
   const [email, setemail] = useState('');
   const [pass, setpass] = useState('');
   const [errorflag, seterrorflag] = useState(false);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const navigate = useNavigate();
+
 
   const errorbox = () => {
     if (errorflag) {
@@ -61,8 +59,12 @@ export default function Login() {
     }
     axios.post(apiMapping.userData.postlogin, payload).then(response => {
       seterrorflag(false);
-      window.location.href = '/home';
-      // console.log("userdata: ", response.data)
+      if (response.data.email == undefined) {
+        seterrorflag(true);
+      }
+      else {
+        navigate('/home');
+      }
     })
       .catch((error) => {
         if (error.code == "ERR_BAD_RESPONSE") {
@@ -101,8 +103,8 @@ export default function Login() {
 
             </Typography>
 
-            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }}>LOGIN</Button>
-            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} >SIGN UP</Button>
+            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/') }}>LOGIN</Button>
+            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/signup') }}>SIGN UP</Button>
 
 
           </Toolbar>
@@ -123,7 +125,7 @@ export default function Login() {
             <Typography component="h1" variant="h5" fontFamily='monospace' color='#f8f8f2' sx={{ fontWeight: 550, marginLeft: "-60%" }}>
               Login to datablocks
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, marginLeft: '0.4%' }} color='#f8f8f2'>
+            <Box component="form" noValidate sx={{ mt: 1, marginLeft: '0.4%' }} color='#f8f8f2'>
               {errorbox()}
               <TextField
                 margin="normal"
@@ -180,6 +182,7 @@ export default function Login() {
               >
                 Login
               </Button>
+
               <Button
                 type="submit"
                 fullWidth
@@ -200,31 +203,31 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs={12}>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
+                  <Link2 href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
                     color: '#f8f8f2', ':hover': {
                       color: '#53606C',
                     }
                   }}>
                     Forgot your password → <span style={{ fontWeight: 'bold' }}>Password reset</span>
-                  </Link>
+                  </Link2>
                 </Grid>
                 <Grid item xs={12}>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
+                  <Link2 href="/signup" variant="body2" style={{ textDecoration: 'none' }} sx={{
                     color: '#f8f8f2', ':hover': {
                       color: '#53606C',
                     }
                   }}>
                     No account yet → <span style={{ fontWeight: 'bold' }}>Sign up</span>
-                  </Link>
+                  </Link2>
                 </Grid>
                 <Grid item xs={12}>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
+                  <Link2 href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
                     color: '#f8f8f2', ':hover': {
                       color: '#53606C',
                     }
                   }}>
                     New to datablocks? → <span style={{ fontWeight: 'bold' }}>Try the demo</span>
-                  </Link>
+                  </Link2>
                 </Grid>
               </Grid>
             </Box>
