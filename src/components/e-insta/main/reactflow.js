@@ -29,7 +29,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography'
-import logo from '../resources/logo.png'
+import logo from '../../resources/logo.png'
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -38,10 +38,10 @@ import Divider from '@mui/material/Divider';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import TextField from '@mui/material/TextField';
 import DoneIcon from '@mui/icons-material/Done';
-import useResponse from '../response/response';
-import DialogButton from './dialog/dialog';
-import DisplayResponse from '../response/displayResponse';
-import { UserContext, UserContextProvider } from './usercontext';
+import useResponse from '../../response/response';
+import DialogButton from '../dialog/dialog';
+import DisplayResponse from '../../response/displayResponse';
+import { UserContext, UserContextProvider } from '../context/usercontext';
 const SourceNode = ({ data }) => {
   if (data.color === "") {
     data.color = "333154"
@@ -367,7 +367,8 @@ export default function Flow() {
         <Grid item xs={8} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
           <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>OUTPUT</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
-          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>
+          <div  style={{ margin: "5px", marginTop: "5px",height:"75%", color: 'white', fontSize: "12px", overflow: "scroll",
+ whiteSpace: "nowrap" }}>
             <DisplayResponse />
           </div>
 

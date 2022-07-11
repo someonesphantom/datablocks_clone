@@ -2,9 +2,9 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import './index.css';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'  
 import Login from './components/e-insta/login/login'
-import Home from './components/e-insta/home'
-import Reactflow from './components/e-insta/reactflow';
-import Flows from './components/e-insta/flows';
+import Home from './components/e-insta/main/home'
+import Reactflow from './components/e-insta/main/reactflow';
+import Flows from './components/e-insta/main/flows';
 const routing = (data,setData) => (
   <Router>
     <Routes>

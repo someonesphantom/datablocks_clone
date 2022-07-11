@@ -20,11 +20,11 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import logo from '../resources/logo.png'
+import logo from '../../resources/logo.png'
 import { useNavigate } from "react-router-dom";
-import FlowContext from './flowcontext';
-import avatar from '../resources/esblogo.jpg';
-import apiMapping from '../resources/apiMapping.json';
+import FlowContext from '../context/flowcontext';
+import avatar from '../../resources/esblogo.jpg';
+import apiMapping from '../../resources/apiMapping.json';
 
 
 
