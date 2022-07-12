@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { FlowContext } from '../context/flowcontext';
 import { Link } from "react-router-dom";
-
+import apiMapping from '../../resources/apiMapping.json';
+import axios from 'axios';
 
 
 
@@ -28,25 +29,32 @@ function getCurrentDate(separator = '/') {
 const Flows = (props) => {
     const [edit, setEdit] = React.useState(false);
     const [editid, setEditId] = useState('');
-    const { flowsvalue, setflowsvalue } = useContext(FlowContext);
+    const {
+        token, settoken,
+        flowsvalue, setflowsvalue,
+        email, setemail,
+        fname, setfname,
+        lname, setlname
+    } = useContext(FlowContext);
 
-    // const flowcontext = useContext(FlowContext);
-    // const [flows, setFlows] = useState(flowsvalue);
-    // console.log("in flows.js:", flowcontext);
-
-    // const setflowcontext = () => {
-    //     setflowsvalue(flowsvalue);
-    //     console.log("called it")
-    // }
     const editname = (value, i) => {
         let newArr = [...flowsvalue];
         newArr[i].flowname = value;
         setflowsvalue(newArr)
-        // setflowcontext();
     }
 
-    // console.log('the structured data in flows is:', array)
-    // console.log("info:",getCurrentDate())
+    const setflowsdb = () => {
+        let payload =
+        {
+            "flows": "",
+            "firstname": fname,
+            "lastname": lname,
+            "email": email
+        }
+        axios.post(apiMapping.userData.setflows, payload).then(response => {
+        })
+    }
+
     return (
         <>
             <div>
@@ -64,7 +72,7 @@ const Flows = (props) => {
                             edges: []
                         }
                         setflowsvalue(currflow => [...currflow, newflow]);
-                        // setflowcontext();
+                        setflowsdb();
                     }}
                     sx={{
                         mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
@@ -136,8 +144,8 @@ const Flows = (props) => {
                                                             let newArr = [...flowsvalue];
                                                             newArr[i].updationinfo = getCurrentDate();
                                                             setflowsvalue(newArr);
-                                                            // setflowcontext();
                                                             setEdit(false);
+                                                            setflowsdb();
                                                         }}
                                                         startIcon={<DoneIcon style={{ color: "white", marginRight: "-13px" }} />}
                                                     />
@@ -176,7 +184,6 @@ const Flows = (props) => {
                                                 let newArr = [...flowsvalue];
                                                 newArr[i].updationinfo = getCurrentDate();
                                                 setflowsvalue(newArr);
-                                                // setflowcontext();
                                             }}
                                             startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />
@@ -199,7 +206,7 @@ const Flows = (props) => {
                                                     ...flowsvalue.slice(0, i),
                                                     ...flowsvalue.slice(i + 1, flowsvalue.length)
                                                 ]);
-                                                // setflowcontext();
+                                                setflowsdb();
                                             }}
                                             startIcon={<DeleteOutlineOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />

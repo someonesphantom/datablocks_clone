@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
@@ -26,8 +26,7 @@ import { FlowContext } from '../context/flowcontext';
 import avatar from '../../resources/esblogo.jpg';
 import apiMapping from '../../resources/apiMapping.json';
 import { Link } from "react-router-dom";
-
-
+import axios from 'axios';
 
 
 
@@ -71,20 +70,35 @@ export default function Home() {
     setValue(newValue);
   };
   const navigate = useNavigate();
+  const {
+    token, settoken,
+    flowsvalue, setflowsvalue,
+    email, setemail,
+    fname, setfname,
+    lname, setlname,
+    backendcallstatus, setbackendcallstatus
+  } = useContext(FlowContext);
 
-
-  // const [flowsvalue, setflowsvalue] = useState([]);
-  // const flowdata = {
-  //   flowname: flowsvalue,
-  //   setflowsvalue
-  // };
 
   const username = () => {
-    return "Pradyumn Garg";
+    return `${fname}${" "}${lname}`;
+  }
+
+  const getflowsdb = () => {
+    let payload =
+    {
+        "email": email
+    }
+    axios.post(apiMapping.userData.getflows, payload).then(response => {
+    })
+  }   
+
+  if(!backendcallstatus){
+    getflowsdb();
+    setbackendcallstatus(true);
   }
 
   return (
-    // <FlowContext.Provider value={flowdata}>
     <Box style={{ backgroundColor: "#1A202C", height: '100%', minHeight: "100vh" }}>
       <AppBar position="static" style={{ background: '#1A192B', height: "45px" }}>
         <Container maxWidth="xl">
@@ -238,7 +252,5 @@ export default function Home() {
 
       </Box>
     </Box>
-    // </FlowContext.Provider>
-
   );
 }

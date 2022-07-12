@@ -1,6 +1,8 @@
 {
     "userData": {
         "postsignup": "http://localhost:8080/signup",
-        "postlogin": "http://localhost:8080/login"
+        "postlogin": "http://localhost:8080/login",
+        "setflows": "http://localhost:8080/postflows",
+        "getflows": "http://localhost:8080/getflows"
     }
 }
