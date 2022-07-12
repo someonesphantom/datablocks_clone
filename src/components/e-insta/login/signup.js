@@ -31,7 +31,7 @@ import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Signup() {
 
     const [email, setemail] = useState('');
     const [pass, setpass] = useState('');
