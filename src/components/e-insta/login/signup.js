@@ -28,7 +28,6 @@ import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const theme = createTheme();
 
 export default function Signup() {
@@ -82,6 +81,15 @@ export default function Signup() {
                 setfname('');
                 setlname('');
                 setsuccessflag(true);
+            })
+            let payload2 =
+            {
+                "flows": "",
+                "firstname": fname,
+                "lastname": lname,
+                "email": email
+            }
+            axios.post(apiMapping.userData.setflows, payload2).then(response => {
             })
         }
         else {

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -26,17 +26,24 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
-
+import { FlowContext } from '../context/flowcontext';
 
 
 const theme = createTheme();
 
 export default function Login() {
 
-  const [email, setemail] = useState('');
-  const [pass, setpass] = useState('');
+  const [textboxemail, settextboxemail] = useState('');
+  const [textboxpass, settextboxpass] = useState('');
   const [errorflag, seterrorflag] = useState(false);
   const navigate = useNavigate();
+  const {
+    token, settoken,
+    flowsvalue, setflowsvalue,
+    email, setemail,
+    fname, setfname,
+    lname, setlname
+  } = useContext(FlowContext);
 
 
   const errorbox = () => {
@@ -54,8 +61,8 @@ export default function Login() {
   const signin = () => {
     let payload =
     {
-      "email": email,
-      "password": pass
+      "email": textboxemail,
+      "password": textboxpass
     }
     axios.post(apiMapping.userData.postlogin, payload).then(response => {
       seterrorflag(false);
@@ -63,6 +70,11 @@ export default function Login() {
         seterrorflag(true);
       }
       else {
+        settoken(response.data.token);
+        setfname(response.data.firstname);
+        setlname(response.data.lastname);
+        setemail(response.data.email);
+        // console.log("response:", response);
         navigate('/home');
       }
     })
@@ -141,7 +153,7 @@ export default function Login() {
                 }}
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-                onChange={(e) => { setemail(e.target.value) }}
+                onChange={(e) => { settextboxemail(e.target.value) }}
               />
               <TextField
                 margin="normal"
@@ -157,7 +169,7 @@ export default function Login() {
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 autoComplete="current-password"
-                onChange={(e) => { setpass(e.target.value) }}
+                onChange={(e) => { settextboxpass(e.target.value) }}
               />
 
               <Typography component="h1" variant="h5" fontFamily='monospace' color='#f8f8f2' sx={{ fontWeight: 550, marginLeft: "-60%" }}>
