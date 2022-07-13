@@ -2,7 +2,9 @@
     "userData": {
         "postsignup": "http://localhost:8080/signup",
         "postlogin": "http://localhost:8080/login",
-        "setflows": "http://localhost:8080/postflows",
-        "getflows": "http://localhost:8080/getflows"
+        "postflows": "http://localhost:8080/postflows",
+        "getflows": "http://localhost:8080/getflows",
+        "putflows": "http://localhost:8080/putflows/",
+        "deleteflows": "http://localhost:8080/deleteflows/"
     }
 }

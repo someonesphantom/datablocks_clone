@@ -29,7 +29,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -72,30 +71,14 @@ export default function Home() {
   const navigate = useNavigate();
   const {
     token, settoken,
-    flowsvalue, setflowsvalue,
     email, setemail,
     fname, setfname,
-    lname, setlname,
-    backendcallstatus, setbackendcallstatus
+    lname, setlname
   } = useContext(FlowContext);
 
 
   const username = () => {
     return `${fname}${" "}${lname}`;
-  }
-
-  const getflowsdb = () => {
-    let payload =
-    {
-        "email": email
-    }
-    axios.post(apiMapping.userData.getflows, payload).then(response => {
-    })
-  }   
-
-  if(!backendcallstatus){
-    getflowsdb();
-    setbackendcallstatus(true);
   }
 
   return (

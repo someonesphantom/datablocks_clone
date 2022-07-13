@@ -58,6 +58,16 @@ export default function Login() {
     }
   }
 
+  const getflowsdb = (recievedemail) => {
+    let payload =
+    {
+        "email": recievedemail
+    }
+    axios.post(apiMapping.userData.getflows, payload).then(response => {
+        setflowsvalue(response.data);
+    })
+}
+
   const signin = () => {
     let payload =
     {
@@ -74,6 +84,7 @@ export default function Login() {
         setfname(response.data.firstname);
         setlname(response.data.lastname);
         setemail(response.data.email);
+        getflowsdb(response.data.email)
         // console.log("response:", response);
         navigate('/home');
       }

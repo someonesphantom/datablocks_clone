@@ -26,9 +26,10 @@ function getCurrentDate(separator = '/') {
 }
 
 
-const Flows = (props) => {
+const Flows = () => {
     const [edit, setEdit] = React.useState(false);
     const [editid, setEditId] = useState('');
+    const navigate = useNavigate();
     const {
         token, settoken,
         flowsvalue, setflowsvalue,
@@ -40,18 +41,44 @@ const Flows = (props) => {
     const editname = (value, i) => {
         let newArr = [...flowsvalue];
         newArr[i].flowname = value;
+        newArr[i].updationinfo = getCurrentDate();
         setflowsvalue(newArr)
     }
 
-    const setflowsdb = () => {
+    const deleteflow = (i) => {
+        axios.delete(apiMapping.userData.deleteflows+ flowsvalue[i]._id).then(response => {
+        });
+        setflowsvalue([
+            ...flowsvalue.slice(0, i),
+            ...flowsvalue.slice(i + 1, flowsvalue.length)
+        ]);
+    }
+
+    const postflowsdb = (flowname, creationinfo, updationinfo, nodesnedges, newflows) => {
         let payload =
         {
-            "flows": "",
-            "firstname": fname,
-            "lastname": lname,
-            "email": email
+            "nodesnedges": nodesnedges,
+            "email": email,
+            "flowname": flowname,
+            "creationinfo": creationinfo,
+            "updationinfo": updationinfo
         }
-        axios.post(apiMapping.userData.setflows, payload).then(response => {
+        axios.post(apiMapping.userData.postflows, payload).then(response => {
+            let temp = [...newflows];
+            temp[newflows.length - 1]._id = response.data._id;
+            setflowsvalue(temp);
+        })
+    }
+
+    const putflowsdb = (i) => {
+        let newArr = [...flowsvalue];
+        let payload =
+        {
+            "nodesnedges": newArr[i].nodesnedges,
+            "updationinfo": newArr[i].updationinfo,
+            "flowname": newArr[i].flowname
+        }
+        axios.put(apiMapping.userData.putflows + newArr[i]._id, payload).then(response => {
         })
     }
 
@@ -65,14 +92,14 @@ const Flows = (props) => {
                     onClick={(e) => {
                         e.preventDefault();
                         let newflow = {
-                            flowname: 'untitled flow',
+                            _id: "",
+                            nodesnedges: "",
+                            email: "",
+                            flowname: "untitled flow",
                             creationinfo: getCurrentDate(),
-                            updationinfo: getCurrentDate(),
-                            nodes: [],
-                            edges: []
+                            updationinfo: getCurrentDate()
                         }
-                        setflowsvalue(currflow => [...currflow, newflow]);
-                        setflowsdb();
+                        postflowsdb(newflow.flowname, newflow.creationinfo, newflow.updationinfo, newflow.nodesnedges,[...flowsvalue, newflow]);
                     }}
                     sx={{
                         mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
@@ -105,7 +132,7 @@ const Flows = (props) => {
                                     }}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        window.location.href = '/reactapp';
+                                        navigate('/reactapp');
                                     }}
                                 >
                                     <div style={{ textAlign: "left", marginLeft: "0.3%" }}>
@@ -141,11 +168,8 @@ const Flows = (props) => {
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             e.preventDefault();
-                                                            let newArr = [...flowsvalue];
-                                                            newArr[i].updationinfo = getCurrentDate();
-                                                            setflowsvalue(newArr);
+                                                            putflowsdb(i);
                                                             setEdit(false);
-                                                            setflowsdb();
                                                         }}
                                                         startIcon={<DoneIcon style={{ color: "white", marginRight: "-13px" }} />}
                                                     />
@@ -177,13 +201,10 @@ const Flows = (props) => {
                                                 minHeight: "30px",
                                             }}
                                             onClick={(e) => {
-                                                setEdit(true)
-                                                setEditId(i)
                                                 e.stopPropagation();
                                                 e.preventDefault();
-                                                let newArr = [...flowsvalue];
-                                                newArr[i].updationinfo = getCurrentDate();
-                                                setflowsvalue(newArr);
+                                                setEdit(true)
+                                                setEditId(i)
                                             }}
                                             startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />
@@ -202,11 +223,7 @@ const Flows = (props) => {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 e.preventDefault();
-                                                setflowsvalue([
-                                                    ...flowsvalue.slice(0, i),
-                                                    ...flowsvalue.slice(i + 1, flowsvalue.length)
-                                                ]);
-                                                setflowsdb();
+                                                deleteflow(i);
                                             }}
                                             startIcon={<DeleteOutlineOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
                                         />

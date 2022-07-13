@@ -8,14 +8,12 @@ export const FlowProvider = ({ children }) => {
     const [email, setemail] = useState("");
     const [fname, setfname] = useState("");
     const [lname, setlname] = useState("");
-    const [backendcallstatus, setbackendcallstatus] = useState(false);
     const flowdata = {
         token, settoken,
         flowsvalue, setflowsvalue,
         email, setemail,
         fname, setfname,
         lname, setlname,
-        backendcallstatus, setbackendcallstatus
     };
     return <FlowContext.Provider value={flowdata}>{children}</FlowContext.Provider>
 }
