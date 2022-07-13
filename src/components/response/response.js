@@ -11,8 +11,10 @@ const useResponse = (initialState) => {
 
     //State to store the values
     const [values, setValues] = useState([]);
-
+    
     const displayresponse = (props) => {
+      //console.log("type",props.target.files[0].type)
+      if(props.target.files[0].type === 'text/csv'){
         Papa.parse(props.target.files[0], {
             header: true,
             skipEmptyLines: true,
@@ -36,7 +38,16 @@ const useResponse = (initialState) => {
               // Filtered Values
               setValues(valuesArray);
             },
-          });
+          });}
+        if(props.target.files[0].type === 'application/json'){
+          const fileReader = new FileReader();
+          fileReader.readAsText(props.target.files[0], "UTF-8");
+          fileReader.onload = props => {
+            console.log("e.target.result", props.target.result);
+            setValues(props.target.result)
+            };
+          
+        }
     }
     return [value,displayresponse,parsedData,tableRows,values]
 

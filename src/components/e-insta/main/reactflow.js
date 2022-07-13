@@ -74,16 +74,20 @@ const SourceNode = ({ data }) => {
   const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
 
-
-  const {tableRows, setTableRows,values, setValues} = useContext(UserContext)
+  const {tableRows, setTableRows,values, setValues,filetype,setFileType} = useContext(UserContext)
   useEffect(()=>{
     console.log("Table Rows ",tablerows)
     setTableRows(tablerows)
 },[tablerows])
 useEffect(()=>{
   console.log("values  ",Values)
+  
   setValues(Values)
 },[Values])
+useEffect(()=>{
+  console.log("fileType",filetype)
+  
+},[filetype])
 
   return (
     <>
@@ -105,8 +109,10 @@ useEffect(()=>{
                 name="file"
                 onChange={(event) => {
                   displayresponse(event);
+                  {console.log("event",event)}
+                  setFileType(event.target.files[0].type)
                   }}
-                accept=".csv"
+                accept=".csv, .json"
                 style={{ display: "block", margin: "10px auto" }}
               />
               <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
@@ -162,7 +168,6 @@ export default function Flow() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [objectEdit, setObjectEdit] = useState({});
-  const [colId, setColId] = useState([]);
   const [pos, setPos] = useState({});
   const [edit, setEdit] = React.useState(false);
   const [name, setName] = useState(null);
@@ -195,9 +200,12 @@ export default function Flow() {
     setObjectEdit({});
   };
 
-  const onConnect = (params) => setEdges((eds) => addEdge({
-    ...params
-  }, eds));
+  const onConnect = (params) =>{
+    //func
+    setEdges((eds) => addEdge({
+      ...params
+    }, eds))
+  };
   useEffect(() => {
     if (edges.length !== 0) {
       { console.log("edges", edges) }

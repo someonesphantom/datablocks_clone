@@ -1,8 +1,8 @@
 {
     "Inputdata": [
         {
-            "name": "File csv",
-            "desc": "Handles csv, json, geojson or topjson files.",
+            "name": "File",
+            "desc": "Handles csv, json, geojson or topojson files.",
             "input": "-",
             "output": "Dataset, Geojson",
             "callingnode":"File"
@@ -10,7 +10,7 @@
         
         {
             "name": "Paste",
-            "desc": "Paste input: string, number, csv, json, geojson or topjson",
+            "desc": "Paste input: string, number, csv, json, geojson or topojson",
             "input": "-",
             "output": "Dataset, Object, String, Number, Geojson",
             "callingnode":"Paste"

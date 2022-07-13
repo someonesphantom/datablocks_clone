@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const DisplayResponse = () => {
   //State to store table Column name
-  const { tableRows, values } = useContext(UserContext);
+  const { tableRows, values ,filetype} = useContext(UserContext);
   //State to store the values
   useEffect(() => {
     console.log("table Rows in display ", tableRows)
@@ -17,7 +17,7 @@ const DisplayResponse = () => {
 
 
 
-          {tableRows.length !== 0 && (
+          {tableRows.length !== 0 && filetype==="text/csv"&&(
             <>
               {/* <DataGrid
                           
@@ -50,9 +50,18 @@ const DisplayResponse = () => {
           )
 
           }
+
+          {
+            values.length !== 0 && filetype==="application/json"&&(
+              <div>
+                {values}
+              </div>
+            )
+          }
         </div>
 
       }
+      
     </>
   )
 }

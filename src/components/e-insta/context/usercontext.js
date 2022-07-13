@@ -7,6 +7,8 @@ export function UserContextProvider({children}){
 
     //State to store the values
     const [values, setValues] = useState([]);
+
+    const [filetype,setFileType] = useState([]);
     useEffect(
         ()=>{
           console.log("tablerows ",tableRows)
@@ -17,7 +19,9 @@ export function UserContextProvider({children}){
         tableRows,
         setTableRows,
         values,
-         setValues
+         setValues,
+         filetype,
+         setFileType
     }
      
     return(
