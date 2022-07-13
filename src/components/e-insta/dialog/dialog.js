@@ -13,9 +13,10 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import InputIcon from '@mui/icons-material/Input';
 import Typography from '@mui/material/Typography'
-import {React,memo} from 'react';
+import React from 'react';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import ButtonsForDialog from './buttons';
+
 const DialogButton = React.memo(props => {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
@@ -104,7 +105,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Inputdata.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -123,7 +124,7 @@ const DialogButton = React.memo(props => {
                 </Typography><br></br>
                 <div>
                   {props.dialogdata.Transform.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -143,7 +144,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.GeoData.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -165,7 +166,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Vis.map((input,i)=>
-                    <Button size="large" key={i}  style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <Button size="large" key={i}  style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -186,7 +187,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Misc.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.dialogdata.callingnode(); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -210,4 +211,4 @@ const DialogButton = React.memo(props => {
   );
 });
 
-export default memo(DialogButton);
+export default DialogButton;

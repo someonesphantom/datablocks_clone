@@ -105,9 +105,6 @@ useEffect(()=>{
                 name="file"
                 onChange={(event) => {
                   displayresponse(event);
-                  
-                  
-                  
                   }}
                 accept=".csv"
                 style={{ display: "block", margin: "10px auto" }}
@@ -207,7 +204,37 @@ export default function Flow() {
       { console.log("nodes", nodes) }
     }
   }, [edges]);
+  const addNodes=(name)=>{
+    if(name==="File"){
+      addINode()
+    }if(name==="Paste"){
+      addCNode()
+    }
+  }
+  const addCNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      //console.log(nodes);
 
+
+      return [
+        ...nodes,
+        {
+          id,
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
   const addINode = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;
@@ -345,7 +372,7 @@ export default function Flow() {
 
       <Grid container spacing={0} >
         <Grid item xs={12}>
-          <DialogButton  dialogdata={dialogdata}/>
+          <DialogButton addNodes={addNodes} dialogdata={dialogdata}/>
 
         </Grid>
         <Grid item xs={12}>

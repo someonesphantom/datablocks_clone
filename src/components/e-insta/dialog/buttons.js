@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography'
 import {React,memo} from 'react';
-const ButtonsForDialog = React.memo(props => {
+const ButtonsForDialog = memo(props => {
     
     return(
         <div  style={{textAlign:"left"}}>
@@ -22,4 +22,4 @@ const ButtonsForDialog = React.memo(props => {
     );
 });
 
-export default memo(ButtonsForDialog)
+export default ButtonsForDialog

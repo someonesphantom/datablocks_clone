@@ -1,39 +1,40 @@
 {
     "Inputdata": [
         {
-            "name": "File",
+            "name": "File csv",
             "desc": "Handles csv, json, geojson or topjson files.",
             "input": "-",
             "output": "Dataset, Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"File"
         },
+        
         {
             "name": "Paste",
             "desc": "Paste input: string, number, csv, json, geojson or topjson",
             "input": "-",
             "output": "Dataset, Object, String, Number, Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"Paste"
         },
         {
             "name": "HTTP Request",
             "desc": "Loads data via a http request.",
             "input": "-",
             "output": "Dataset, Object, Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Sheets",
             "desc": "Loads data from google sheets.",
             "input": "-",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Example Data",
             "desc": "Some example data for playing around with data blocks.",
             "input": "-",
             "output": "Dataset, Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         }
     ],
     "Transform": [
@@ -42,28 +43,28 @@
             "desc": "Groups a data set based on a given column name.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Merge",
             "desc": "Merges two data sets based on the given column names.",
             "input": "Dataset, Geojson",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Group",
             "desc": "Groups a data set based on a given column name.",
             "input": "Dataset, Geojson",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Slice",
             "desc": "Slices a data set based on indices.",
             "input": "Dataset, Array",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         }
     ],
     "GeoData": [
@@ -72,28 +73,28 @@
             "desc": "Calculates the bounding box of a given geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Centroid",
             "desc": "Calculates the centroid of a given geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Area",
             "desc": "Calculates the area in square meters of a given geojson.",
             "input": "Geojson",
             "output": "Number",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Buffer",
             "desc": "Buffers a geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         }
     ],
     "Vis": [
@@ -102,28 +103,28 @@
             "desc": "Displays a bar chart of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Histogram",
             "desc": "Displays a histogram of a given column name.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Scatterplot",
             "desc": "Displays a scatterplot of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Time Series",
             "desc": "Displays a timeseries line chart of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         }
     ],
     "Misc": [
@@ -132,21 +133,21 @@
             "desc": "Gives you min, max, avg, mean and count of a given column name.",
             "input": "Dataset",
             "output": "-",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Markdown",
             "desc": "Lets you write some markdown.",
             "input": "-",
             "output": "-",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         },
         {
             "name": "Export",
             "desc": "Lets you export data as csv, json or geojson.",
             "input": "Dataset, Geojson, Topojson, Object",
             "output": "-",
-            "callingnode":"addINode()"
+            "callingnode":"addINode"
         }
     ]
 }
