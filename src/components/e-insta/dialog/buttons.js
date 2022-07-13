@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography'
-import React from 'react';
-
+import {React,memo} from 'react';
 const ButtonsForDialog = React.memo(props => {
     
     return(
@@ -23,4 +22,4 @@ const ButtonsForDialog = React.memo(props => {
     );
 });
 
-export default ButtonsForDialog
+export default memo(ButtonsForDialog)

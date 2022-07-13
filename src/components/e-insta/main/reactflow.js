@@ -42,7 +42,32 @@ import useResponse from '../../response/response';
 import DialogButton from '../dialog/dialog';
 import DisplayResponse from '../../response/displayResponse';
 import { UserContext, UserContextProvider } from '../context/usercontext';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';const SourceNode = ({ data }) => {
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import dialogdata from '../../resources/data.json'
+
+const initialNodes = [
+  // {
+  //   id: '1',
+  //   type: 'source',
+  //   data: { label: 'File' },
+  //   position: { x: 250, y: 25 },
+  // },
+
+  // {
+  //   id: '2',
+  //   // you can also pass a React component as a label
+  //   data: { label: <div>Default Node</div> },
+  //   position: { x: 100, y: 125 },
+  // },
+  // {
+  //   id: '3',
+  //   type: 'output',
+  //   data: { label: 'Output Node' },
+  //   position: { x: 250, y: 250 },
+  // },
+];
+
+const SourceNode = ({ data }) => {
   if (data.color === "") {
     data.color = "333154"
   }
@@ -90,29 +115,7 @@ useEffect(()=>{
               <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
                 {data.value}
               </Typography>
-              <div style={{}}>
-                <table>
-                  <thead>
-                    <tr>
-                      
-                      {tablerows.map((rows, index) => {
-                        return <th key={index}>{rows}</th>;
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Values.map((value, index) => {
-                      return (
-                        <tr key={index}>
-                          {value.map((val, i) => {
-                            return <td key={i}>{val}</td>;
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+              
               <Typography variant="body2" color="text.secondary">
 
               </Typography>
@@ -158,7 +161,7 @@ let tableId = 0;
 
 export default function Flow() {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [objectEdit, setObjectEdit] = useState({});
@@ -187,7 +190,8 @@ export default function Flow() {
   const onDoubleClickOfNode = (node) => {
     { console.log("node", node) }
     setObjectEdit(node)
-
+    { console.log("edges", edges) }
+      { console.log("nodes", nodes) }
   }
 
   const onPaneClick = () => {
@@ -200,7 +204,7 @@ export default function Flow() {
   useEffect(() => {
     if (edges.length !== 0) {
       { console.log("edges", edges) }
-
+      { console.log("nodes", nodes) }
     }
   }, [edges]);
 
@@ -341,7 +345,7 @@ export default function Flow() {
 
       <Grid container spacing={0} >
         <Grid item xs={12}>
-          <DialogButton addINode={addINode} />
+          <DialogButton  dialogdata={dialogdata}/>
 
         </Grid>
         <Grid item xs={12}>

@@ -13,10 +13,9 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import InputIcon from '@mui/icons-material/Input';
 import Typography from '@mui/material/Typography'
-import React from 'react';
+import {React,memo} from 'react';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import ButtonsForDialog from './buttons';
-
 const DialogButton = React.memo(props => {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
@@ -103,86 +102,37 @@ const DialogButton = React.memo(props => {
                   INPUT
                 </Typography>
                 <br></br>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"File"}
-                    desc={"Handles csv, json, geojson or topjson files."}
-                    input={"-"}
-                    output={"Dataset, Geojson"} />
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Paste"}
-                    desc={"Paste input: string, number, csv, json, geojson or topjson"}
-                    input={"-"}
-                    output={"Dataset, Object, String, Number, Geojson"} />
-
-                </Button>
-
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"HTTP Request"}
-                    desc={"Loads data via a http request."}
-                    input={"-"}
-                    output={"Dataset, Object, Geojson"} />
-
-                </Button>
-
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Sheets"}
-                    desc={"Loads data from google sheets."}
-                    input={"-"}
-                    output={"Dataset"} />
-
-                </Button>
-
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Example Data"}
-                    desc={"Some example data for playing around with data blocks."}
-                    input={"-"}
-                    output={"Dataset, Geojson"} />
-
-                </Button>
+                <div>
+                  {props.dialogdata.Inputdata.map((input,i)=>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <ButtonsForDialog
+                      name={input.name}
+                      desc={input.desc}
+                      input={input.input}
+                      output={input.output} />
+                  </Button>
+                  )
+                  }
+                </div>
+                
               </div>
               <br></br>
               <div id="transform" style={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
                 <Typography variant="h7" color="white" >
                   TRANSFORM
                 </Typography><br></br>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Filter"}
-                    desc={"Groups a data set based on a given column name."}
-                    input={"Dataset"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Merge"}
-                    desc={"Merges two data sets based on the given column names."}
-                    input={"Dataset, Geojson"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Group"}
-                    desc={"Groups a data set based on a given column name."}
-                    input={"Dataset, Geojson"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Slice"}
-                    desc={"Slices a data set based on indices."}
-                    input={"Dataset, Array"}
-                    output={"Dataset"} />
-
-                </Button>
+                <div>
+                  {props.dialogdata.Transform.map((input,i)=>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <ButtonsForDialog
+                      name={input.name}
+                      desc={input.desc}
+                      input={input.input}
+                      output={input.output} />
+                  </Button>
+                  )
+                  }
+                </div>
               </div>
 
               <br></br>
@@ -191,38 +141,18 @@ const DialogButton = React.memo(props => {
                   GEO DATA
                 </Typography>
                 <br></br>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Bounding Box"}
-                    desc={"Calculates the bounding box of a given geojson."}
-                    input={"Geojson"}
-                    output={"Geojson"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Centroid"}
-                    desc={"Calculates the centroid of a given geojson."}
-                    input={"Geojson"}
-                    output={"Geojson"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Area"}
-                    desc={"Calculates the area in square meters of a given geojson."}
-                    input={"Geojson"}
-                    output={"Number"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Buffer"}
-                    desc={"Buffers a geojson."}
-                    input={"Geojson"}
-                    output={"Geojson"} />
-
-                </Button>
+                <div>
+                  {props.dialogdata.GeoData.map((input,i)=>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <ButtonsForDialog
+                      name={input.name}
+                      desc={input.desc}
+                      input={input.input}
+                      output={input.output} />
+                  </Button>
+                  )
+                  }
+                </div>
 
               </div>
 
@@ -233,38 +163,18 @@ const DialogButton = React.memo(props => {
                   VISUALIZATION
                 </Typography>
                 <br></br>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Barchart"}
-                    desc={"Displays a bar chart of given x and y column names."}
-                    input={"Dataset"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Histogram"}
-                    desc={"Displays a histogram of a given column name."}
-                    input={"Dataset"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Scatterplot"}
-                    desc={"Displays a scatterplot of given x and y column names."}
-                    input={"Dataset"}
-                    output={"Dataset"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Time Series"}
-                    desc={"Displays a timeseries line chart of given x and y column names."}
-                    input={"Dataset"}
-                    output={"Dataset"} />
-
-                </Button>
+                <div>
+                  {props.dialogdata.Vis.map((input,i)=>
+                    <Button size="large" key={i}  style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { eval(props.dialogdata.callingnode); handleClose() }}>
+                    <ButtonsForDialog
+                      name={input.name}
+                      desc={input.desc}
+                      input={input.input}
+                      output={input.output} />
+                  </Button>
+                  )
+                  }
+                </div>
               </div>
 
               <br></br>
@@ -274,31 +184,18 @@ const DialogButton = React.memo(props => {
                   MISC
                 </Typography>
                 <br></br>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Stats"}
-                    desc={"Gives you min, max, avg, mean and count of a given column name."}
-                    input={"Dataset"}
-                    output={"-"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Markdown"}
-                    desc={"Lets you write some markdown."}
-                    input={"-"}
-                    output={"-"} />
-
-                </Button>
-                <Button size="large" style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addINode(); handleClose() }}>
-                  <ButtonsForDialog
-                    name={"Export"}
-                    desc={"Lets you export data as csv, json or geojson."}
-                    input={"Dataset, Geojson, Topojson, Object"}
-                    output={"-"} />
-
-                </Button>
-
+                <div>
+                  {props.dialogdata.Misc.map((input,i)=>
+                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.dialogdata.callingnode(); handleClose() }}>
+                    <ButtonsForDialog
+                      name={input.name}
+                      desc={input.desc}
+                      input={input.input}
+                      output={input.output} />
+                  </Button>
+                  )
+                  }
+                </div>
               </div>
 
               <br></br>
@@ -313,4 +210,4 @@ const DialogButton = React.memo(props => {
   );
 });
 
-export default DialogButton;
+export default memo(DialogButton);
