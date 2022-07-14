@@ -35,7 +35,8 @@ const Flows = () => {
         flowsvalue, setflowsvalue,
         email, setemail,
         fname, setfname,
-        lname, setlname
+        lname, setlname,
+        currflow, setcurrflow
     } = useContext(FlowContext);
 
     const editname = (value, i) => {
@@ -46,7 +47,7 @@ const Flows = () => {
     }
 
     const deleteflow = (i) => {
-        axios.delete(apiMapping.userData.deleteflows+ flowsvalue[i]._id).then(response => {
+        axios.delete(apiMapping.userData.deleteflows + flowsvalue[i]._id).then(response => {
         });
         setflowsvalue([
             ...flowsvalue.slice(0, i),
@@ -54,16 +55,16 @@ const Flows = () => {
         ]);
     }
 
-    const postflowsdb = (flowname, creationinfo, updationinfo, nodesnedges, newflows) => {
-        let payload =
+    const postflowsdb = (flowname, creationinfo, updationinfo, payload, newflows) => {
+        let payload2 =
         {
-            "nodesnedges": nodesnedges,
+            "payload": payload,
             "email": email,
             "flowname": flowname,
             "creationinfo": creationinfo,
             "updationinfo": updationinfo
         }
-        axios.post(apiMapping.userData.postflows, payload).then(response => {
+        axios.post(apiMapping.userData.postflows, payload2).then(response => {
             let temp = [...newflows];
             temp[newflows.length - 1]._id = response.data._id;
             setflowsvalue(temp);
@@ -72,13 +73,13 @@ const Flows = () => {
 
     const putflowsdb = (i) => {
         let newArr = [...flowsvalue];
-        let payload =
+        let payload2 =
         {
-            "nodesnedges": newArr[i].nodesnedges,
+            "payload": newArr[i].payload,
             "updationinfo": newArr[i].updationinfo,
             "flowname": newArr[i].flowname
         }
-        axios.put(apiMapping.userData.putflows + newArr[i]._id, payload).then(response => {
+        axios.put(apiMapping.userData.putflows + newArr[i]._id, payload2).then(response => {
         })
     }
 
@@ -93,13 +94,13 @@ const Flows = () => {
                         e.preventDefault();
                         let newflow = {
                             _id: "",
-                            nodesnedges: "",
+                            payload: "",
                             email: "",
                             flowname: "untitled flow",
                             creationinfo: getCurrentDate(),
                             updationinfo: getCurrentDate()
                         }
-                        postflowsdb(newflow.flowname, newflow.creationinfo, newflow.updationinfo, newflow.nodesnedges,[...flowsvalue, newflow]);
+                        postflowsdb(newflow.flowname, newflow.creationinfo, newflow.updationinfo, newflow.payload, [...flowsvalue, newflow]);
                     }}
                     sx={{
                         mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
@@ -132,6 +133,7 @@ const Flows = () => {
                                     }}
                                     onClick={(e) => {
                                         e.preventDefault();
+                                        setcurrflow(i);
                                         navigate('/reactapp');
                                     }}
                                 >

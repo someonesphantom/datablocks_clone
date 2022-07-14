@@ -82,20 +82,6 @@ export default function Signup() {
                 setlname('');
                 setsuccessflag(true);
             })
-            // let payload2 =
-            // {
-            //     "nodesnedges": "",
-            //     "email": email,
-            //     "flowname": 
-
-            //     // "flowname": ,
-            //     // "creationinfo": ,
-            //     // "updationinfo": ,
-            //     // "nodes": ,
-            //     // "edges": 
-            // }
-            // axios.post(apiMapping.userData.postflows, payload2).then(response => {
-            // })
         }
         else {
             setsuccessflag(false);

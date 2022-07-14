@@ -45,28 +45,10 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import dialogdata from '../../resources/data.json'
 import { useNavigate } from 'react-router-dom';
+import { FlowContext } from '../context/flowcontext';
+import apiMapping from '../../resources/apiMapping.json';
+import axios from 'axios';
 
-const initialNodes = [
-  // {
-  //   id: '1',
-  //   type: 'source',
-  //   data: { label: 'File' },
-  //   position: { x: 250, y: 25 },
-  // },
-
-  // {
-  //   id: '2',
-  //   // you can also pass a React component as a label
-  //   data: { label: <div>Default Node</div> },
-  //   position: { x: 100, y: 125 },
-  // },
-  // {
-  //   id: '3',
-  //   type: 'output',
-  //   data: { label: 'Output Node' },
-  //   position: { x: 250, y: 250 },
-  // },
-];
 
 const SourceNode = ({ data }) => {
   if (data.color === "") {
@@ -75,61 +57,61 @@ const SourceNode = ({ data }) => {
   const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
 
-  const {tableRows, setTableRows,values, setValues,filetype,setFileType} = useContext(UserContext)
-  useEffect(()=>{
-    console.log("Table Rows ",tablerows)
+  const { tableRows, setTableRows, values, setValues, filetype, setFileType } = useContext(UserContext)
+  useEffect(() => {
+    console.log("Table Rows ", tablerows)
     setTableRows(tablerows)
-},[tablerows])
-useEffect(()=>{
-  console.log("values  ",Values)
-  
-  setValues(Values)
-},[Values])
-useEffect(()=>{
-  console.log("fileType",filetype)
-  
-},[filetype])
+  }, [tablerows])
+  useEffect(() => {
+    console.log("values  ", Values)
+
+    setValues(Values)
+  }, [Values])
+  useEffect(() => {
+    console.log("fileType", filetype)
+
+  }, [filetype])
 
   return (
     <>
-        <UserContextProvider >
-      <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
-        <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
-          <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
-          <React.Fragment>
-            <CardContent>
-            <left>
-          <DragIndicatorIcon sx={{ fontSize:"30px", position: "absolute", left: "5px", top: "5px", color: "white" }} />
-          <Typography fontSize="15px" position="absolute" left="30px" top="8px" color="white">
-            File
-          </Typography>
+      <UserContextProvider >
+        <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
+          <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
+            <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
+            <React.Fragment>
+              <CardContent>
+                <left>
+                  <DragIndicatorIcon sx={{ fontSize: "30px", position: "absolute", left: "5px", top: "5px", color: "white" }} />
+                  <Typography fontSize="15px" position="absolute" left="30px" top="8px" color="white">
+                    File
+                  </Typography>
 
-        </left>
-              <input
-                type="file"
-                name="file"
-                onChange={(event) => {
-                  displayresponse(event);
-                  {console.log("event",event)}
-                  setFileType(event.target.files[0].type)
+                </left>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(event) => {
+                    displayresponse(event);
+                    { console.log("event", event) }
+                    setFileType(event.target.files[0].type)
                   }}
-                accept=".csv, .json"
-                style={{ display: "block", margin: "10px auto" }}
-              />
-              <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
-                {data.value}
-              </Typography>
-              
-              <Typography variant="body2" color="text.secondary">
+                  accept=".csv, .json"
+                  style={{ display: "block", margin: "10px auto" }}
+                />
+                <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
+                  {data.value}
+                </Typography>
 
-              </Typography>
+                <Typography variant="body2" color="text.secondary">
 
-            </CardContent>
+                </Typography>
 
-          </React.Fragment>
-        </Card>
-      </Box>
-      <Handle
+              </CardContent>
+
+            </React.Fragment>
+          </Card>
+        </Box>
+        <Handle
           type="source"
           position="right"
           id="a"
@@ -163,9 +145,27 @@ const Item = styled(Paper)(({ theme }) => ({
 let nodeId = 0;
 let tableId = 0;
 
+
 export default function Flow() {
+
+  useEffect(() => {
+    getflowsdb();
+  }, [])
+
+  const getflowsdb = () => {
+    let payload =
+    {
+      "email": email
+    }
+    axios.post(apiMapping.userData.getflows, payload).then(response => {
+      let recievedpayload = JSON.parse(response.data[currflow].payload);
+      setNodes(recievedpayload.nodes);
+      setEdges(recievedpayload.edges);
+    })
+  }
+
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [objectEdit, setObjectEdit] = useState({});
@@ -178,6 +178,15 @@ export default function Flow() {
   const open1 = Boolean(anchorEl);
   const [response] = useResponse(null)
   const navigate = useNavigate();
+  const {
+    token, settoken,
+    flowsvalue, setflowsvalue,
+    email, setemail,
+    fname, setfname,
+    lname, setlname,
+    currflow, setcurrflow
+  } = useContext(FlowContext);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -194,14 +203,14 @@ export default function Flow() {
     { console.log("node", node) }
     setObjectEdit(node)
     { console.log("edges", edges) }
-      { console.log("nodes", nodes) }
+    { console.log("nodes", nodes) }
   }
 
   const onPaneClick = () => {
     setObjectEdit({});
   };
 
-  const onConnect = (params) =>{
+  const onConnect = (params) => {
     //func
     setEdges((eds) => addEdge({
       ...params
@@ -213,10 +222,10 @@ export default function Flow() {
       { console.log("nodes", nodes) }
     }
   }, [edges]);
-  const addNodes=(name)=>{
-    if(name==="File"){
+  const addNodes = (name) => {
+    if (name === "File") {
       addINode()
-    }if(name==="Paste"){
+    } if (name === "Paste") {
       addCNode()
     }
   }
@@ -269,12 +278,57 @@ export default function Flow() {
     });
     handleClose()
   }, [nodes]);
-  const saveflow=()=>{
-    return(0);
+  const saveflow = () => {
+    putflowsdb(0);
   }
-  const clearflow=()=>{
-    return(0);
+  const clearflow = () => {
+    putflowsdb(1);
+    getflowsdb();
   }
+
+  const setflowname = (newname) => {
+    let newArr = [...flowsvalue];
+    newArr[currflow].flowname = newname;
+    setflowsvalue(newArr);
+  }
+
+  const putflowsdb = (status) => {
+    let newArr = [...flowsvalue];
+    flowsvalue[currflow].updationinfo = getCurrentDate();
+    let temppayload;
+    if (status == 0) {
+      temppayload = {
+        "nodes": nodes,
+        "edges": edges
+      }
+    }
+    else if (status == 1) {
+      temppayload = {
+        "nodes": [],
+        "edges": []
+      }
+    }
+    let newpayload = JSON.stringify(temppayload);
+    let payload =
+    {
+      "payload": newpayload,
+      "updationinfo": getCurrentDate(),
+      "flowname": newArr[currflow].flowname
+    }
+    axios.put(apiMapping.userData.putflows + newArr[currflow]._id, payload).then(response => {
+    })
+  }
+
+  function getCurrentDate(separator = '/') {
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    let hours = newDate.getHours();
+    let minutes = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes();
+    return `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year} ${hours}${':'}${minutes}`
+  }
+
   return (
     <div style={{ backgroundColor: "#222138", height: '100vh' }}>
       <AppBar position="static" sx={{ backgroundColor: "#1A192B" }}>
@@ -303,11 +357,11 @@ export default function Flow() {
                   vertical: 'top',
                   horizontal: 'left',
                 }}
-                
+
               >
-                <MenuItem onClick={(event)=>{saveflow();handleClose();}}>Save</MenuItem>
-                <MenuItem onClick={(event)=>{clearflow();handleClose();}}>Clear</MenuItem>
-                <MenuItem onClick={(event)=>{navigate('/');handleClose();}}>Logout</MenuItem>
+                <MenuItem onClick={(event) => { saveflow(); handleClose(); }}>Save</MenuItem>
+                <MenuItem onClick={(event) => { clearflow(); handleClose(); }}>Clear</MenuItem>
+                <MenuItem onClick={(event) => { window.location.href = '/'; handleClose(); }}>Logout</MenuItem>
               </Menu>
               <Button color="inherit"
               >VIEW</Button>
@@ -325,8 +379,8 @@ export default function Flow() {
                       e.preventDefault();
                     }}
                   >
-                    <TextField id="outlined-basic" size='small' sx={{ input: { color: 'white' }, border: '1px solid white', width: '80%' }} value={name} variant="outlined"
-                      onChange={(e) => { setName(e.target.value) }}
+                    <TextField id="outlined-basic" size='small' sx={{ input: { color: 'white' }, border: '1px solid white', width: '80%' }} value={flowsvalue[currflow].flowname} variant="outlined"
+                      onChange={(e) => { setflowname(e.target.value) }}
                     />
                   </Button>
 
@@ -346,7 +400,6 @@ export default function Flow() {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-
                       setEdit(false);
                     }}
                     startIcon={<DoneIcon style={{ color: "white", marginRight: "-13px" }} />}
@@ -355,7 +408,7 @@ export default function Flow() {
               ) :
                 (
                   <div style={{ textAlign: "left" }}>
-                    {name}
+                    {flowsvalue[currflow].flowname}
                   </div>
                 )
             }
@@ -377,18 +430,31 @@ export default function Flow() {
                 setEdit(true)
                 e.stopPropagation();
                 e.preventDefault();
-
               }}
               startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
             />
-            
+
+            <Button
+              color="inherit"
+              style={{
+                position: "absolute",
+                marginLeft: "90%"
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/home');
+              }}
+            >
+              Back To Home
+            </Button>
+
           </Toolbar>
         </Container>
       </AppBar>
 
       <Grid container spacing={0} >
         <Grid item xs={12}>
-          <DialogButton addNodes={addNodes} dialogdata={dialogdata}/>
+          <DialogButton addNodes={addNodes} dialogdata={dialogdata} />
 
         </Grid>
         <Grid item xs={12}>
@@ -420,8 +486,10 @@ export default function Flow() {
         <Grid item xs={8} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
           <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>OUTPUT</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
-          <div  style={{ margin: "5px", marginTop: "5px",height:"75%", color: 'white', fontSize: "12px", overflow: "scroll",
- whiteSpace: "nowrap" }}>
+          <div style={{
+            margin: "5px", marginTop: "5px", height: "75%", color: 'white', fontSize: "12px", overflow: "scroll",
+            whiteSpace: "nowrap"
+          }}>
             <DisplayResponse />
           </div>
 
@@ -431,7 +499,7 @@ export default function Flow() {
           <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>LOGS</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
           <div style={{ margin: "2px", color: 'white', fontSize: "10px" }}>
-            Successfully loaded flow "{name}". Last update: { }
+            Successfully loaded flow "{flowsvalue[currflow].flowname}". Last update: {flowsvalue[currflow].updationinfo}
           </div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
         </Grid>

@@ -5,6 +5,7 @@
         "postflows": "http://localhost:8080/postflows",
         "getflows": "http://localhost:8080/getflows",
         "putflows": "http://localhost:8080/putflows/",
-        "deleteflows": "http://localhost:8080/deleteflows/"
+        "deleteflows": "http://localhost:8080/deleteflows/",
+        "changepassword": "http://localhost:8080/changepassword/"
     }
 }

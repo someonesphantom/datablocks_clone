@@ -61,12 +61,12 @@ export default function Login() {
   const getflowsdb = (recievedemail) => {
     let payload =
     {
-        "email": recievedemail
+      "email": recievedemail
     }
     axios.post(apiMapping.userData.getflows, payload).then(response => {
-        setflowsvalue(response.data);
+      setflowsvalue(response.data);
     })
-}
+  }
 
   const signin = () => {
     let payload =

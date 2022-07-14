@@ -27,6 +27,7 @@ import avatar from '../../resources/esblogo.jpg';
 import apiMapping from '../../resources/apiMapping.json';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import sx from '@mui/system/sx';
 
 
 function TabPanel(props) {
@@ -79,6 +80,71 @@ export default function Home() {
 
   const username = () => {
     return `${fname}${" "}${lname}`;
+  }
+
+  const [errorflag, seterrorflag] = useState(false);
+  const [successflag, setsuccessflag] = useState(false);
+
+  const errorbox = () => {
+    if (errorflag) {
+      return (
+        <div style={{ marginLeft: "-71%", marginTop: "10px", position: "relative", backgroundColor: "#ff0072", height: "35px", width: "30%" }}>
+          <Typography
+            sx={{
+              mt: 1,
+              fontFamily: 'sans-serif',
+              fontWeight: 700,
+              color: '#f8f8f2',
+              fontSize: '12px',
+              marginLeft: "11px"
+            }}>
+            Incorrect Old Password!
+          </Typography>
+        </div>
+      )
+    }
+  }
+
+  const successbox = () => {
+    if (successflag) {
+      return (
+        <div style={{ marginLeft: "-71%", marginTop: "10px", position: "relative", backgroundColor: "#27b91a", height: "35px", width: "30%" }}>
+          <Typography
+            sx={{
+              mt: 1,
+              fontFamily: 'sans-serif',
+              fontWeight: 700,
+              color: '#f8f8f2',
+              fontSize: '12px',
+              marginLeft: "11px"
+            }}>
+            Password changed Successfully!
+          </Typography>
+        </div>
+      )
+    }
+  }
+
+  const [oldpassword, setoldpassword] = useState("");
+  const [newpassword, setnewpassword] = useState("");
+
+  const changepasswordfunc = () => {
+    let payload =
+    {
+      "oldpassword": oldpassword,
+      "newpassword": newpassword
+    }
+    axios.put(apiMapping.userData.changepassword + email, payload).then(response => {
+      console.log("change pass response", response.data)
+      if (response.data == "successful") {
+        seterrorflag(false);
+        setsuccessflag(true);
+      }
+      else if (response.data == "password incorrect") {
+        setsuccessflag(false);
+        seterrorflag(true);
+      }
+    })
   }
 
   return (
@@ -151,6 +217,8 @@ export default function Home() {
             <Typography component="h1" variant="h5" color="white" sx={{ fontSize: '15px', fontWeight: 700, marginLeft: "-88.3%", marginTop: "-6%" }} >
               Change Password
             </Typography>
+            {errorbox()}
+            {successbox()}
             <Box component="form" noValidate sx={{ mt: 1, color: "white", fontWeight: 300, fontSize: '10px', marginLeft: "-29%" }}>
               &nbsp;Old Password*
               <TextField
@@ -166,6 +234,7 @@ export default function Home() {
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 style={{ marginTop: "8px" }}
+                onChange={(e) => { setoldpassword(e.target.value) }}
               />
               &nbsp;New Password*
               <TextField
@@ -181,6 +250,7 @@ export default function Home() {
                 sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 style={{ marginTop: "8px" }}
+                onChange={(e) => { setnewpassword(e.target.value) }}
               />
 
               <Button
@@ -198,7 +268,7 @@ export default function Home() {
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.href = '/home';
+                  changepasswordfunc();
                 }}
               >
                 Change Password
