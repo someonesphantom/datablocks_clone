@@ -44,6 +44,7 @@ import DisplayResponse from '../../response/displayResponse';
 import { UserContext, UserContextProvider } from '../context/usercontext';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import dialogdata from '../../resources/data.json'
+import { useNavigate } from 'react-router-dom';
 
 const initialNodes = [
   // {
@@ -176,7 +177,7 @@ export default function Flow() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open1 = Boolean(anchorEl);
   const [response] = useResponse(null)
-
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -268,7 +269,12 @@ export default function Flow() {
     });
     handleClose()
   }, [nodes]);
-
+  const saveflow=()=>{
+    return(0);
+  }
+  const clearflow=()=>{
+    return(0);
+  }
   return (
     <div style={{ backgroundColor: "#222138", height: '100vh' }}>
       <AppBar position="static" sx={{ backgroundColor: "#1A192B" }}>
@@ -297,10 +303,11 @@ export default function Flow() {
                   vertical: 'top',
                   horizontal: 'left',
                 }}
+                
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={(event)=>{saveflow();handleClose();}}>Save</MenuItem>
+                <MenuItem onClick={(event)=>{clearflow();handleClose();}}>Clear</MenuItem>
+                <MenuItem onClick={(event)=>{navigate('/');handleClose();}}>Logout</MenuItem>
               </Menu>
               <Button color="inherit"
               >VIEW</Button>
@@ -374,6 +381,7 @@ export default function Flow() {
               }}
               startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
             />
+            
           </Toolbar>
         </Container>
       </AppBar>
