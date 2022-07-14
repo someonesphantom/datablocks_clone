@@ -171,7 +171,7 @@ export default function Flow() {
   const [objectEdit, setObjectEdit] = useState({});
   const [pos, setPos] = useState({});
   const [edit, setEdit] = React.useState(false);
-  const [name, setName] = useState(null);
+  const [name, setName] = useState("untitled flow");
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
   const [anchorEl, setAnchorEl] = React.useState(null);
