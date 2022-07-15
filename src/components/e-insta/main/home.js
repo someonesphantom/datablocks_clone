@@ -28,7 +28,7 @@ import apiMapping from '../../resources/apiMapping.json';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import sx from '@mui/system/sx';
-
+import '../../css/main.scss'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

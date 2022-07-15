@@ -12,7 +12,7 @@ import { FlowContext } from '../context/flowcontext';
 import { Link } from "react-router-dom";
 import apiMapping from '../../resources/apiMapping.json';
 import axios from 'axios';
-import './flows.scss'
+import '../../css/flows.scss'
 
 
 function getCurrentDate(separator = '/') {

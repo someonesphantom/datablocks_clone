@@ -26,7 +26,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
-import '../../../App.css'
+import '../../css/main.scss'
 
 const theme = createTheme();
 
@@ -44,8 +44,8 @@ export default function Signup() {
     const errorbox = () => {
         if (errorflag) {
             return (
-                <Box noValidate bgcolor="#ff0072" fontFamily='sans-serif' fontSize='12px' sx={{ mt: 1, marginLeft: '0.1%', fontWeight: 700, height: "40px" }} color='#f8f8f2'>
-                    <div style={{ marginLeft: "14px", marginTop: "10px", position: "absolute" }}>
+                <Box noValidate className='dummy' >
+                    <div className='dummy1'>
                         Please fill all fields!
                     </div>
                 </Box>
@@ -56,8 +56,8 @@ export default function Signup() {
     const successbox = () => {
         if (successflag) {
             return (
-                <Box noValidate bgcolor="#27b91a" fontFamily='sans-serif' fontSize='12px' sx={{ mt: 1, marginLeft: '0.1%', fontWeight: 700, height: "40px" }} color='#f8f8f2'>
-                    <div style={{ marginLeft: "14px", marginTop: "10px", position: "absolute" }}>
+                <Box noValidate className='dummy2'>
+                    <div className='dummy1'>
                         User Successfully Registered! Please Proceed to Login
                     </div>
                 </Box>
@@ -90,9 +90,9 @@ export default function Signup() {
     }
 
     return (
-        <div style={{ background: '#1A202C', height: '100vh' }}>
-            <AppBar position="static" style={{ background: '#1A192B', height: "45px" }}>
-                <Container maxWidth="xl">
+        <div className='dummy4'>
+            <AppBar position="static"  className='dummy5' style={{ background: '#1A192B', height: "45px" }}>
+                <Container className='cont' maxWidth="xl">
                     <Toolbar disableGutters>
                         <img src={logo} alt="My logo" width="40" height="50" style={{ marginTop: "-15px", marginLeft: "-15px" }} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: '10vw', hright: '10vh' }} />
                         <Typography
@@ -118,32 +118,28 @@ export default function Signup() {
 
                         </Typography>
 
-                        <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/') }}>LOGIN</Button>
-                        <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/signup') }}>SIGN UP</Button>
+                        <Button color="inherit" className='buttons1' sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/') }}>LOGIN</Button>
+                        <Button color="inherit" className='buttons1' sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/signup') }}>SIGN UP</Button>
 
 
                     </Toolbar>
                 </Container>
             </AppBar>
-            <ThemeProvider theme={theme} style={{ height: "60%" }}>
-                <Container component="main" style={{ width: "50%" }}>
+            <ThemeProvider theme={theme} className="theme">
+                <Container component="main" className='contain'>
                     <CssBaseline />
                     <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
+                        className='box1'
                     >
 
-                        <Typography component="h1" variant="h5" fontFamily='monospace' color='#f8f8f2' sx={{ fontWeight: 550, marginLeft: "-38%" }}>
+                        <Typography component="h1" variant="h5" className='typo'>
                             Create a datablocks account
                         </Typography>
-                        <Box component="form" noValidate sx={{ mt: 1, marginLeft: '0.4%', width: "600px" }} color='#f8f8f2'>
+                        <Box component="form" noValidate className='boxes'>
                             {errorbox()}
                             {successbox()}
                             <TextField
+                                className='texts'
                                 margin="normal"
                                 fullWidth
                                 size='small'
@@ -156,11 +152,12 @@ export default function Signup() {
                                 InputLabelProps={{
                                     style: { color: '#4A5568' },
                                 }}
-                                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                                
                                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                                 onChange={(e) => { setfname(e.target.value) }}
                             />
                             <TextField
+                                className='texts'
                                 margin="normal"
                                 fullWidth
                                 size='small'
@@ -172,11 +169,12 @@ export default function Signup() {
                                 InputLabelProps={{
                                     style: { color: '#4A5568' },
                                 }}
-                                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                                
                                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                                 onChange={(e) => { setlname(e.target.value) }}
                             />
                             <TextField
+                                className='texts'
                                 margin="normal"
                                 fullWidth
                                 size='small'
@@ -188,11 +186,12 @@ export default function Signup() {
                                 InputLabelProps={{
                                     style: { color: '#4A5568' },
                                 }}
-                                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                                
                                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                                 onChange={(e) => { setemail(e.target.value) }}
                             />
                             <TextField
+                                className='texts'
                                 margin="normal"
                                 fullWidth
                                 size='small'
@@ -205,7 +204,6 @@ export default function Signup() {
                                     style: { color: '#4A5568' },
                                 }}
                                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-                                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
                                 autoComplete="current-password"
                                 onChange={(e) => { setpass(e.target.value) }}
                             />
@@ -217,14 +215,7 @@ export default function Signup() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                style={{ textTransform: 'none' }}
-                                sx={{
-                                    mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                                        bgcolor: '#4c497e',
-                                        color: 'white',
-                                    },
-                                    fontFamily: 'monospace'
-                                }}
+                                className='buttons'
                                 onClick={(e) => {
                                     e.preventDefault();
                                     signin();
@@ -237,14 +228,7 @@ export default function Signup() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                style={{ textTransform: 'none' }}
-                                sx={{
-                                    mt: 1, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                                        bgcolor: '#4c497e',
-                                        color: 'white',
-                                    },
-                                    fontFamily: 'monospace'
-                                }}
+                                className='buttons'
                                 onClick={(e) => {
                                     e.preventDefault();
                                 }}
@@ -253,20 +237,12 @@ export default function Signup() {
                             </Button>
                             <Grid container>
                                 <Grid item xs={12}>
-                                    <Link2 href="/" variant="body2" style={{ textDecoration: 'none' }} sx={{
-                                        color: '#f8f8f2', ':hover': {
-                                            color: '#53606C',
-                                        }
-                                    }}>
+                                    <Link2 href="/" variant="body2"  className='links'>
                                         Already have an account → <span style={{ fontWeight: 'bold', fontFamily: "IBM Plex Sans" }}>Login!</span>
                                     </Link2>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Link2 href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
-                                        color: '#f8f8f2', ':hover': {
-                                            color: '#53606C',
-                                        }
-                                    }}>
+                                    <Link2 href="#" variant="body2"  className='links'>
                                         New to datablocks? → <span style={{ fontWeight: 'bold', fontFamily: "IBM Plex Sans" }}>Try the demo</span>
                                     </Link2>
                                 </Grid>

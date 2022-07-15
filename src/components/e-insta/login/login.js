@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import { FlowContext } from '../context/flowcontext';
-
+import '../../css/main.scss'
 
 const theme = createTheme();
 
@@ -49,8 +49,8 @@ export default function Login() {
   const errorbox = () => {
     if (errorflag) {
       return (
-        <Box noValidate bgcolor="#ff0072" fontFamily='sans-serif' fontSize='12px' sx={{ mt: 1, marginLeft: '0.1%', fontWeight: 700, height: "40px" }} color='#f8f8f2'>
-          <div style={{ marginLeft: "14px", marginTop: "10px", position: "absolute" }}>
+        <Box noValidate className='dummy'>
+          <div className='dummy1' >
             Error: Incorrect "Email" or "Password"
           </div>
         </Box>
@@ -98,9 +98,9 @@ export default function Login() {
   }
 
   return (
-    <div style={{ background: '#1A202C', height: '100vh' }}>
-      <AppBar position="static" style={{ background: '#1A192B', height: "45px" }}>
-        <Container maxWidth="xl">
+    <div className='dummy4'>
+      <AppBar position="static" className='dummy5' style={{ background: '#1A192B', height: "45px" }}>
+        <Container className='cont' maxWidth="xl">
           <Toolbar disableGutters>
             <img src={logo} alt="My logo" width="40" height="50" style={{ marginTop: "-15px", marginLeft: "-15px" }} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: '10vw', hright: '10vh' }} />
             <Typography
@@ -126,29 +126,24 @@ export default function Login() {
 
             </Typography>
 
-            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/') }}>LOGIN</Button>
-            <Button color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/signup') }}>SIGN UP</Button>
+            <Button color="inherit" className='buttons1'  sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/') }}>LOGIN</Button>
+            <Button color="inherit" className='buttons1'  sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }} onClick={(e) => { navigate('/signup') }}>SIGN UP</Button>
 
 
           </Toolbar>
         </Container>
       </AppBar>
-      <ThemeProvider theme={theme} style={{ height: "60%" }}>
-        <Container component="main" style={{ width: "50%" }}>
+      <ThemeProvider theme={theme} className="theme">
+        <Container component="main" className='contain'>
           <CssBaseline />
           <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            className='box1'
           >
 
-            <Typography component="h1" variant="h5" fontFamily='monospace' color='#f8f8f2' sx={{ fontWeight: 550, marginLeft: "-60%" }}>
+            <Typography component="h1" variant="h5" className='typo' >
               Login to datablocks
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1, marginLeft: '0.4%' }} color='#f8f8f2'>
+            <Box component="form" noValidate className='boxes'>
               {errorbox()}
               <TextField
                 margin="normal"
@@ -162,7 +157,7 @@ export default function Login() {
                 InputLabelProps={{
                   style: { color: '#4A5568' },
                 }}
-                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                className='texts'
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 onChange={(e) => { settextboxemail(e.target.value) }}
               />
@@ -178,7 +173,7 @@ export default function Login() {
                   style: { color: '#4A5568' },
                 }}
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
-                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                className='texts'
                 autoComplete="current-password"
                 onChange={(e) => { settextboxpass(e.target.value) }}
               />
@@ -190,14 +185,7 @@ export default function Login() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                style={{ textTransform: 'none' }}
-                sx={{
-                  mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                    bgcolor: '#4c497e',
-                    color: 'white',
-                  },
-                  fontFamily: 'monospace'
-                }}
+                className='buttons'
                 onClick={(e) => {
                   e.preventDefault();
                   signin();
@@ -210,14 +198,7 @@ export default function Login() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                style={{ textTransform: 'none' }}
-                sx={{
-                  mt: 1, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                    bgcolor: '#4c497e',
-                    color: 'white',
-                  },
-                  fontFamily: 'monospace'
-                }}
+                className='buttons'
                 onClick={(e) => {
                   e.preventDefault();
                 }}
@@ -226,29 +207,17 @@ export default function Login() {
               </Button>
               <Grid container>
                 <Grid item xs={12}>
-                  <Link2 href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
-                    color: '#f8f8f2', ':hover': {
-                      color: '#53606C',
-                    }
-                  }}>
+                  <Link2 href="#" variant="body2" className='links'>
                     Forgot your password → <span style={{ fontWeight: 'bold' }}>Password reset</span>
                   </Link2>
                 </Grid>
                 <Grid item xs={12}>
-                  <Link2 href="/signup" variant="body2" style={{ textDecoration: 'none' }} sx={{
-                    color: '#f8f8f2', ':hover': {
-                      color: '#53606C',
-                    }
-                  }}>
+                  <Link2 href="/signup" variant="body2" className='links'>
                     No account yet → <span style={{ fontWeight: 'bold' }}>Sign up</span>
                   </Link2>
                 </Grid>
                 <Grid item xs={12}>
-                  <Link2 href="#" variant="body2" style={{ textDecoration: 'none' }} sx={{
-                    color: '#f8f8f2', ':hover': {
-                      color: '#53606C',
-                    }
-                  }}>
+                  <Link2 href="#" variant="body2" className='links'>
                     New to datablocks? → <span style={{ fontWeight: 'bold' }}>Try the demo</span>
                   </Link2>
                 </Grid>
