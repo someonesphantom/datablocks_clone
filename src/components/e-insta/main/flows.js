@@ -12,7 +12,7 @@ import { FlowContext } from '../context/flowcontext';
 import { Link } from "react-router-dom";
 import apiMapping from '../../resources/apiMapping.json';
 import axios from 'axios';
-
+import './flows.scss'
 
 
 function getCurrentDate(separator = '/') {
@@ -89,7 +89,7 @@ const Flows = () => {
                 <Button
                     type="submit"
                     variant="contained"
-                    style={{ textTransform: 'none', marginBottom: "0.8%", marginLeft: "89%", marginTop: "-7.5%" }}
+                    className='btn'
                     onClick={(e) => {
                         e.preventDefault();
                         let newflow = {
@@ -102,71 +102,42 @@ const Flows = () => {
                         }
                         postflowsdb(newflow.flowname, newflow.creationinfo, newflow.updationinfo, newflow.payload, [...flowsvalue, newflow]);
                     }}
-                    sx={{
-                        mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                            bgcolor: '#4c497e',
-                            color: 'white',
-                        },
-                        fontFamily: 'monospace'
-                    }}
+                    
                 >
                     + new flow
                 </Button>
-                <div style={{ marginTop: "-2%" }}>
+                <div className='a'>
                     {
                         flowsvalue.map((currflow, i) => (
                             <>
                                 <Button
                                     disableRipple
-                                    style={{ textTransform: 'none', whiteSpace: 'nowrap', justifyContent: "left", marginBottom: "-1.3%" }}
-                                    sx={{
-                                        mt: 0, mb: 0, background: '#333154', ':hover': {
-                                            bgcolor: '#4c497e',
-                                            color: 'white',
-                                        },
-                                        fontFamily: 'system-ui',
-                                        width: "100%",
-                                        minHeight: "90px",
-                                        color: "white",
-                                        fontWeight: 600,
-                                        fontSize: "18px"
-                                    }}
+                                    className='btn1'
                                     onClick={(e) => {
                                         e.preventDefault();
                                         setcurrflow(i);
                                         navigate('/reactapp');
                                     }}
                                 >
-                                    <div style={{ textAlign: "left", marginLeft: "0.3%" }}>
+                                    <div className='b'>
                                         {
                                             edit == true && editid == i ? (
-                                                <div style={{ marginTop: "2%", width: "120px", marginLeft: "-4%" }}>
+                                                <div className='c'>
                                                     <Button
                                                         disableRipple
-                                                        sx={{ width: '300%' }}
+                                                        className='btn2'
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             e.preventDefault();
                                                         }}
                                                     >
-                                                        <TextField id="outlined-basic" size='small' sx={{ input: { color: 'white' }, border: '1px solid white', width: '300%' }} value={currflow.flowname} variant="outlined"
+                                                        <TextField className="text1" size='small'  value={currflow.flowname} variant="outlined"
                                                             onChange={(e) => { editname(e.target.value, i) }}
                                                         />
                                                     </Button>
 
                                                     <Button
-                                                        style={{ textTransform: 'none', marginTop: "-1px", borderRadius: 0, marginLeft: "-9px" }}
-                                                        sx={{
-                                                            mt: 0, mb: 0, background: '#434161', ':hover': {
-                                                                bgcolor: '#4c497e',
-                                                                color: 'white',
-                                                            },
-                                                            fontFamily: 'monospace',
-                                                            minWidth: "40px",
-                                                            minHeight: "42px",
-                                                            border: 1,
-                                                            borderColor: "white"
-                                                        }}
+                                                        className='btn3'
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             e.preventDefault();
@@ -178,56 +149,38 @@ const Flows = () => {
                                                 </div>
                                             ) :
                                                 (
-                                                    <div style={{ textAlign: "left" }}>
+                                                    <div className='d'>
                                                         {currflow.flowname}
                                                     </div>
                                                 )
 
                                         }
-                                        <div style={{ fontSize: '12px', color: '#9ca8b3', fontWeight: 'normal' }}>
+                                        <div className='e'>
                                             created at: {currflow.creationinfo}
                                             <br />
                                             updated at: {currflow.updationinfo}
                                         </div>
                                     </div>
-                                    <div style={{ marginBottom: "25px", position: "absolute", marginLeft: "89%" }}>
+                                    <div className='f'>
                                         <Button
-                                            style={{ textTransform: 'none' }}
-                                            sx={{
-                                                mt: 0, mb: 0, background: '#434161', ':hover': {
-                                                    bgcolor: '#4c497e',
-                                                    color: 'white',
-                                                },
-                                                fontFamily: 'monospace',
-                                                minWidth: "40px",
-                                                minHeight: "30px",
-                                            }}
+                                            className='btn4'
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 e.preventDefault();
                                                 setEdit(true)
                                                 setEditId(i)
                                             }}
-                                            startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
+                                            startIcon={<EditOutlinedIcon className='icon' />}
                                         />
 
                                         <Button
-                                            style={{ textTransform: 'none', marginLeft: "10px" }}
-                                            sx={{
-                                                mt: 0, mb: 0, background: '#434161', ':hover': {
-                                                    bgcolor: '#4c497e',
-                                                    color: 'white',
-                                                },
-                                                fontFamily: 'monospace',
-                                                minWidth: "40px",
-                                                minHeight: "30px",
-                                            }}
+                                            className='btn5'
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 e.preventDefault();
                                                 deleteflow(i);
                                             }}
-                                            startIcon={<DeleteOutlineOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
+                                            startIcon={<DeleteOutlineOutlinedIcon className='icon' />}
                                         />
                                     </div>
                                 </Button>
