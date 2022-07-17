@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography'
 import React from 'react';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import ButtonsForDialog from './buttons';
+import './dialog.scss'
 
 const DialogButton = React.memo(props => {
   const [open, setOpen] = React.useState(false);
@@ -35,12 +36,7 @@ const DialogButton = React.memo(props => {
     <>
       <Button fontColor="white"
         onClick={handleClickOpen('paper')}
-        style={{
-          color: "white",
-          border: '1px solid', borderColor: '#4C497E', borderRadius: "20px",
-
-
-        }}
+        className='forbuttons'
       >+ block</Button>
       <Dialog
         open={open}
@@ -50,17 +46,17 @@ const DialogButton = React.memo(props => {
         maxWidth="md"
       >
 
-        <DialogContent dividers={scroll === 'paper'} sx={{ backgroundColor: "#222138" }}>
+        <DialogContent dividers={scroll === 'paper'} className='darkcolor'>
           <Grid container spacing={2}>
             <Grid item xs={2}>
-              <Typography variant="h5" color="white" sx={{ mb: 1.5, fontSize: "20px", fontFamily: "sans-serif", fontWeight: "bold" }}>
+              <Typography variant="h5" color="white" className='leftbartitle'>
                 Block Library
               </Typography>
               <Button
                 onClick={() => scrollTo('#input')}
                 startIcon={<InputIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
-                <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <Typography variant="h9" color="white" className='leftbar'>
                   INPUT
                 </Typography>
               </Button>
@@ -68,7 +64,7 @@ const DialogButton = React.memo(props => {
                 onClick={() => scrollTo('#transform')}
                 startIcon={<ConstructionOutlinedIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
-                <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <Typography variant="h9" color="white" className='leftbar'>
                   TRANSFORM
                 </Typography>
               </Button>
@@ -76,7 +72,7 @@ const DialogButton = React.memo(props => {
                 onClick={() => scrollTo('#geodata')}
                 startIcon={<LocationOnOutlinedIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
-                <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <Typography variant="h9" color="white" className='leftbar'>
                   GEO DATA
                 </Typography>
               </Button>
@@ -84,7 +80,7 @@ const DialogButton = React.memo(props => {
                 onClick={() => scrollTo('#vis')}
                 startIcon={<InsertChartOutlinedIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
-                <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <Typography variant="h9" color="white" className='leftbar'>
                   VISUALIZATION
                 </Typography>
               </Button>
@@ -92,7 +88,7 @@ const DialogButton = React.memo(props => {
                 onClick={() => scrollTo('#misc')}
                 startIcon={<MoreHorizOutlinedIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
-                <Typography variant="h9" color="white" sx={{ mb: 1.5, fontSize: "9px", fontWeight: "bold" }}>
+                <Typography variant="h9" color="white" className='leftbar'>
                   MISC
                 </Typography>
               </Button>
@@ -105,7 +101,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Inputdata.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -124,7 +120,7 @@ const DialogButton = React.memo(props => {
                 </Typography><br></br>
                 <div>
                   {props.dialogdata.Transform.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar'onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -144,7 +140,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.GeoData.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -166,7 +162,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Vis.map((input,i)=>
-                    <Button size="large" key={i}  style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                    <Button size="large" key={i}  style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}
@@ -187,7 +183,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Misc.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} sx={{ backgroundColor: "#333154", width: "200px", height: "150px" }} onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                     <ButtonsForDialog
                       name={input.name}
                       desc={input.desc}

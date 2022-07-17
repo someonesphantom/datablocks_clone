@@ -1,0 +1,125 @@
+//home 
+.buttonsh {
+    text-transform: none;
+    height: 40px;
+    width: 160px;
+    margin-top: 10px;
+    margin-left: -0.5%;
+    font-family: Polaris;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+
+}
+
+.buttonsh:hover {
+    background-color: #6866AC;
+    color: white;
+}
+
+.boxh {
+    margin-top: 8px;
+    color: white;
+    font-weight: 300;
+    font-size: 10px;
+    position: relative;
+    margin-left: -0.5%;
+}
+
+.box1h {
+    margin-top: 8px;
+    color: white;
+    font-weight: 300;
+    font-size: 10px;
+    margin-left: -29%;
+}
+
+.typ {
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: -88.3%;
+    margin-top: -6%;
+}
+
+.box2 {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tablep {
+    margin-top: -1.5%;
+}
+
+.tabs {
+    max-width: 2%;
+}
+
+.box3 {
+    color: white;
+    border-bottom: 8px;
+    border-color: Divider;
+    margin-left: 1.1%;
+}
+
+.box4 {
+    width: 80%;
+    margin-left: 9%;
+    margin-top: 2%;
+}
+
+.but {
+    font-size: 11px;
+    margin-top: -15px;
+    margin-right: -10px;
+}
+
+.di {
+    font-size: 11px;
+    font-family: arial;
+    font-weight: 500;
+    margin-top: -17.1px;
+    margin-right: 10px;
+}
+
+.ava {
+    margin-top: -17px;
+    height: 28;
+    width: 28;
+    margin-right: 10px;
+}
+
+.boxf1 {
+    border: 16px;
+    border-radius: 16px;
+}
+
+.cardf1 {
+    border-color: #333154;
+    max-width: 1000;
+    min-width: 236;
+    min-height: 300;
+}
+
+.cd {
+    border: 8px;
+    border-radius: 16px;
+}
+
+.inpf1 {
+    display: block;
+    margin: 10px auto;
+}
+
+.tyf1 {
+    font-size: 10;
+    color: white;
+}
+
+.texts {
+    border: 1px solid #4A5568 !important;
+    border-color: #4A5568 !important;
+    border-radius: 6px !important;
+
+}

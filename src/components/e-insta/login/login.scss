@@ -1,0 +1,129 @@
+
+
+.dummy {
+  background-color: #ff0072;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #f8f8f2;
+  margin-top: 8px;
+  margin-left: 0.1%;
+  font-weight: 700;
+  height: 40px;
+}
+
+.dummy1 {
+  margin-left: 14px;
+  margin-top: 10px;
+  position: absolute;
+}
+
+.dummy2 {
+  background-color: #27b91a;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #f8f8f2;
+  margin-top: 8px;
+  margin-left: 0.1%;
+  font-weight: 700;
+  height: 40px;
+}
+
+.dummy4 {
+  background: #1A202C;
+  height: 100vh;
+}
+
+.dummy5 {
+  position: static;
+  background-color: #1A192B;
+  height: 45px;
+
+}
+
+.cont {
+  max-width: xl;
+}
+
+.image {
+  width: 40;
+  height: 50;
+  margin-top: -15px;
+  margin-left: -15px;
+
+}
+
+
+.span1 {
+  font-weight: bold;
+  font-family: IBM Plex Sans;
+
+}
+
+.links {
+  color: #f8f8f2 !important;
+  text-decoration: none !important;
+}
+
+.links:hover {
+  color: #53606C !important;
+}
+
+.buttons {
+  text-transform: none !important;
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  font-family: monospace !important;
+}
+
+.buttons:hover {
+  background-color: #4c497e !important;
+  color: white !important;
+}
+
+.texts InputLabelProps {
+  color: #4A5568 !important;
+
+}
+
+.texts {
+  border: 1px solid #4A5568 !important;
+  border-color: #4A5568 !important;
+  border-radius: 6px !important;
+
+}
+
+.boxes {
+  margin-top: 8px;
+  margin-left: 0.4%;
+  width: 600px;
+  color: #f8f8f2;
+}
+
+.typo {
+  font-family: monospace;
+  color: #f8f8f2;
+  font-weight: 550;
+  margin-left: -38%;
+}
+
+.box1 {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.theme {
+  height: 60%;
+}
+
+.contain {
+  width: 50%;
+}
+
+.buttons1 {
+  font-size: '9px';
+  margin-top: -15px;
+  margin-right: -10px;
+}

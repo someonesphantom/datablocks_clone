@@ -26,7 +26,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/main.scss'
+import './login.scss'
 
 const theme = createTheme();
 

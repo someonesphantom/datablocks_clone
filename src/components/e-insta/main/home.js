@@ -28,7 +28,7 @@ import apiMapping from '../../resources/apiMapping.json';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import sx from '@mui/system/sx';
-import '../../css/main.scss'
+import './home.scss'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -175,12 +175,12 @@ export default function Home() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 
             </Typography>
-            <Avatar src={avatar} alt="eaiesb" sx={{ marginTop: "-17px", height: 28, width: 28, marginRight: "10px" }} />
-            <div color="inherit" style={{ fontSize: "11px", fontFamily: 'Arial', fontWeight: 500, marginTop: "-17.1px", marginRight: "10px" }}>
+            <Avatar src={avatar} alt="eaiesb" className='ava'  />
+            <div color="inherit" className='di'>
               {username()}
             </div>
             <Button
-              color="inherit" sx={{ fontSize: "11px", marginTop: "-15px", marginRight: "-10px" }}
+              color="inherit" className='but'
               onClick={(e) => {
                 e.preventDefault();
                 // navigate('/');
@@ -191,35 +191,26 @@ export default function Home() {
         </Container>
       </AppBar>
 
-      <Box sx={{
-        width: '80%',
-        marginLeft: '9%',
-        marginTop: '2%'
-      }}>
-        <Box sx={{ color: "white", borderBottom: 1, borderColor: 'divider', marginLeft: '1.1%' }}>
+      <Box className='box4'>
+        <Box className='box3'>
           <Tabs textColor="white" value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{ style: { backgroundColor: "white", width: "60px", marginLeft: "1.25%" } }}>
-            <Tab label="Flows" {...a11yProps(0)} style={{ maxWidth: "2%" }} />
-            <Tab label="Account" {...a11yProps(1)} style={{ maxWidth: "2%" }} />
+            <Tab label="Flows" {...a11yProps(0)} className="tabs" />
+            <Tab label="Account" {...a11yProps(1)} className="tabs" />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0} style={{ marginTop: "-1.5%" }}>
+        <TabPanel value={value} index={0} className="tablep" style={{ marginTop: "-1.5%" }}>
           <Flows />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Box
-            sx={{
-              marginTop: 6,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            className='box2'
           >
-            <Typography component="h1" variant="h5" color="white" sx={{ fontSize: '15px', fontWeight: 700, marginLeft: "-88.3%", marginTop: "-6%" }} >
+            <Typography component="h1" variant="h5" color="white" className='typ' >
               Change Password
             </Typography>
             {errorbox()}
             {successbox()}
-            <Box component="form" noValidate sx={{ mt: 1, color: "white", fontWeight: 300, fontSize: '10px', marginLeft: "-29%" }}>
+            <Box component="form" noValidate className='box1h'>
               &nbsp;Old Password*
               <TextField
                 margin="normal"
@@ -231,7 +222,7 @@ export default function Home() {
                 autoComplete="current-password"
                 size='small'
                 InputLabelProps={{ style: { color: '#4A5568' } }}
-                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                className='texts'
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 style={{ marginTop: "8px" }}
                 onChange={(e) => { setoldpassword(e.target.value) }}
@@ -247,7 +238,7 @@ export default function Home() {
                 autoComplete="current-password"
                 size='small'
                 InputLabelProps={{ style: { color: '#4A5568' } }}
-                sx={{ border: '1px solid #4A5568', borderRadius: "6px" }}
+                className='texts'
                 inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
                 style={{ marginTop: "8px" }}
                 onChange={(e) => { setnewpassword(e.target.value) }}
@@ -257,15 +248,7 @@ export default function Home() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                style={{ textTransform: 'none', height: "40px", width: "160px" }}
-                sx={{
-                  mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                    bgcolor: '#6866AC',
-                    color: 'white',
-                  },
-                  fontWeight: 700,
-                  fontFamily: 'Polaris'
-                }}
+                className='buttonsh'
                 onClick={(e) => {
                   e.preventDefault();
                   changepasswordfunc();
@@ -275,25 +258,17 @@ export default function Home() {
               </Button>
             </Box>
           </Box>
-          <Box component="form" noValidate sx={{ mt: 1, color: "white", fontWeight: 700, fontSize: '15px', position: "relative", marginTop: "25px", marginLeft: "-0.5%" }}>
+          <Box component="form" noValidate className='boxh'>
             Delete User
           </Box>
-          <Box component="form" noValidate sx={{ mt: 1, color: "white", fontWeight: 300, fontSize: '10px', position: "relative", marginTop: "7px", marginLeft: "-0.5%" }}>
+          <Box component="form" noValidate className='boxh'>
             When you delete your user all connected data will be removed from our servers.
           </Box>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            style={{ textTransform: 'none', height: "40px", width: "160px", marginTop: "10px", marginLeft: "-0.5%" }}
-            sx={{
-              mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
-                bgcolor: '#6866AC',
-                color: 'white',
-              },
-              fontWeight: 700,
-              fontFamily: 'Polaris'
-            }}
+            className='buttonsh'
             onClick={(e) => {
               e.preventDefault();
               window.location.href = '/home';

@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 import { render } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import { FlowContext } from '../context/flowcontext';
-import '../../css/main.scss'
+import './login.scss'
 
 const theme = createTheme();
 
