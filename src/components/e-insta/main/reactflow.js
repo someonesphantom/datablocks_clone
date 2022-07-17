@@ -48,7 +48,7 @@ import { useNavigate } from 'react-router-dom';
 import { FlowContext } from '../context/flowcontext';
 import apiMapping from '../../resources/apiMapping.json';
 import axios from 'axios';
-
+import './reactflow.scss'
 
 const SourceNode = ({ data }) => {
   if (data.color === "") {
@@ -75,9 +75,9 @@ const SourceNode = ({ data }) => {
   return (
     <>
       <UserContextProvider >
-        <Box sx={{ border: 2, borderColor: "#" + data.color, borderRadius: 2 }}>
-          <Card variant="outlined" sx={{ backgroundColor: "#333154", maxWidth: 1000, minHeight: 300, minWidth: 260 }}>
-            <CardHeader style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
+        <Box className="boxf1" sx={{  borderColor: "#" + data.color}}>
+          <Card variant="outlined" className='cardf1' >
+            <CardHeader className='cd' style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
             <React.Fragment>
               <CardContent>
                 <left>
@@ -96,9 +96,9 @@ const SourceNode = ({ data }) => {
                     setFileType(event.target.files[0].type)
                   }}
                   accept=".csv, .json"
-                  style={{ display: "block", margin: "10px auto" }}
+                  className='inpf1'
                 />
-                <Typography sx={{ fontSize: 10 }} color="white" gutterBottom>
+                <Typography  className='tyf1'  color="white" gutterBottom>
                   {data.value}
                 </Typography>
 
@@ -115,13 +115,7 @@ const SourceNode = ({ data }) => {
           type="source"
           position="right"
           id="a"
-          style={{
-            backgroundColor: 'rgb(64, 63, 105)', border: "1px solid #fff",
-            borderRadius: "0px 10px 10px 0px",
-            height: "100%",
-            position: "absolute",
-            width: "19px", right: '-20px'
-          }}
+          className='handleright'
           isConnectable={true}
         />
       </UserContextProvider>
@@ -386,23 +380,8 @@ export default function Flow() {
 
                   <Button
                     style={{ textTransform: 'none', marginTop: "-1px", borderRadius: 0, marginLeft: "-9px" }}
-                    sx={{
-                      mt: 0, mb: 0, background: '#434161', ':hover': {
-                        bgcolor: '#4c497e',
-                        color: 'white',
-                      },
-                      fontFamily: 'monospace',
-                      minWidth: "40px",
-                      minHeight: "42px",
-                      border: 1,
-                      borderColor: "white"
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      setEdit(false);
-                    }}
-                    startIcon={<DoneIcon style={{ color: "white", marginRight: "-13px" }} />}
+                    className="btn3"
+                    startIcon={<DoneIcon className="doneandediticon" />}
                   />
                 </>
               ) :
@@ -414,32 +393,18 @@ export default function Flow() {
             }
 
             <Button
-              style={{ textTransform: 'none' }}
-              sx={{
-                mt: 0, mb: 0, background: '#434161', ':hover': {
-                  bgcolor: '#4c497e',
-                  color: 'white',
-                },
-                fontFamily: 'monospace',
-                minWidth: "40px",
-                minHeight: "30px",
-                marginLeft: "10px",
-                marginRight: "45vw",
-              }}
+              className="btn3"
               onClick={(e) => {
                 setEdit(true)
                 e.stopPropagation();
                 e.preventDefault();
               }}
-              startIcon={<EditOutlinedIcon style={{ color: "white", marginRight: "-13px" }} />}
+              startIcon={<EditOutlinedIcon className="doneandediticon" />}
             />
 
             <Button
               color="inherit"
-              style={{
-                position: "absolute",
-                marginLeft: "90%"
-              }}
+              className='backhome'
               onClick={(e) => {
                 e.preventDefault();
                 navigate('/home');
@@ -483,22 +448,19 @@ export default function Flow() {
 
           </ReactFlowProvider>
         </Grid>
-        <Grid item xs={8} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
-          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>OUTPUT</div>
+        <Grid item xs={8} className='responsegrid'>
+          <div className='responsegridtitles'>OUTPUT</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
-          <div style={{
-            margin: "5px", marginTop: "5px", height: "75%", color: 'white', fontSize: "12px", overflow: "scroll",
-            whiteSpace: "nowrap"
-          }}>
+          <div className='displayingresponse'>
             <DisplayResponse />
           </div>
 
         </Grid>
 
-        <Grid item xs={4} sx={{ backgroundColor: "#1A192B", height: "20vh", border: 0.5, borderColor: "#4C497E" }}>
-          <div style={{ margin: "5px", marginTop: "5px", color: 'white', fontSize: "12px" }}>LOGS</div>
+        <Grid item xs={4} className='responsegrid'>
+          <div className='responsegridtitles'>LOGS</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
-          <div style={{ margin: "2px", color: 'white', fontSize: "10px" }}>
+          <div className='logs'>
             Successfully loaded flow "{flowsvalue[currflow].flowname}". Last update: {flowsvalue[currflow].updationinfo}
           </div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
