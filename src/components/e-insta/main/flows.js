@@ -47,7 +47,7 @@ const Flows = () => {
     }
 
     const deleteflow = (i) => {
-        axios.delete(apiMapping.userData.deleteflows + flowsvalue[i]._id).then(response => {
+        axios.delete(apiMapping.userData.deleteflow + flowsvalue[i]._id).then(response => {
         });
         setflowsvalue([
             ...flowsvalue.slice(0, i),
