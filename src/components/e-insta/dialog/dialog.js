@@ -61,6 +61,14 @@ const DialogButton = React.memo(props => {
                 </Typography>
               </Button>
               <Button
+                onClick={() => scrollTo('#output')}
+                startIcon={<InputIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
+              >
+                <Typography variant="h9" color="white" className='leftbar'>
+                  OUTPUT
+                </Typography>
+              </Button>
+              <Button
                 onClick={() => scrollTo('#transform')}
                 startIcon={<ConstructionOutlinedIcon style={{ color: "white", width: "10px", height: "10px", marginBottom: "11px" }} />}
               >
@@ -100,18 +108,38 @@ const DialogButton = React.memo(props => {
                 </Typography>
                 <br></br>
                 <div>
-                  {props.dialogdata.Inputdata.map((input,i)=>
+                  {props.dialogdata.Inputdata.map((input, i) =>
                     <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
-                    <ButtonsForDialog
-                      name={input.name}
-                      desc={input.desc}
-                      input={input.input}
-                      output={input.output} />
-                  </Button>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
                   )
                   }
                 </div>
-                
+
+              </div>
+              <br></br>
+              <div id="output" style={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
+                <Typography variant="h7" color="white" >
+                  OUTPUT
+                </Typography>
+                <br></br>
+                <div>
+                  {props.dialogdata.Outputdata.map((input, i) =>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
+                  )
+                  }
+                </div>
+
               </div>
               <br></br>
               <div id="transform" style={{ fontFamily: "sans-serif", fontWeight: "bold" }}>
@@ -119,14 +147,14 @@ const DialogButton = React.memo(props => {
                   TRANSFORM
                 </Typography><br></br>
                 <div>
-                  {props.dialogdata.Transform.map((input,i)=>
-                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar'onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
-                    <ButtonsForDialog
-                      name={input.name}
-                      desc={input.desc}
-                      input={input.input}
-                      output={input.output} />
-                  </Button>
+                  {props.dialogdata.Transform.map((input, i) =>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
                   )
                   }
                 </div>
@@ -139,14 +167,14 @@ const DialogButton = React.memo(props => {
                 </Typography>
                 <br></br>
                 <div>
-                  {props.dialogdata.GeoData.map((input,i)=>
+                  {props.dialogdata.GeoData.map((input, i) =>
                     <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
-                    <ButtonsForDialog
-                      name={input.name}
-                      desc={input.desc}
-                      input={input.input}
-                      output={input.output} />
-                  </Button>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
                   )
                   }
                 </div>
@@ -161,14 +189,14 @@ const DialogButton = React.memo(props => {
                 </Typography>
                 <br></br>
                 <div>
-                  {props.dialogdata.Vis.map((input,i)=>
-                    <Button size="large" key={i}  style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
-                    <ButtonsForDialog
-                      name={input.name}
-                      desc={input.desc}
-                      input={input.input}
-                      output={input.output} />
-                  </Button>
+                  {props.dialogdata.Vis.map((input, i) =>
+                    <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
                   )
                   }
                 </div>
@@ -182,14 +210,14 @@ const DialogButton = React.memo(props => {
                 </Typography>
                 <br></br>
                 <div>
-                  {props.dialogdata.Misc.map((input,i)=>
+                  {props.dialogdata.Misc.map((input, i) =>
                     <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
-                    <ButtonsForDialog
-                      name={input.name}
-                      desc={input.desc}
-                      input={input.input}
-                      output={input.output} />
-                  </Button>
+                      <ButtonsForDialog
+                        name={input.name}
+                        desc={input.desc}
+                        input={input.input}
+                        output={input.output} />
+                    </Button>
                   )
                   }
                 </div>

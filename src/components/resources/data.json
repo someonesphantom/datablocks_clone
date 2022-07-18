@@ -37,6 +37,44 @@
             "callingnode":"addINode"
         }
     ],
+    "Outputdata": [
+        {
+            "name": "File",
+            "desc": "Handles csv, json, geojson or topojson files.",
+            "input": "-",
+            "output": "Dataset, Geojson",
+            "callingnode":"File"
+        },
+        
+        {
+            "name": "Paste",
+            "desc": "Paste input: string, number, csv, json, geojson or topojson",
+            "input": "-",
+            "output": "Dataset, Object, String, Number, Geojson",
+            "callingnode":"Paste"
+        },
+        {
+            "name": "HTTP Request",
+            "desc": "Loads data via a http request.",
+            "input": "-",
+            "output": "Dataset, Object, Geojson",
+            "callingnode":"addINode"
+        },
+        {
+            "name": "Sheets",
+            "desc": "Loads data from google sheets.",
+            "input": "-",
+            "output": "Dataset",
+            "callingnode":"addINode"
+        },
+        {
+            "name": "Example Data",
+            "desc": "Some example data for playing around with data blocks.",
+            "input": "-",
+            "output": "Dataset, Geojson",
+            "callingnode":"addINode"
+        }
+    ],
     "Transform": [
         {
             "name": "Filter",
