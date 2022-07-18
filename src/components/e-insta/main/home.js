@@ -127,7 +127,7 @@ export default function Home() {
 
   const [oldpassword, setoldpassword] = useState("");
   const [newpassword, setnewpassword] = useState("");
-
+  const [onclickdelete, setonclickdelete] = useState(false);
   const changepasswordfunc = () => {
     let payload =
     {
@@ -145,6 +145,12 @@ export default function Home() {
         seterrorflag(true);
       }
     })
+  }
+  const deleteuser = () => {
+    axios.delete(apiMapping.userData.deleteallflows + email).then(response => {
+    });
+    axios.delete(apiMapping.userData.deleteuser + email).then(response => {
+    });
   }
 
   return (
@@ -268,14 +274,69 @@ export default function Home() {
             type="submit"
             fullWidth
             variant="contained"
-            className='buttonsh'
+            style={{ textTransform: 'none', height: "40px", width: "160px", marginTop: "10px", marginLeft: "-0.5%" }}
+            sx={{
+              mt: 0, mb: 0, background: 'rgba(255, 255, 255, 0.08)', ':hover': {
+                bgcolor: '#6866AC',
+                color: 'white',
+              },
+              fontWeight: 700,
+              fontFamily: 'Polaris'
+            }}
             onClick={(e) => {
               e.preventDefault();
-              window.location.href = '/home';
+              setonclickdelete(true);
             }}
           >
             Delete my user data
           </Button>
+          <br></br>
+
+          {onclickdelete ? (
+            <div>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                style={{ textTransform: 'none', height: "60px", width: "160px", marginTop: "10px", marginLeft: "-0.5%" }}
+                sx={{
+                  mt: 0, mb: 0, background: 'red', ':hover': {
+                    bgcolor: 'red',
+                    color: 'white',
+                  },
+                  fontWeight: 700,
+                  fontFamily: 'Polaris'
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteuser();
+                  window.location.href = '/';
+                }}
+              >
+                Confirm user and all data deletion?
+              </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                style={{ textTransform: 'none', height: "60px", width: "160px", marginTop: "10px", marginLeft: "1%" }}
+                sx={{
+                  mt: 0, mb: 0, background: 'green', ':hover': {
+                    bgcolor: 'green',
+                    color: 'white',
+                  },
+                  fontWeight: 700,
+                  fontFamily: 'Polaris'
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setonclickdelete(false);
+                }}
+              >
+                Cancel deletion
+              </Button>
+            </div>
+          ) : (console.log())}
         </TabPanel>
 
       </Box>
