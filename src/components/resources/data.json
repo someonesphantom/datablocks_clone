@@ -1,7 +1,7 @@
 {
     "Inputdata": [
         {
-            "name": "File",
+            "name": "CSV/JSON",
             "desc": "Handles csv, json, geojson or topojson files.",
             "input": "-",
             "output": "Dataset, Geojson",
@@ -9,18 +9,18 @@
         },
         
         {
-            "name": "Paste",
-            "desc": "Paste input: string, number, csv, json, geojson or topojson",
+            "name": "XML",
+            "desc": "Handles xml files.",
             "input": "-",
             "output": "Dataset, Object, String, Number, Geojson",
-            "callingnode":"Paste"
+            "callingnode":"File"
         },
         {
-            "name": "HTTP Request",
-            "desc": "Loads data via a http request.",
+            "name": "XLSX",
+            "desc": "Handles xlsx files.",
             "input": "-",
             "output": "Dataset, Object, Geojson",
-            "callingnode":"addINode"
+            "callingnode":"File"
         },
         {
             "name": "Sheets",
