@@ -51,7 +51,7 @@ import axios from 'axios';
 import './reactflow.scss'
 import Filenode from '../nodes/filenode';
 
-const nodeTypes = { source: Filenode };
+const nodeTypes = { filenode: Filenode };
 const edgeTypes = {
   // custom: CustomEdge,
 };
@@ -192,7 +192,7 @@ export default function Flow() {
         ...nodes,
         {
           id,
-          type: "source",
+          type: "filenode",
           data: { id: `${id}`, label: "File ", value: "", color: "" },
           position,
         }
