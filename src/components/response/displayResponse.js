@@ -10,20 +10,27 @@ const DisplayResponse = () => {
     console.log("table Rows in display ", tableRows)
   }, [tableRows])
 
+  function NewlineText() {
+    // const text = values;
+    // return <div>{text}</div>;
+    const text = values[0].replace(/,/g, ' ');
+    const newText = text.split('\n').map(str => <p>{str}</p>);
+    return newText;
+  }
+
   return (
     <>
       {
         <div style={{ height: '100%', width: '100%' }}>
 
-
-
-          {tableRows.length !== 0 && filetype === "text/csv" && (
+          {tableRows.length !== 0 && filetype === "text/csv" ? (
             <>
               {/* <DataGrid
                           
         columns={tableRows}
         rows={values}
       /> */}
+
               <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
                 <thead>
                   <tr>
@@ -47,16 +54,24 @@ const DisplayResponse = () => {
                 </tbody>
               </table>
             </>
-          )
+          ) : (console.log())
 
           }
 
           {
-            values.length !== 0 && filetype === "application/json" && (
+            values.length !== 0 && filetype === "application/json" ? (
               <div>
                 {values}
               </div>
-            )
+            ) : (console.log())
+          }
+
+          {
+            tableRows[0] === "xlsx" ? (
+              <div>
+                <NewlineText />
+              </div>
+            ) : (console.log())
           }
         </div>
 

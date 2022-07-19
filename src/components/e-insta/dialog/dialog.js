@@ -129,6 +129,7 @@ const DialogButton = React.memo(props => {
                 <br></br>
                 <div>
                   {props.dialogdata.Outputdata.map((input, i) =>
+
                     <Button size="large" key={i} style={{ margin: "5px" }} className='rightbar' onClick={(event) => { props.addNodes(input.callingnode); handleClose() }}>
                       <ButtonsForDialog
                         name={input.name}
