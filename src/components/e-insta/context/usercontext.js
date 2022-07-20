@@ -8,13 +8,16 @@ export function UserContextProvider({ children }) {
   //State to store the values
   const [values, setValues] = useState([]);
   const [columns,setColumns] = useState([]);
-  const [name,setName]=useState([]);
+  const [name,setName]=useState('');
   const [ts,setTs]=useState([]);
   const [filetype, setFileType] = useState([]);
   const [firstrow,setfirstrow] = useState(0);
   const [lastrow,setlastrow] = useState(0);
   const [slice,setslice] = useState('0');
-    
+  const [filename,setFilename]=useState('');
+  useEffect(()=>{
+    setFilename(name)
+  },{name})
   useEffect(
     () => {
       console.log("tablerows ", tableRows)

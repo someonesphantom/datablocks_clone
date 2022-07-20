@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const TimeSeries = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [TimeSeries, setTimeSeries] = useState();
     const[url,setUrl]=useState(null)
     const [x,setX]=useState("")
@@ -40,7 +40,7 @@ useEffect(()=>{
 },[columns,TimeSeries])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/time/'+x+'/y/'+y)
+  setUrl('http://127.0.0.1:8000/time/'+x+'/y/'+y+'/'+name)
   fetchTimeSeries();
   
 },[x,y,url])

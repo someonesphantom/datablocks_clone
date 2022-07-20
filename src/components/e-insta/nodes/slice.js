@@ -13,7 +13,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Slice = ({ data }) => {
      
-    const {firstrow,setfirstrow,lastrow,setlastrow,slice,setslice} = useContext(UserContext)
+    const {firstrow,setfirstrow,lastrow,setlastrow,slice,setslice,name,setName} = useContext(UserContext)
     const[url,seturl]=useState(null)
 useEffect(()=>{
     
@@ -21,7 +21,7 @@ useEffect(()=>{
      setlastrow(lastrow)
     console.log("firstrowinlastrow ",firstrow)
     console.log('lastrow',lastrow)
-    seturl('http://127.0.0.1:8000/slice/'+firstrow+'/lastrow/'+lastrow)
+    seturl('http://127.0.0.1:8000/slice/'+firstrow+'/lastrow/'+lastrow+'/name/'+name)
     try{
       fetchslice()
     }

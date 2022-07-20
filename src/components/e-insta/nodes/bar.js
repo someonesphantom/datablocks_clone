@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Bar = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [bar, setBar] = useState();
     const[url,seturl]=useState(null)
     const [x,setX]=useState("")
@@ -40,7 +40,7 @@ useEffect(()=>{
 },[columns,bar])
 
 useEffect(()=>{
-  seturl('http://127.0.0.1:8000/bar/'+x+'/y/'+y)
+  seturl('http://127.0.0.1:8000/bar/'+x+'/y/'+y+'/'+name)
   fetchBarchart();
   
 },[x,y,url])

@@ -13,7 +13,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Histogram = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [histogram, setHistogram] = useState();
     const[url,setUrl]=useState(null)
     const [x,setX]=useState("")
@@ -40,7 +40,7 @@ useEffect(()=>{
 },[columns,histogram])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/hist/'+x)
+  setUrl('http://127.0.0.1:8000/hist/'+x+'/'+name)
   fetchHistogram();
   
 },[x,url])

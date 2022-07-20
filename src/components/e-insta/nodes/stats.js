@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Stats = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [stats, setStats] = useState();
     const[url,setUrl]=useState(null)
     const [x,setX]=useState("")
@@ -36,7 +36,7 @@ useEffect(()=>{
 },[columns,stats])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/stats/'+x+'/types/'+y)
+  setUrl('http://127.0.0.1:8000/stats/'+x+'/types/'+y+'/'+name)
   //setStats(stats)
   fetchStatsPlot();
   

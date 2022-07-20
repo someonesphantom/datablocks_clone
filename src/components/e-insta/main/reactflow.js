@@ -226,16 +226,16 @@ export default function Flow() {
 
 
   const [columnList, setColumnList] = useState([]);
-  const {columns,setColumns,lastrow,setlastrow} = useContext(UserContext)
+  const {columns,setColumns,lastrow,setlastrow,filename,setFilename} = useContext(UserContext)
   const fetchColumnList = async () => {
-    const response = await fetch(apiMapping.userData.get)
+    const response = await fetch('http://127.0.0.1:8000/columns/'+filename)
     const columnList = await response.json()
     setColumnList(columnList.data)
     setColumns(columnList)
     // console.log("colsfetch",columns)
   }
   const fetchlastrow = async () => {
-    const response = await fetch(apiMapping.userData.getlastrow)
+    const response = await fetch('http://127.0.0.1:8000/lastrow'+'/'+filename)
     const columnList = await response.json()
     setColumnList(columnList.data)
     setlastrow(columnList)

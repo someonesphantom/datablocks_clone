@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Scatter = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [scatter, setScatter] = useState();
     const[url,setUrl]=useState(null)
     const [x,setX]=useState("")
@@ -40,7 +40,7 @@ useEffect(()=>{
 },[columns,scatter])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/scatter/'+x+'/y/'+y)
+  setUrl('http://127.0.0.1:8000/scatter/'+x+'/y/'+y+'/'+name)
   fetchScatterPlot();
   
 },[x,y,url])

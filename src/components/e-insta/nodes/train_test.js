@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Train_test = ({ data }) => {
      
-    const {columns,setColumns} = useContext(UserContext)
+    const {columns,setColumns,name,setName} = useContext(UserContext)
     const [Train_test, setTrain_test] = useState();
     const[url,setUrl]=useState(null)
     
@@ -35,7 +35,7 @@ useEffect(()=>{
 },[columns,Train_test])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/train_test')
+  setUrl('http://127.0.0.1:8000/train_test'+'/'+name)
   fetchTrain_testPlot();
   
 },[url])

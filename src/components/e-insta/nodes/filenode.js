@@ -10,7 +10,7 @@ import files from '../../resources/apiMapping.json';
 import useResponse from '../../response/response';
 import CardHeader from '@mui/material/CardHeader';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-
+import axios, { post } from 'axios';
 
 const Filenode = ({ data }) => {
   if (data.color === "") {
@@ -19,7 +19,8 @@ const Filenode = ({ data }) => {
   const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
 
-  const { tableRows, setTableRows, values, setValues, filetype, setFileType } = useContext(UserContext)
+  const { tableRows, setTableRows, values, setValues, filetype, setFileType,name,setName,ts,setTs } = useContext(UserContext)
+  
   useEffect(() => {
     console.log("Table Rows ", tablerows)
     setTableRows(tablerows)
@@ -33,6 +34,44 @@ const Filenode = ({ data }) => {
     console.log("fileType", filetype)
 
   }, [filetype])
+  useEffect(() => {
+    console.log("name", name)
+    
+  }, [name])
+  
+  const HandleChange = (event) => {
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth()+1;
+    let year = newDate.getFullYear();
+    let hours=newDate.getHours()
+    let minutes=newDate.getMinutes();
+    let seconds=newDate.getSeconds();
+    console.log('name',name)
+    let a=date.toString()+'-'+month.toString()+'-'+year.toString()+'_'+hours.toString()+'-'+minutes.toString()+'-'+seconds.toString()+'_'
+    setTs(a)
+    
+    const n=event.target.files[0].name
+    setName(a+n)
+    const url='http://127.0.0.1:8000/uploadfile/'+a+n+'?projectName=vineel&request=post'
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }
+    
+    post(url, formData, config)
+    .then((response) => {
+      console.log(response.data);
+
+    });
+    
+   
+
+}
 
   return (
     <>
@@ -53,7 +92,9 @@ const Filenode = ({ data }) => {
                   type="file"
                   name="file"
                   onChange={(event) => {
+                    
                     displayresponse(event);
+                    HandleChange(event);
                     { console.log("event", event) }
                     setFileType(event.target.files[0].type)
                   }}
