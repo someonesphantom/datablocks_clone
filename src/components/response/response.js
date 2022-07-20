@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Papa from "papaparse";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 
 
 const useResponse = (initialState) => {
@@ -15,11 +15,8 @@ const useResponse = (initialState) => {
   const [values, setValues] = useState([]);
 
   const displayresponse = (props) => {
-    if (props.type === 'XLSX') {
-      setValues([props.data]);
-      setTableRows(["xlsx"]);
-    }
-    else {
+    
+    
       if (props.target.files[0].type === 'text/csv') {
         Papa.parse(props.target.files[0], {
           header: true,
@@ -52,7 +49,10 @@ const useResponse = (initialState) => {
           setValues(props.target.result)
         };
       }
-    }
+      // if (props.type === 'XLSX') {
+      //   setValues([props.data]);
+      //   setTableRows(["xlsx"]);
+      // }
   }
   return [value, displayresponse, parsedData, tableRows, values]
 

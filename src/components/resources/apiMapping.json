@@ -1,13 +1,13 @@
 {
     "userData": {
-        "postsignup": "http://localhost:8080/signup",
-        "postlogin": "http://localhost:8080/login",
-        "postflows": "http://localhost:8080/postflows",
-        "getflows": "http://localhost:8080/getflows",
-        "putflows": "http://localhost:8080/putflows/",
-        "deleteflow": "http://localhost:8080/deleteflow/",
-        "changepassword": "http://localhost:8080/changepassword/",
-        "deleteallflows": "http://localhost:8080/deleteallflows/",
-        "deleteuser": "http://localhost:8080/deleteuser/"
+        "postsignup": "https://backend-einsta.herokuapp.com/signup",
+        "postlogin": "https://backend-einsta.herokuapp.com/login",
+        "postflows": "https://backend-einsta.herokuapp.com/postflows",
+        "getflows": "https://backend-einsta.herokuapp.com/getflows",
+        "putflows": "https://backend-einsta.herokuapp.com/putflows/",
+        "deleteflow": "https://backend-einsta.herokuapp.com/deleteflow/",
+        "changepassword": "https://backend-einsta.herokuapp.com/changepassword/",
+        "deleteallflows": "https://backend-einsta.herokuapp.com/deleteallflows/",
+        "deleteuser": "https://backend-einsta.herokuapp.com/deleteuser/"
     }
 }

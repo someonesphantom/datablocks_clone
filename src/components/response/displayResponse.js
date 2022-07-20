@@ -10,13 +10,13 @@ const DisplayResponse = () => {
     console.log("table Rows in display ", tableRows)
   }, [tableRows])
 
-  function NewlineText() {
-    // const text = values;
-    // return <div>{text}</div>;
-    const text = values[0].replace(/,/g, ' ');
-    const newText = text.split('\n').map(str => <p>{str}</p>);
-    return newText;
-  }
+  // function NewlineText() {
+  //   // const text = values;
+  //   // return <div>{text}</div>;
+  //   const text = values[0].replace(/,/g, ' ');
+  //   const newText = text.split('\n').map(str => <p>{str}</p>);
+  //   return newText;
+  // }
 
   return (
     <>
@@ -66,13 +66,13 @@ const DisplayResponse = () => {
             ) : (console.log())
           }
 
-          {
+          {/* {
             tableRows[0] === "xlsx" ? (
               <div>
                 <NewlineText />
               </div>
             ) : (console.log())
-          }
+          } */}
         </div>
 
       }
