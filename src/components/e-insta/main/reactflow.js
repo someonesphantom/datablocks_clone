@@ -141,7 +141,7 @@ import Train_test from '../nodes/train_test'
 //   )
 // }
 
-const nodeTypes = { filenode: Filenode, xlsx: Filenode };
+const nodeTypes = { filenode: Filenode, xlsx: Filenode,slice:Slice , stats:Stats , train_test:Train_test,bar:Bar, scatter: Scatter, hist: Histogram, time: TimeSeries };
 const edgeTypes = {
   // custom: CustomEdge,
 };
@@ -222,8 +222,29 @@ export default function Flow() {
     setObjectEdit({});
   };
 
+
+
+
+  const [columnList, setColumnList] = useState([]);
+  const {columns,setColumns,lastrow,setlastrow} = useContext(UserContext)
+  const fetchColumnList = async () => {
+    const response = await fetch(apiMapping.userData.get)
+    const columnList = await response.json()
+    setColumnList(columnList.data)
+    setColumns(columnList)
+    // console.log("colsfetch",columns)
+  }
+  const fetchlastrow = async () => {
+    const response = await fetch(apiMapping.userData.getlastrow)
+    const columnList = await response.json()
+    setColumnList(columnList.data)
+    setlastrow(columnList)
+    // console.log("colsfetch",firstrow)
+  }
   const onConnect = (params) => {
     //func
+    fetchlastrow();
+    fetchColumnList();
     setEdges((eds) => addEdge({
       ...params
     }, eds))
@@ -243,7 +264,191 @@ export default function Flow() {
     if (name === "XLSX") {
       addxlsxNode()
     }
+    if(name=="slice"){
+      addSlice()
+    }
+    if(name=="clean"){
+      addStats()
+    }
+    if(name=="split"){
+      addTraintest()
+    }
+    if(name=='hist'){
+      addHist()
+    }
+    if(name=='bar'){
+      addBar()
+    }
+    if(name=='scatter'){
+      addScatter()
+    }
+    if(name=='time'){
+      addTime()
+    }
   }
+
+  const addBar = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    // generateColor()
+    const position = {
+        x: 250 ,
+        y: 10 ,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+        console.log(nodes);
+        const id = `${++nodeId}`;
+        return [
+            ...nodes,
+            {
+                id,
+                type: "bar",
+                data: { label: "Bar ", value: "" },
+                position,
+            }
+        ];
+    });
+}, [setNodes]);
+
+const addScatter = useCallback(() => {
+  reactFlowWrapper.current += 50;
+  // generateColor()
+  const position = {
+      x: 250 ,
+      y: 10 ,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+          ...nodes,
+          {
+              id,
+              type: "scatter",
+              data: { label: "Scatterplot ", value: "" },
+              position,
+          }
+      ];
+  });
+}, [setNodes]);
+
+const addHist = useCallback(() => {
+  reactFlowWrapper.current += 50;
+  // generateColor()
+  const position = {
+      x: 250 ,
+      y: 10 ,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+          ...nodes,
+          {
+              id,
+              type: "hist",
+              data: { label: "Histogram ", value: "" },
+              position,
+          }
+      ];
+  });
+}, [setNodes]);
+
+const addTime = useCallback(() => {
+  reactFlowWrapper.current += 50;
+  // generateColor()
+  const position = {
+      x: 250 ,
+      y: 10 ,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+          ...nodes,
+          {
+              id,
+              type: "time",
+              data: { label: "Time Series ", value: "" },
+              position,
+          }
+      ];
+  });
+}, [setNodes]);
+
+const addSlice = useCallback(() => {
+  reactFlowWrapper.current += 50;
+  // generateColor()
+  const position = {
+      x: 250 ,
+      y: 10 ,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+      console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+          ...nodes,
+          {
+              id,
+              type: "slice",
+              data: { label: "lastrow ", value: "" },
+              position,
+          }
+      ];
+  });
+}, [setNodes]);
+
+const addTraintest = useCallback(() => {
+  reactFlowWrapper.current += 50;
+  // generateColor()
+  const position = {
+      x: 250 ,
+      y: 10 ,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+      console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+          ...nodes,
+          {
+              id,
+              type: "train_test",
+              data: { label: "train_test ", value: "" },
+              position,
+          }
+      ];
+  });
+}, [setNodes]);
+
+const addStats = useCallback(() => {
+reactFlowWrapper.current += 50;
+// generateColor()
+const position = {
+    x: 250 ,
+    y: 10 ,
+};
+setPos(position)
+setNodes((nodes) => {
+    console.log(nodes);
+    const id = `${++nodeId}`;
+    return [
+        ...nodes,
+        {
+            id,
+            type: "stats",
+            data: { label: "stats ", value: "" },
+            position,
+        }
+    ];
+});
+}, [setNodes]);
+
+
   const addCNode = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;

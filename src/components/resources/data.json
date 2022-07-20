@@ -100,7 +100,21 @@
             "desc": "Slices a data set based on indices.",
             "input": "Dataset, Array",
             "output": "Dataset",
-            "callingnode": "addINode"
+            "callingnode": "slice"
+        },
+        {
+            "name": "Clean",
+            "desc": "Cleans a data set.",
+            "input": "Dataset, Array",
+            "output": "Dataset",
+            "callingnode": "clean"
+        },
+        {
+            "name": "Split",
+            "desc": "Splits a data set.",
+            "input": "Dataset, Array",
+            "output": "Dataset",
+            "callingnode": "split"
         }
     ],
     "GeoData": [
@@ -139,28 +153,28 @@
             "desc": "Displays a bar chart of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode": "addINode"
+            "callingnode": "bar"
         },
         {
             "name": "Histogram",
             "desc": "Displays a histogram of a given column name.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode": "addINode"
+            "callingnode": "hist"
         },
         {
             "name": "Scatterplot",
             "desc": "Displays a scatterplot of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode": "addINode"
+            "callingnode": "scatter"
         },
         {
             "name": "Time Series",
             "desc": "Displays a timeseries line chart of given x and y column names.",
             "input": "Dataset",
             "output": "Dataset",
-            "callingnode": "addINode"
+            "callingnode": "time"
         }
     ],
     "Misc": [

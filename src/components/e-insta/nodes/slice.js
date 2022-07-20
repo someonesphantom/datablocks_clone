@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect,useCallback,useContext } from 'react';
 import  { Handle } from 'react-flow-renderer';
-import { UserContext, UserContextProvider } from './UserContext';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import files from '../resources/apimapping.json';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import DragIndicatorOutlinedIcon from '@mui/icons-material/DragIndicatorOutlined';
 import TextField from '@mui/material/TextField';
+import files from '../../resources/apiMapping.json';
+import { UserContext, UserContextProvider } from '../context/usercontext';
 
 const Slice = ({ data }) => {
      
