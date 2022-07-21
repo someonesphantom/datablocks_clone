@@ -65,14 +65,13 @@ useEffect(()=>{
           Train_test 
           
   </Typography>
-{/* <img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} src={Train_test} alt="Train_test"/> */}
- <div>{Train_test}</div>
- {/* <div>{Train_test[1]}</div>  */}
+ <div style={{color:'white'}}>{Train_test}</div>
+
       </CardContent>
     </React.Fragment>
   );
 
-  // console.log(data)
+  
   return (
     <>
      <UserContextProvider >

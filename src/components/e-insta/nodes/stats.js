@@ -92,13 +92,11 @@ const types=['mean','median','mode']
     
   </select>
   </Typography>
-{/* <img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} src={Stats} alt="Stats"/> */}
-<div>{JSON.stringify(stats)}</div>
+<div style={{color:'white'}}>{JSON.stringify(stats)}</div>
       </CardContent>
     </React.Fragment>
   );
 
-  // console.log(data)
   return (
     <>
      <UserContextProvider >

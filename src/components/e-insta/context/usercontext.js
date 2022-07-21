@@ -14,10 +14,8 @@ export function UserContextProvider({ children }) {
   const [firstrow,setfirstrow] = useState(0);
   const [lastrow,setlastrow] = useState(0);
   const [slice,setslice] = useState('0');
-  const [filename,setFilename]=useState('');
-  useEffect(()=>{
-    setFilename(name)
-  },{name})
+  const [filecontent,setFilecontent]=useState({});
+  
   useEffect(
     () => {
       console.log("tablerows ", tableRows)

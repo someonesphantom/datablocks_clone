@@ -197,7 +197,7 @@
             "desc": "Lets you export data as csv, json or geojson.",
             "input": "Dataset, Geojson, Topojson, Object",
             "output": "-",
-            "callingnode": "addINode"
+            "callingnode": "exports"
         }
     ]
 }

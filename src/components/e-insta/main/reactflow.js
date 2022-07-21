@@ -58,7 +58,7 @@ import Bar from '../nodes/bar'
 import Slice from '../nodes/slice'
 import Stats from '../nodes/stats'
 import Train_test from '../nodes/train_test'
-
+import Exports from '../nodes/exportscsv';
 
 // const XLSXNode = ({ data }) => {
 //   if (data.color === "") {
@@ -141,7 +141,8 @@ import Train_test from '../nodes/train_test'
 //   )
 // }
 
-const nodeTypes = { filenode: Filenode, xlsx: Filenode,slice:Slice , stats:Stats , train_test:Train_test,bar:Bar, scatter: Scatter, hist: Histogram, time: TimeSeries };
+const nodeTypes = { filenode: Filenode, xlsx: Filenode,slice:Slice , stats:Stats , train_test:Train_test,bar:Bar, scatter: Scatter
+  , hist: Histogram, time: TimeSeries,exports:Exports };
 const edgeTypes = {
   // custom: CustomEdge,
 };
@@ -183,7 +184,7 @@ export default function Flow() {
   const [objectEdit, setObjectEdit] = useState({});
   const [pos, setPos] = useState({});
   const [edit, setEdit] = React.useState(false);
-  const [name, setName] = useState("untitled flow");
+  const [flowname, setFlowname] = useState("untitled flow");
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -214,28 +215,28 @@ export default function Flow() {
   const onDoubleClickOfNode = (node) => {
     { console.log("node", node) }
     setObjectEdit(node)
-    { console.log("edges", edges) }
-    { console.log("nodes", nodes) }
+    // { console.log("edges", edges) }
+    // { console.log("nodes", nodes) }
   }
 
   const onPaneClick = () => {
     setObjectEdit({});
   };
 
-
-
-
   const [columnList, setColumnList] = useState([]);
-  const {columns,setColumns,lastrow,setlastrow,filename,setFilename} = useContext(UserContext)
+  const {columns,setColumns,lastrow,setlastrow,name,setName} = useContext(UserContext)
+  useEffect(()=>{
+    console.log('name',name)
+  },[name])
   const fetchColumnList = async () => {
-    const response = await fetch('http://127.0.0.1:8000/columns/'+filename)
+    const response = await fetch('http://127.0.0.1:8000/columns/'+name)
     const columnList = await response.json()
     setColumnList(columnList.data)
     setColumns(columnList)
     // console.log("colsfetch",columns)
   }
   const fetchlastrow = async () => {
-    const response = await fetch('http://127.0.0.1:8000/lastrow'+'/'+filename)
+    const response = await fetch('http://127.0.0.1:8000/lastrow'+'/'+name)
     const columnList = await response.json()
     setColumnList(columnList.data)
     setlastrow(columnList)
@@ -249,6 +250,7 @@ export default function Flow() {
       ...params
     }, eds))
   };
+  //console.log('edges',edges)
   useEffect(() => {
     if (edges.length !== 0) {
       { console.log("edges", edges) }
@@ -284,6 +286,9 @@ export default function Flow() {
     }
     if(name=='time'){
       addTime()
+    }
+    if(name=='exports'){
+      addExports()
     }
   }
 
@@ -448,6 +453,28 @@ setNodes((nodes) => {
 });
 }, [setNodes]);
 
+const addExports = useCallback(() => {
+  handleClose()
+  reactFlowWrapper.current += 50;
+  const id = `${++nodeId}`;
+  const position = {
+    x: 250,
+    y: 10,
+  };
+  setPos(position)
+  setNodes((nodes) => {
+    return [
+      ...nodes,
+      {
+        id,
+        type: "exports",
+        data: { id: `${id}`, label: "exports csv ", value: "", color: "" },
+        position,
+      }
+    ];
+  });
+  handleClose()
+}, [nodes]);
 
   const addCNode = useCallback(() => {
     handleClose()

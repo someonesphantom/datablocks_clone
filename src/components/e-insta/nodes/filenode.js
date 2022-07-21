@@ -19,7 +19,7 @@ const Filenode = ({ data }) => {
   const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
 
-  const { tableRows, setTableRows, values, setValues, filetype, setFileType,name,setName,ts,setTs } = useContext(UserContext)
+  const { tableRows, setTableRows, values, setValues, filetype, setFileType,name,setName,ts,setTs,filecontent,setFilecontent } = useContext(UserContext)
   
   useEffect(() => {
     console.log("Table Rows ", tablerows)
@@ -66,9 +66,12 @@ const Filenode = ({ data }) => {
     post(url, formData, config)
     .then((response) => {
       console.log(response.data);
-
+      setFilecontent(response.data)
     });
     
+    useEffect(()=>{
+      console.log('filecontent',filecontent)
+    },[])
    
 
 }

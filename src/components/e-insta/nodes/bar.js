@@ -92,7 +92,7 @@ const yaxisChange = event => {
     })}
   </select>
   </Typography>
-<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} src={bar} alt="bar"/>
+<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem',visibility:'visible'}} onError = {e => e.target.style.display = 'none'} onLoad={e => e.target.style.display = 'revert'} src={bar} alt="bar"/>
       </CardContent>
     </React.Fragment>
   );

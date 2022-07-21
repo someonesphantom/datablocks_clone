@@ -65,16 +65,16 @@ const fetchslice = async () => {
       <Typography align="left" fontFamily='"IBM Plex Sans", system-ui, sans-serif' fontSize={12} minWidth={100} color="white">
           From Index: 
           
-  <TextField id="outlined-basic" label="Outlined" variant="outlined" value={firstrow} onChange={(event)=>{handleChange(event)}}/>
+  <TextField id="outlined-basic"  label="Outlined" variant="outlined" value={firstrow} onChange={(event)=>{handleChange(event)}}/>
   </Typography>
   <br></br>
-  <Typography align="left" fontFamily='"IBM Plex Sans", system-ui, sans-serif' fontSize={12} minWidth={100} color="white">
+  <Typography  align="left" fontFamily='"IBM Plex Sans", system-ui, sans-serif' fontSize={12} minWidth={100} color="white">
   To Index: 
           
-  <TextField id="outlined-basic" label="Outlined" variant="outlined" value={lastrow} onChange={(event)=>{handleChange1(event)}} />
+  <TextField style={{color:'white'}} id="outlined-basic" label="Outlined" variant="outlined" value={lastrow} onChange={(event)=>{handleChange1(event)}} />
   </Typography>
   
-  <div>{slice}</div>
+  <div style={{color:'white'}}>{slice}</div>
   {console.log('slice',slice)}
 
       </CardContent>

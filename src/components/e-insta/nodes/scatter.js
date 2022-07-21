@@ -13,10 +13,10 @@ import { UserContext, UserContextProvider } from '../context/usercontext';
 const Scatter = ({ data }) => {
      
     const {columns,setColumns,name,setName} = useContext(UserContext)
-    const [scatter, setScatter] = useState();
+    const [scatter, setScatter] = useState(null);
     const[url,setUrl]=useState(null)
-    const [x,setX]=useState("")
-    const [y,setY]=useState("")
+    const [x,setX]=useState(null)
+    const [y,setY]=useState(null)
 
     const fetchScatterPlot = async () => {
       const response = await fetch(url)
@@ -40,8 +40,11 @@ useEffect(()=>{
 },[columns,scatter])
 
 useEffect(()=>{
-  setUrl('http://127.0.0.1:8000/scatter/'+x+'/y/'+y+'/'+name)
-  fetchScatterPlot();
+  
+    setUrl('http://127.0.0.1:8000/scatter/'+x+'/y/'+y+'/'+name)
+    fetchScatterPlot();
+  
+  
   
 },[x,y,url])
 
@@ -55,6 +58,7 @@ const yaxisChange = event => {
      setY(event.target.value);
   }
 };
+
   const card = (
 
     <React.Fragment>
@@ -92,11 +96,11 @@ const yaxisChange = event => {
     })}
   </select>
   </Typography>
-<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} src={scatter} alt="scatter"/>
+<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}}  onError = {e => e.target.style.display = 'none'} onLoad={e => e.target.style.display = 'revert'}  src={scatter} alt="scatter"/>
       </CardContent>
     </React.Fragment>
   );
-
+  
   // console.log(data)
   return (
     <>

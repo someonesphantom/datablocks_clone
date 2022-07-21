@@ -79,7 +79,7 @@ const xaxisChange = event => {
   </select>
   </Typography>
   <br></br>
-<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} src={histogram} alt="Histogram"/>
+<img style={{width:'90%',height:'100%',objectfit:'cover',margin:'1rem'}} onError = {e => e.target.style.display = 'none'} onLoad={e => e.target.style.display = 'revert'} src={histogram} alt="Histogram"/>
       </CardContent>
     </React.Fragment>
   );
