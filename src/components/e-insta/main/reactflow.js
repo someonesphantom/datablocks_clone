@@ -213,6 +213,15 @@ export default function Flow() {
     if (name === "XLSX") {
       addXLSXNode()
     }  
+    if (name === "XML") {
+      addXMLNode()
+    }
+    if (name === "Output") {
+      addMNode()
+    }
+    if (name === "Csv") {
+      addCSVNode()
+    }
   }
 
   const addBar = useCallback(() => {
@@ -466,7 +475,81 @@ const addExports = useCallback(() => {
     });
     handleClose()
   }, [nodes]);
+  const addXMLNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      //console.log(nodes);
 
+
+      return [
+        ...nodes,
+        {
+          id,
+          type: "destination",
+          data: { id: `${id}`, label: "XML ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+  const addMNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      //console.log(nodes);
+
+
+      return [
+        ...nodes,
+        {
+          id,
+          type: "destination",
+          data: { id: `${id}`, label: "JSON ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+  const addCSVNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      //console.log(nodes);
+
+
+      return [
+        ...nodes,
+        {
+          id,
+          type: "destination",
+          data: { id: `${id}`, label: "XML ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
 
 
   const saveflow = () => {

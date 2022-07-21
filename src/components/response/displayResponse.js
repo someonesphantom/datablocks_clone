@@ -65,6 +65,39 @@ const DisplayResponse = () => {
               </div>
             ) : (console.log())
           }
+           {tableRows.length !== 0 && filetype === "text/xml" && (
+            <>
+              {/* <DataGrid
+                          
+        columns={tableRows} 
+        rows={values}
+      /> */}
+              <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
+                <thead>
+                  <tr>
+                    {tableRows.map((rows, index) => {
+
+                      return <th key={index}>{rows}</th>;
+                    })}
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {values.map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        {value.map((val, i) => {
+                          return <td key={i}>{val}</td>;
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
+          )
+
+          }
 
           {tableRows.length !== 0 && filetype === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && (
             <>

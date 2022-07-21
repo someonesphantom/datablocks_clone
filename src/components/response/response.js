@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Papa from "papaparse";
 import apiMapping from '../resources/apiMapping.json';
+import ApiLinks from "../resources/apiMapping.json";
 import axios from 'axios';
 
 
@@ -47,11 +48,36 @@ const useResponse = (initialState) => {
       });
     }
     if (props.target.files[0].type === 'application/json') {
-      const fileReader = new FileReader();
-      fileReader.readAsText(props.target.files[0], "UTF-8");
-      fileReader.onload = props => {
-        setValues(props.target.result)
-      };
+      const formData = new FormData()
+      formData.append("file",props.target.files[0])
+
+      axios.post(ApiLinks.userData.UploadJson,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((res)=>{
+      const data = res.data
+      console.log("response",res);
+            setTableRows(data)
+            setValues(data) 
+      })
+    }
+    if(props.target.files[0].type === 'text/xml'){
+      const formData = new FormData()
+      formData.append("file",props.target.files[0])
+
+      axios.post(ApiLinks.userData.uploadXmlFile,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((res)=>{
+        const xml_data = res.data.data
+        console.log(xml_data); 
+        console.log(JSON.parse(xml_data));
+        const data = JSON.parse(xml_data)
+        setTableRows(data.columns)
+        setValues(data.data) 
+      })
     }
     if (props.target.files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
       const formData = new FormData()
