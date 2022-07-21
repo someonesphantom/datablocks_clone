@@ -59,90 +59,13 @@ import Slice from '../nodes/slice'
 import Stats from '../nodes/stats'
 import Train_test from '../nodes/train_test'
 import Exports from '../nodes/exportscsv';
+import DestinationNode from '../nodes/output';
+import SourceNode from '../nodes/input';
 
-// const XLSXNode = ({ data }) => {
-//   if (data.color === "") {
-//     data.color = "333154"
-//   }
 
-//   const onChange = (e) => {
-//     const [file] = e.target.files;
-//     const reader = new FileReader();
-
-//     reader.onload = (evt) => {
-//       const bstr = evt.target.result;
-//       const wb = XLSX.read(bstr, { type: "binary" });
-//       const wsname = wb.SheetNames[0];
-//       const ws = wb.Sheets[wsname];
-//       const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
-//       let payload = {
-//         type: "XLSX",
-//         data: data
-//       }
-//       displayresponse(payload);
-//     };
-//     reader.readAsBinaryString(file);
-//   };
-//   const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
-
-//   const { tableRows, setTableRows, values, setValues, filetype, setFileType } = useContext(UserContext)
-//   useEffect(() => {
-//     console.log("Table Rows ", tablerows)
-//     setTableRows(tablerows)
-//   }, [tablerows])
-//   useEffect(() => {
-//     console.log("values  ", Values)
-
-//     setValues(Values)
-//   }, [Values])
-//   useEffect(() => {
-//     console.log("fileType", filetype)
-
-//   }, [filetype])
-
-//   return (
-//     <>
-//       <UserContextProvider >
-//         <Box className="boxf1" sx={{ borderColor: "#" + data.color }}>
-//           <Card variant="outlined" className='cardf1' >
-//             <CardHeader className='cd' style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
-//             <React.Fragment>
-//               <CardContent>
-//                 <left>
-//                   <DragIndicatorIcon sx={{ fontSize: "30px", position: "absolute", left: "5px", top: "5px", color: "white" }} />
-//                   <Typography fontSize="15px" position="absolute" left="30px" top="8px" color="white">
-//                     Choose a XLSX file
-//                   </Typography>
-//                 </left>
-
-//                 <input accept=".xlsx" type="file" onChange={e => { onChange(e) }} />
-
-//                 <Typography className='tyf1' color="white" gutterBottom>
-//                 </Typography>
-
-//                 <Typography variant="body2" color="text.secondary">
-
-//                 </Typography>
-
-//               </CardContent>
-
-//             </React.Fragment>
-//           </Card>
-//         </Box>
-//         <Handle
-//           type="source"
-//           position="right"
-//           id="a"
-//           className='handleright'
-//           isConnectable={true}
-//         />
-//       </UserContextProvider>
-//     </>
-//   )
-// }
 
 const nodeTypes = { filenode: Filenode, xlsx: Filenode,slice:Slice , stats:Stats , train_test:Train_test,bar:Bar, scatter: Scatter
-  , hist: Histogram, time: TimeSeries,exports:Exports };
+  , hist: Histogram, time: TimeSeries,exports:Exports, source: SourceNode, destination:DestinationNode};
 const edgeTypes = {
   // custom: CustomEdge,
 };
@@ -224,7 +147,7 @@ export default function Flow() {
   };
 
   const [columnList, setColumnList] = useState([]);
-  const {columns,setColumns,lastrow,setlastrow,name,setName} = useContext(UserContext)
+  const {columns,setColumns,lastrow,setlastrow,name,setName,File,setFile} = useContext(UserContext)
   useEffect(()=>{
     console.log('name',name)
   },[name])
@@ -263,9 +186,6 @@ export default function Flow() {
     } if (name === "Paste") {
       addCNode()
     }
-    if (name === "XLSX") {
-      addxlsxNode()
-    }
     if(name=="slice"){
       addSlice()
     }
@@ -290,6 +210,9 @@ export default function Flow() {
     if(name=='exports'){
       addExports()
     }
+    if (name === "XLSX") {
+      addXLSXNode()
+    }  
   }
 
   const addBar = useCallback(() => {
@@ -495,6 +418,7 @@ const addExports = useCallback(() => {
     });
     handleClose()
   }, [nodes]);
+
   const addINode = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;
@@ -509,7 +433,7 @@ const addExports = useCallback(() => {
         ...nodes,
         {
           id,
-          type: "filenode",
+          type: "source",
           data: { id: `${id}`, label: "File ", value: "", color: "" },
           position,
         }
@@ -517,8 +441,7 @@ const addExports = useCallback(() => {
     });
     handleClose()
   }, [nodes]);
-
-  const addxlsxNode = useCallback(() => {
+  const addXLSXNode = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;
     const id = `${++nodeId}`;
@@ -528,19 +451,21 @@ const addExports = useCallback(() => {
     };
     setPos(position)
     setNodes((nodes) => {
+      //console.log(nodes);
+
+
       return [
         ...nodes,
         {
           id,
-          type: "xlsx",
-          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          type: "destination",
+          data: { id: `${id}`, label: "XLSX ", value: "", color: "" },
           position,
         }
       ];
     });
     handleClose()
   }, [nodes]);
-
 
 
 

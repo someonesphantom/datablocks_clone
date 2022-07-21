@@ -1,10 +1,24 @@
 {
     "Inputdata": [
         {
-            "name": "CSV/JSON",
+            "name": "CSV",
             "desc": "Handles csv, json, geojson or topojson files.",
             "input": "-",
             "output": "Dataset, Geojson",
+            "callingnode": "File"
+        },
+        {
+            "name": "Json",
+            "desc": "Loads data from google sheets.",
+            "input": "-",
+            "output": "Dataset",
+            "callingnode": "File"
+        },
+        {
+            "name": "XLSX",
+            "desc": "Handles xlsx files.",
+            "input": "-",
+            "output": "Dataset, Object, Geojson",
             "callingnode": "File"
         },
         {
@@ -13,64 +27,36 @@
             "input": "-",
             "output": "Dataset, Object, String, Number, Geojson",
             "callingnode": "File"
+        }
+    ],
+    "Outputdata": [
+        {
+            "name": "csv",
+            "desc": "Handles csv",
+            "input": "-",
+            "output": "Dataset, Geojson",
+            "callingnode": "Csv"
+        },
+        {
+            "name": "Json",
+            "desc": "Loads data from google sheets.",
+            "input": "-",
+            "output": "Dataset",
+            "callingnode": "Output"
         },
         {
             "name": "XLSX",
-            "desc": "Handles xlsx files.",
+            "desc": "Handles xlsx files",
             "input": "-",
             "output": "Dataset, Object, Geojson",
             "callingnode": "XLSX"
         },
         {
-            "name": "Sheets",
-            "desc": "Loads data from google sheets.",
-            "input": "-",
-            "output": "Dataset",
-            "callingnode": "addINode"
-        },
-        {
-            "name": "Example Data",
-            "desc": "Some example data for playing around with data blocks.",
-            "input": "-",
-            "output": "Dataset, Geojson",
-            "callingnode": "addINode"
-        }
-    ],
-    "Outputdata": [
-        {
-            "name": "File",
-            "desc": "Handles csv, json, geojson or topojson files.",
-            "input": "-",
-            "output": "Dataset, Geojson",
-            "callingnode": "File"
-        },
-        {
-            "name": "Paste",
-            "desc": "Paste input: string, number, csv, json, geojson or topojson",
-            "input": "-",
-            "output": "Dataset, Object, String, Number, Geojson",
-            "callingnode": "Paste"
-        },
-        {
-            "name": "HTTP Request",
-            "desc": "Loads data via a http request.",
+            "name": "XML",
+            "desc": "Handles xml files",
             "input": "-",
             "output": "Dataset, Object, Geojson",
-            "callingnode": "addINode"
-        },
-        {
-            "name": "Sheets",
-            "desc": "Loads data from google sheets.",
-            "input": "-",
-            "output": "Dataset",
-            "callingnode": "addINode"
-        },
-        {
-            "name": "Example Data",
-            "desc": "Some example data for playing around with data blocks.",
-            "input": "-",
-            "output": "Dataset, Geojson",
-            "callingnode": "addINode"
+            "callingnode": "XML"
         }
     ],
     "Transform": [

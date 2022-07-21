@@ -8,13 +8,15 @@ export function UserContextProvider({ children }) {
   //State to store the values
   const [values, setValues] = useState([]);
   const [columns,setColumns] = useState([]);
-  const [name,setName]=useState('');
+  const [name, setName] = useState("untitled flow");
   const [ts,setTs]=useState([]);
   const [filetype, setFileType] = useState([]);
   const [firstrow,setfirstrow] = useState(0);
   const [lastrow,setlastrow] = useState(0);
   const [slice,setslice] = useState('0');
   const [filecontent,setFilecontent]=useState({});
+  const [File,setFile] = useState(null)
+
   
   useEffect(
     () => {
@@ -40,7 +42,9 @@ export function UserContextProvider({ children }) {
     lastrow,
     setlastrow,
     slice,
-    setslice
+    setslice,
+    File,
+    setFile
   }
 
   return (
