@@ -362,7 +362,6 @@ const addHist = useCallback(() => {
 
 const addTime = useCallback(() => {
   reactFlowWrapper.current += 50;
-  // generateColor()
   const position = {
       x: 250 ,
       y: 10 ,
