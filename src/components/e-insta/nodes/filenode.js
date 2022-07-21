@@ -71,7 +71,7 @@ const Filenode = ({ data }) => {
     
     useEffect(()=>{
       console.log('filecontent',filecontent)
-    },[])
+    },[filecontent])
    
 
 }
