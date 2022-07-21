@@ -340,7 +340,6 @@ const addScatter = useCallback(() => {
 
 const addHist = useCallback(() => {
   reactFlowWrapper.current += 50;
-  // generateColor()
   const position = {
       x: 250 ,
       y: 10 ,
