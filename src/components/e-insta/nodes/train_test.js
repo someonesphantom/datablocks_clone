@@ -15,7 +15,7 @@ const Train_test = ({ data }) => {
     const {columns,setColumns,name,setName} = useContext(UserContext)
     const [Train_test, setTrain_test] = useState();
     const[url,setUrl]=useState(null)
-    
+    const[showdata,setShowdata]=useState(false)
 
     const fetchTrain_testPlot = async () => {
         const response = await fetch(url)
@@ -62,10 +62,12 @@ useEffect(()=>{
       
       <hr style={{borderColor:"#4C497E"}}></hr>
       <Typography align="left" fontFamily='"IBM Plex Sans", system-ui, sans-serif' fontSize={12} minWidth={100} color="white">
-          Train_test 
+           
           
   </Typography>
- <div style={{color:'white'}}>{Train_test}</div>
+  <Button variant='contained' style={{color:'white'}} onClick={()=>{if(showdata===true){setShowdata(false)} else{setShowdata(true)}}} >Show Data</Button>
+  {showdata===true?(<div style={{color:'white'}}>{Train_test}</div>):(console.log())}
+ 
 
       </CardContent>
     </React.Fragment>

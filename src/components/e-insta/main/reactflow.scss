@@ -1,6 +1,7 @@
 .boxf1 {
     border: 16px;
     border-radius: 16px;
+    width: 180px
 }
 
 .cardf1 {
@@ -56,8 +57,9 @@
      border-radius: 10px 0px 0px 10px;
            height: 100%;
            position: absolute;
+           margin-left: -10px;
            width: 19px;
-            left: -20px;
+            right: -20px;
 }
 
 .responsegrid{

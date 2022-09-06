@@ -1,80 +1,84 @@
 import React, { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import { Handle } from 'react-flow-renderer';
+import { UserContext, UserContextProvider } from '../context/usercontext';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import DragIndicatorOutlinedIcon from '@mui/icons-material/DragIndicatorOutlined';
 import files from '../../resources/apiMapping.json';
-import { UserContext, UserContextProvider } from '../context/usercontext';
+import useResponse from '../../response/response';
 import CardHeader from '@mui/material/CardHeader';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import useResponse from '../../response/response';
+import axios, { post } from 'axios';
+import apiMapping from '../../resources/apiMapping.json';
 
 
-const SourceNode = ({ data }) => {
+const Xmlinputnode = ({ data }) => {
     if (data.color === "") {
         data.color = "333154"
     }
     const [value, displayresponse, parsedData, tablerows, Values] = useResponse(null)
 
+    const { tableRows, uploadedfile, setuploadedfile, setTableRows, values, setValues, filetype, setFileType, name, setName, ts, setTs, filecontent, setFilecontent } = useContext(UserContext)
 
+    const HandleChange = (event) => {
+        // console.log(event.target.files)
+        setFileType(event.target.files[0].type)
 
+        const formData = new FormData()
+        formData.append("file", event.target.files[0])
 
-    const { tableRows, setTableRows, values, setValues, filetype, setFileType, setFile } = useContext(UserContext)
-    useEffect(() => {
-        console.log("Table Rows ", tablerows)
-        setTableRows(tablerows)
-    }, [tablerows])
-    useEffect(() => {
-        console.log("values  ", Values)
+        axios.post(apiMapping.userData.uploadxml, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            // console.log("response for xml", response);
+            let recievedpayload = JSON.parse(response.data.data);
+            setTableRows(recievedpayload.columns)
+            setValues(recievedpayload.data)
+        })
+    }
 
-        setValues(Values)
-    }, [Values])
-    useEffect(() => {
-        console.log("fileType", filetype)
-
-    }, [filetype])
+    const [filename, setfilename] = useState("")
+    const [flag, setflag] = useState(false)  
 
     return (
         <>
             <UserContextProvider >
                 <Box className="boxf1" sx={{ borderColor: "#" + data.color }}>
-                    <Card variant="outlined" className='cardf1' style={{ width: "200px" }}>
+                    <Card variant="outlined" className='cardf1' >
                         <CardHeader className='cd' style={{ backgroundColor: "#" + data.color, border: 1, borderColor: "#" + data.color, borderRadius: 2 }} />
                         <React.Fragment>
                             <CardContent>
                                 <left>
                                     <DragIndicatorIcon sx={{ fontSize: "30px", position: "absolute", left: "5px", top: "5px", color: "white" }} />
                                     <Typography fontSize="15px" position="absolute" left="30px" top="8px" color="white">
-                                        Input
+                                        Upload XML File
                                     </Typography>
-
                                 </left>
                                 <input
                                     type="file"
                                     name="file"
                                     onChange={(event) => {
-                                        setFile(event.target.files[0])
+                                        setuploadedfile(event.target.files[0]);
                                         displayresponse(event);
-                                        { console.log("event", event) }
-                                        setFileType(event.target.files[0].type)
+                                        HandleChange(event);
+                                        setfilename(event.target.files[0].name)
+                                        setflag(true)
                                     }}
-                                    accept=".csv, .json, .xml, .xlsx"
+                                    accept=".xml"
                                     className='inpf1'
                                 />
-                                <Typography className='tyf1' color="white" gutterBottom>
-                                    {data.value}
-                                </Typography>
 
-                                <Typography variant="body2" color="text.secondary">
-
-                                </Typography>
+                                {flag ? (
+                                    <Typography variant="body2" color="text.secondary" style={{ marginLeft: "0px", marginTop: "5px", marginBottom: "-13px" }}>
+                                        {filename} uploaded
+                                    </Typography>
+                                ) : (console.log())}
 
                             </CardContent>
-
                         </React.Fragment>
                     </Card>
                 </Box>
@@ -89,5 +93,4 @@ const SourceNode = ({ data }) => {
         </>
     )
 }
-
-export default SourceNode;
+export default Xmlinputnode

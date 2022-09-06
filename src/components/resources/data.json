@@ -2,84 +2,77 @@
     "Inputdata": [
         {
             "name": "CSV",
+            "desc": "Handles csv upload",
+            "input": "-",
+            "output": "Datagrid",
+            "callingnode": "File"
+        },
+        {
+            "name": "JSON",
+            "desc": "Handles json upload.",
+            "input": "-",
+            "output": "Datagrid",
+            "callingnode": "json"
+        },
+        {
+            "name": "XML",
+            "desc": "Handles xml upload.",
+            "input": "-",
+            "output": "Datagrid",
+            "callingnode": "xml"
+        },
+        {
+            "name": "XLSX",
+            "desc": "Handles xlsx upload.",
+            "input": "-",
+            "output": "Datagrid",
+            "callingnode": "xlsx"
+        }
+    ],
+    "Outputdata": [
+        {
+            "name": "File",
             "desc": "Handles csv, json, geojson or topojson files.",
             "input": "-",
             "output": "Dataset, Geojson",
             "callingnode": "File"
         },
         {
-            "name": "Json",
-            "desc": "Loads data from google sheets.",
-            "input": "-",
-            "output": "Dataset",
-            "callingnode": "File"
-        },
-        {
-            "name": "XLSX",
-            "desc": "Handles xlsx files.",
-            "input": "-",
-            "output": "Dataset, Object, Geojson",
-            "callingnode": "File"
-        },
-        {
-            "name": "XML",
-            "desc": "Handles xml files.",
-            "input": "-",
-            "output": "Dataset, Object, String, Number, Geojson",
-            "callingnode": "File"
-        }
-    ],
-    "Outputdata": [
-        {
-            "name": "csv",
-            "desc": "Handles csv",
-            "input": "-",
-            "output": "Dataset, Geojson",
-            "callingnode": "Csv"
-        },
-        {
-            "name": "Json",
-            "desc": "Loads data from google sheets.",
-            "input": "-",
-            "output": "Dataset",
-            "callingnode": "Output"
-        },
-        {
-            "name": "XLSX",
-            "desc": "Handles xlsx files",
-            "input": "-",
-            "output": "Dataset, Object, Geojson",
-            "callingnode": "XLSX"
-        },
-        {
-            "name": "XML",
-            "desc": "Handles xml files",
-            "input": "-",
-            "output": "Dataset, Object, Geojson",
-            "callingnode": "XML"
+            "name": "Save",
+            "desc": "Saves file to Downloads folder",
+            "input": "csv, json, xml, xlsx",
+            "output": "-",
+            "callingnode": "savefiles"
         }
     ],
     "Transform": [
         {
-            "name": "Filter",
-            "desc": "Groups a data set based on a given column name.",
-            "input": "Dataset",
-            "output": "Dataset",
-            "callingnode": "addINode"
+            "name": "Transform XLSX",
+            "desc": "converts xlsx file to other file types.",
+            "input": "xlsx file",
+            "output": "csv/xml/json file",
+            "callingnode": "xlsxtransform"
         },
         {
-            "name": "Merge",
-            "desc": "Merges two data sets based on the given column names.",
-            "input": "Dataset, Geojson",
-            "output": "Dataset",
-            "callingnode": "addINode"
+            "name": "Transform JSON",
+            "desc": "converts json file to other file types.",
+            "input": "json file",
+            "output": "csv/xlsx/xml file",
+            "callingnode": "jsontransform"
         },
         {
-            "name": "Group",
-            "desc": "Groups a data set based on a given column name.",
-            "input": "Dataset, Geojson",
-            "output": "Dataset",
-            "callingnode": "addINode"
+            "name": "Transform XML",
+            "desc": "converts xml file to other file types.",
+            "input": "xml file",
+            "output": "csv/xlsx/json file",
+            "callingnode": "xmltransform"
+        },
+        {
+            "name": "Transform CSV",
+            "desc": "converts csv file to other file types.",
+            "input": "csv file",
+            "output": "xlsx/xml/json file",
+            "callingnode": "csvtransform"
         },
         {
             "name": "Slice",
@@ -109,28 +102,28 @@
             "desc": "Calculates the bounding box of a given geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         },
         {
             "name": "Centroid",
             "desc": "Calculates the centroid of a given geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         },
         {
             "name": "Area",
             "desc": "Calculates the area in square meters of a given geojson.",
             "input": "Geojson",
             "output": "Number",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         },
         {
             "name": "Buffer",
             "desc": "Buffers a geojson.",
             "input": "Geojson",
             "output": "Geojson",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         }
     ],
     "Vis": [
@@ -169,14 +162,14 @@
             "desc": "Gives you min, max, avg, mean and count of a given column name.",
             "input": "Dataset",
             "output": "-",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         },
         {
             "name": "Markdown",
             "desc": "Lets you write some markdown.",
             "input": "-",
             "output": "-",
-            "callingnode": "addINode"
+            "callingnode": "undef"
         },
         {
             "name": "Export",

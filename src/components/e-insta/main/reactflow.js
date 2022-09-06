@@ -49,8 +49,15 @@ import { FlowContext } from '../context/flowcontext';
 import apiMapping from '../../resources/apiMapping.json';
 import axios from 'axios';
 import './reactflow.scss';
-// import * as XLSX from "xlsx";
-import Filenode from '../nodes/filenode';
+import Csvupload from '../nodes/csvupload';
+import Xlsxupload from '../nodes/xlsxupload';
+import Xlsxtransform from '../nodes/xlsxtransform';
+import Jsontransform from '../nodes/jsontransform';
+import Xmltransform from '../nodes/xmltransform';
+import Csvtransform from '../nodes/csvtransform';
+import Savefile from '../nodes/savefile';
+import Xmlupload from '../nodes/xmlupload';
+import Jsonupload from '../nodes/jsonupload';
 import Histogram from '../nodes/hist';
 import Scatter from '../nodes/scatter'
 import TimeSeries from '../nodes/time'
@@ -59,15 +66,15 @@ import Slice from '../nodes/slice'
 import Stats from '../nodes/stats'
 import Train_test from '../nodes/train_test'
 import Exports from '../nodes/exportscsv';
-import DestinationNode from '../nodes/output';
-import SourceNode from '../nodes/input';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-
-
-const nodeTypes = { filenode: Filenode, xlsx: Filenode,slice:Slice , stats:Stats , train_test:Train_test,bar:Bar, scatter: Scatter
-  , hist: Histogram, time: TimeSeries,exports:Exports, source: SourceNode, destination:DestinationNode};
+const nodeTypes = {
+  csvinput: Csvupload, xlsxinput: Xlsxupload, xmlinput: Xmlupload, jsoninput: Jsonupload, xlsxtransform: Xlsxtransform, savefile: Savefile, jsontransform: Jsontransform, xmltransform: Xmltransform, csvtransform: Csvtransform, slice: Slice, stats: Stats, train_test: Train_test, bar: Bar, scatter: Scatter
+  , hist: Histogram, time: TimeSeries, exports: Exports
+};
 const edgeTypes = {
-  // custom: CustomEdge,
 };
 
 
@@ -80,7 +87,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 let nodeId = 0;
 let tableId = 0;
-
 
 export default function Flow() {
 
@@ -130,7 +136,6 @@ export default function Flow() {
     setOpen(true);
     setScroll(scrollType);
   };
-
   const handleClose = () => {
     setOpen(false);
     setAnchorEl(null);
@@ -138,28 +143,27 @@ export default function Flow() {
   const onDoubleClickOfNode = (node) => {
     { console.log("node", node) }
     setObjectEdit(node)
-    // { console.log("edges", edges) }
-    // { console.log("nodes", nodes) }
   }
-
   const onPaneClick = () => {
     setObjectEdit({});
   };
 
   const [columnList, setColumnList] = useState([]);
-  const {columns,setColumns,lastrow,setlastrow,name,setName,File,setFile} = useContext(UserContext)
-  useEffect(()=>{
-    console.log('name',name)
-  },[name])
+  const { columns, setColumns, lastrow, setlastrow, name, setName } = useContext(UserContext)
+
+  useEffect(() => {
+    console.log('name', name)
+  }, [name])
   const fetchColumnList = async () => {
-    const response = await fetch('http://127.0.0.1:8000/columns/'+name)
+    const response = await fetch('http://127.0.0.1:8000/columns/' + name)
     const columnList = await response.json()
+    console.log("here it is", columnList)
     setColumnList(columnList.data)
     setColumns(columnList)
     // console.log("colsfetch",columns)
   }
   const fetchlastrow = async () => {
-    const response = await fetch('http://127.0.0.1:8000/lastrow'+'/'+name)
+    const response = await fetch('http://127.0.0.1:8000/lastrow' + '/' + name)
     const columnList = await response.json()
     setColumnList(columnList.data)
     setlastrow(columnList)
@@ -172,241 +176,437 @@ export default function Flow() {
     setEdges((eds) => addEdge({
       ...params
     }, eds))
+    console.log('here edges', edges)
   };
-  //console.log('edges',edges)
+
   useEffect(() => {
     if (edges.length !== 0) {
       { console.log("edges", edges) }
       { console.log("nodes", nodes) }
     }
   }, [edges]);
+
   const addNodes = (name) => {
     if (name === "File") {
-      addINode()
-    } if (name === "Paste") {
-      addCNode()
+      addcsvNode()
     }
-    if(name=="slice"){
+    if (name === "xlsx") {
+      addxlsxNode()
+    }
+    if (name === "json") {
+      addjsonNode()
+    }
+    if (name === "xml") {
+      addxmlNode()
+    }
+    if (name == 'xlsxtransform') {
+      addxlsxtransformNode()
+    }
+    if (name == 'jsontransform') {
+      addjsontransformNode()
+    }
+    if (name == 'xmltransform') {
+      addxmltransformNode()
+    }
+    if (name == 'csvtransform') {
+      addcsvtransformNode()
+    }
+    if (name == 'savefiles') {
+      addfilesaverNode()
+    }
+    if (name == "slice") {
       addSlice()
     }
-    if(name=="clean"){
+    if (name == "clean") {
       addStats()
     }
-    if(name=="split"){
+    if (name == "split") {
       addTraintest()
     }
-    if(name=='hist'){
+    if (name == 'hist') {
       addHist()
     }
-    if(name=='bar'){
+    if (name == 'bar') {
       addBar()
     }
-    if(name=='scatter'){
+    if (name == 'scatter') {
       addScatter()
     }
-    if(name=='time'){
+    if (name == 'time') {
       addTime()
     }
-    if(name=='exports'){
+    if (name == 'exports') {
       addExports()
     }
-    if (name === "XLSX") {
-      addXLSXNode()
-    }  
-    if (name === "XML") {
-      addXMLNode()
-    }
-    if (name === "Output") {
-      addMNode()
-    }
-    if (name === "Csv") {
-      addCSVNode()
-    }
   }
+
+  const addcsvNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "csvinput",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addxlsxNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "xlsxinput",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addjsonNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "jsoninput",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addxmlNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "xmlinput",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addxlsxtransformNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "xlsxtransform",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addjsontransformNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "jsontransform",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addxmltransformNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "xmltransform",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addcsvtransformNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "csvtransform",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
+
+  const addfilesaverNode = useCallback(() => {
+    handleClose()
+    reactFlowWrapper.current += 50;
+    const id = `${++nodeId}`;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      return [
+        ...nodes,
+        {
+          id,
+          type: "savefile",
+          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          position,
+        }
+      ];
+    });
+    handleClose()
+  }, [nodes]);
 
   const addBar = useCallback(() => {
     reactFlowWrapper.current += 50;
     // generateColor()
     const position = {
-        x: 250 ,
-        y: 10 ,
+      x: 250,
+      y: 10,
     };
     setPos(position)
     setNodes((nodes) => {
-        console.log(nodes);
-        const id = `${++nodeId}`;
-        return [
-            ...nodes,
-            {
-                id,
-                type: "bar",
-                data: { label: "Bar ", value: "" },
-                position,
-            }
-        ];
-    });
-}, [setNodes]);
-
-const addScatter = useCallback(() => {
-  reactFlowWrapper.current += 50;
-  // generateColor()
-  const position = {
-      x: 250 ,
-      y: 10 ,
-  };
-  setPos(position)
-  setNodes((nodes) => {
-      // console.log(nodes);
-      const id = `${++nodeId}`;
-      return [
-          ...nodes,
-          {
-              id,
-              type: "scatter",
-              data: { label: "Scatterplot ", value: "" },
-              position,
-          }
-      ];
-  });
-}, [setNodes]);
-
-const addHist = useCallback(() => {
-  reactFlowWrapper.current += 50;
-  const position = {
-      x: 250 ,
-      y: 10 ,
-  };
-  setPos(position)
-  setNodes((nodes) => {
-      // console.log(nodes);
-      const id = `${++nodeId}`;
-      return [
-          ...nodes,
-          {
-              id,
-              type: "hist",
-              data: { label: "Histogram ", value: "" },
-              position,
-          }
-      ];
-  });
-}, [setNodes]);
-
-const addTime = useCallback(() => {
-  reactFlowWrapper.current += 50;
-  const position = {
-      x: 250 ,
-      y: 10 ,
-  };
-  setPos(position)
-  setNodes((nodes) => {
-      // console.log(nodes);
-      const id = `${++nodeId}`;
-      return [
-          ...nodes,
-          {
-              id,
-              type: "time",
-              data: { label: "Time Series ", value: "" },
-              position,
-          }
-      ];
-  });
-}, [setNodes]);
-
-const addSlice = useCallback(() => {
-  reactFlowWrapper.current += 50;
-  // generateColor()
-  const position = {
-      x: 250 ,
-      y: 10 ,
-  };
-  setPos(position)
-  setNodes((nodes) => {
       console.log(nodes);
       const id = `${++nodeId}`;
       return [
-          ...nodes,
-          {
-              id,
-              type: "slice",
-              data: { label: "lastrow ", value: "" },
-              position,
-          }
+        ...nodes,
+        {
+          id,
+          type: "bar",
+          data: { label: "Bar ", value: "" },
+          position,
+        }
       ];
-  });
-}, [setNodes]);
+    });
+  }, [setNodes]);
 
-const addTraintest = useCallback(() => {
-  reactFlowWrapper.current += 50;
-  // generateColor()
-  const position = {
-      x: 250 ,
-      y: 10 ,
-  };
-  setPos(position)
-  setNodes((nodes) => {
+  const addScatter = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    // generateColor()
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+        ...nodes,
+        {
+          id,
+          type: "scatter",
+          data: { label: "Scatterplot ", value: "" },
+          position,
+        }
+      ];
+    });
+  }, [setNodes]);
+
+  const addHist = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+        ...nodes,
+        {
+          id,
+          type: "hist",
+          data: { label: "Histogram ", value: "" },
+          position,
+        }
+      ];
+    });
+  }, [setNodes]);
+
+  const addTime = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      // console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+        ...nodes,
+        {
+          id,
+          type: "time",
+          data: { label: "Time Series ", value: "" },
+          position,
+        }
+      ];
+    });
+  }, [setNodes]);
+
+  const addSlice = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    // generateColor()
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
       console.log(nodes);
       const id = `${++nodeId}`;
       return [
-          ...nodes,
-          {
-              id,
-              type: "train_test",
-              data: { label: "train_test ", value: "" },
-              position,
-          }
-      ];
-  });
-}, [setNodes]);
-
-const addStats = useCallback(() => {
-reactFlowWrapper.current += 50;
-// generateColor()
-const position = {
-    x: 250 ,
-    y: 10 ,
-};
-setPos(position)
-setNodes((nodes) => {
-    console.log(nodes);
-    const id = `${++nodeId}`;
-    return [
         ...nodes,
         {
-            id,
-            type: "stats",
-            data: { label: "stats ", value: "" },
-            position,
+          id,
+          type: "slice",
+          data: { label: "lastrow ", value: "" },
+          position,
         }
-    ];
-});
-}, [setNodes]);
+      ];
+    });
+  }, [setNodes]);
 
-const addExports = useCallback(() => {
-  handleClose()
-  reactFlowWrapper.current += 50;
-  const id = `${++nodeId}`;
-  const position = {
-    x: 250,
-    y: 10,
-  };
-  setPos(position)
-  setNodes((nodes) => {
-    return [
-      ...nodes,
-      {
-        id,
-        type: "exports",
-        data: { id: `${id}`, label: "exports csv ", value: "", color: "" },
-        position,
-      }
-    ];
-  });
-  handleClose()
-}, [nodes]);
+  const addTraintest = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    // generateColor()
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+        ...nodes,
+        {
+          id,
+          type: "train_test",
+          data: { label: "train_test ", value: "" },
+          position,
+        }
+      ];
+    });
+  }, [setNodes]);
 
-  const addCNode = useCallback(() => {
+  const addStats = useCallback(() => {
+    reactFlowWrapper.current += 50;
+    // generateColor()
+    const position = {
+      x: 250,
+      y: 10,
+    };
+    setPos(position)
+    setNodes((nodes) => {
+      console.log(nodes);
+      const id = `${++nodeId}`;
+      return [
+        ...nodes,
+        {
+          id,
+          type: "stats",
+          data: { label: "stats ", value: "" },
+          position,
+        }
+      ];
+    });
+  }, [setNodes]);
+
+  const addExports = useCallback(() => {
     handleClose()
     reactFlowWrapper.current += 50;
     const id = `${++nodeId}`;
@@ -420,137 +620,14 @@ const addExports = useCallback(() => {
         ...nodes,
         {
           id,
-          data: { id: `${id}`, label: "File ", value: "", color: "" },
+          type: "exports",
+          data: { id: `${id}`, label: "exports csv ", value: "", color: "" },
           position,
         }
       ];
     });
     handleClose()
   }, [nodes]);
-
-  const addINode = useCallback(() => {
-    handleClose()
-    reactFlowWrapper.current += 50;
-    const id = `${++nodeId}`;
-    const position = {
-      x: 250,
-      y: 10,
-    };
-    setPos(position)
-    setNodes((nodes) => {
-      return [
-        ...nodes,
-        {
-          id,
-          type: "source",
-          data: { id: `${id}`, label: "File ", value: "", color: "" },
-          position,
-        }
-      ];
-    });
-    handleClose()
-  }, [nodes]);
-  const addXLSXNode = useCallback(() => {
-    handleClose()
-    reactFlowWrapper.current += 50;
-    const id = `${++nodeId}`;
-    const position = {
-      x: 250,
-      y: 10,
-    };
-    setPos(position)
-    setNodes((nodes) => {
-      //console.log(nodes);
-
-
-      return [
-        ...nodes,
-        {
-          id,
-          type: "destination",
-          data: { id: `${id}`, label: "XLSX ", value: "", color: "" },
-          position,
-        }
-      ];
-    });
-    handleClose()
-  }, [nodes]);
-  const addXMLNode = useCallback(() => {
-    handleClose()
-    reactFlowWrapper.current += 50;
-    const id = `${++nodeId}`;
-    const position = {
-      x: 250,
-      y: 10,
-    };
-    setPos(position)
-    setNodes((nodes) => {
-      //console.log(nodes);
-
-
-      return [
-        ...nodes,
-        {
-          id,
-          type: "destination",
-          data: { id: `${id}`, label: "XML ", value: "", color: "" },
-          position,
-        }
-      ];
-    });
-    handleClose()
-  }, [nodes]);
-  const addMNode = useCallback(() => {
-    handleClose()
-    reactFlowWrapper.current += 50;
-    const id = `${++nodeId}`;
-    const position = {
-      x: 250,
-      y: 10,
-    };
-    setPos(position)
-    setNodes((nodes) => {
-      //console.log(nodes);
-
-
-      return [
-        ...nodes,
-        {
-          id,
-          type: "destination",
-          data: { id: `${id}`, label: "JSON ", value: "", color: "" },
-          position,
-        }
-      ];
-    });
-    handleClose()
-  }, [nodes]);
-  const addCSVNode = useCallback(() => {
-    handleClose()
-    reactFlowWrapper.current += 50;
-    const id = `${++nodeId}`;
-    const position = {
-      x: 250,
-      y: 10,
-    };
-    setPos(position)
-    setNodes((nodes) => {
-      //console.log(nodes);
-
-
-      return [
-        ...nodes,
-        {
-          id,
-          type: "destination",
-          data: { id: `${id}`, label: "XML ", value: "", color: "" },
-          position,
-        }
-      ];
-    });
-    handleClose()
-  }, [nodes]);
-
 
   const saveflow = () => {
     putflowsdb(0);
@@ -700,8 +777,8 @@ const addExports = useCallback(() => {
       <Grid container spacing={0} >
         <Grid item xs={12}>
           <DialogButton addNodes={addNodes} dialogdata={dialogdata} />
-
         </Grid>
+
         <Grid item xs={12}>
           <ReactFlowProvider>
             <div className="reactflow-wrapper" style={{ width: "100%", height: "70vh", backgroundColor: "#222138" }} ref={reactFlowWrapper}>
@@ -728,6 +805,7 @@ const addExports = useCallback(() => {
 
           </ReactFlowProvider>
         </Grid>
+
         <Grid item xs={8} className='responsegrid'>
           <div className='responsegridtitles'>OUTPUT</div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
@@ -745,6 +823,7 @@ const addExports = useCallback(() => {
           </div>
           <hr style={{ borderColor: "#4C497E" }}></hr>
         </Grid>
+
       </Grid>
     </div>
   );

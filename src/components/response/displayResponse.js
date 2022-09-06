@@ -25,17 +25,10 @@ const DisplayResponse = () => {
 
           {tableRows.length !== 0 && filetype === "text/csv" ? (
             <>
-              {/* <DataGrid
-                          
-        columns={tableRows}
-        rows={values}
-      /> */}
-
               <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
                 <thead>
                   <tr>
                     {tableRows.map((rows, index) => {
-
                       return <th key={index}>{rows}</th>;
                     })}
 
@@ -43,6 +36,7 @@ const DisplayResponse = () => {
                 </thead>
                 <tbody>
                   {values.map((value, index) => {
+                    console.log('values for csv', values)
                     return (
                       <tr key={index}>
                         {value.map((val, i) => {
@@ -65,18 +59,13 @@ const DisplayResponse = () => {
               </div>
             ) : (console.log())
           }
-           {tableRows.length !== 0 && filetype === "text/xml" && (
+
+          {tableRows.length !== 0 && filetype === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
             <>
-              {/* <DataGrid
-                          
-        columns={tableRows} 
-        rows={values}
-      /> */}
               <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
                 <thead>
                   <tr>
                     {tableRows.map((rows, index) => {
-
                       return <th key={index}>{rows}</th>;
                     })}
 
@@ -95,20 +84,18 @@ const DisplayResponse = () => {
                 </tbody>
               </table>
             </>
-          )
+          ) : (console.log())
 
           }
 
-          {tableRows.length !== 0 && filetype === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && (
+          {tableRows.length !== 0 && filetype === "text/xml" && (
             <>
               <table style={{ maxHeight: "30rem", maxWidth: "10%" }}>
                 <thead>
                   <tr>
                     {tableRows.map((rows, index) => {
-
                       return <th key={index}>{rows}</th>;
                     })}
-
                   </tr>
                 </thead>
                 <tbody>
@@ -124,12 +111,9 @@ const DisplayResponse = () => {
                 </tbody>
               </table>
             </>
-          )
-          }
+          )}
         </div>
-
       }
-
 
     </>
   )

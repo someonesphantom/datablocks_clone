@@ -7,17 +7,17 @@ export function UserContextProvider({ children }) {
 
   //State to store the values
   const [values, setValues] = useState([]);
-  const [columns,setColumns] = useState([]);
-  const [name, setName] = useState("untitled flow");
-  const [ts,setTs]=useState([]);
+  const [columns, setColumns] = useState([]);
+  const [name, setName] = useState('');
+  const [ts, setTs] = useState([]);
   const [filetype, setFileType] = useState([]);
-  const [firstrow,setfirstrow] = useState(0);
-  const [lastrow,setlastrow] = useState(0);
-  const [slice,setslice] = useState('0');
-  const [filecontent,setFilecontent]=useState({});
-  const [File,setFile] = useState(null)
+  const [firstrow, setfirstrow] = useState(0);
+  const [lastrow, setlastrow] = useState(0);
+  const [slice, setslice] = useState('0');
+  const [filecontent, setFilecontent] = useState({});
+  const [uploadedfile, setuploadedfile] = useState();
+  const [conversiontype, setconversiontype] = useState('');
 
-  
   useEffect(
     () => {
       console.log("tablerows ", tableRows)
@@ -43,8 +43,8 @@ export function UserContextProvider({ children }) {
     setlastrow,
     slice,
     setslice,
-    File,
-    setFile
+    uploadedfile, setuploadedfile,
+    conversiontype, setconversiontype
   }
 
   return (
